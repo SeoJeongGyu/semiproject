@@ -14,34 +14,24 @@
 <title>Insert title here</title>
 </head>
 <body>
-<nav>
-  <div class="nav-wrapper" style="background-color: #993333;">
-    <a href="" class="brand-logo">뿜뽀</a>
-    <ul id="nav-mobile" style="margin-left: 300px;" class="left hide-on-med-and-down">
-      <li><a href="">리뷰게시판</a></li>
-      <li><a href="">자유게시판 </a></li>
-      <li><a href="">질문게시판</a></li>
-      <li><a href="">
-  <a class='dropdown-button btn' href='#'  data-activates='dropdown1'>장터게시판</a>
-
-  <ul id='dropdown1' class='dropdown-content'>
-    <li><a href="#!">one</a></li>
-    <li class="divider"></li>
-    <li><a href="#!">two</a></li>
-    <li class="divider"></li>
-  </ul>
-        
-      
-      </a></li>
-    </ul>
-    <ul id="nav-mobile" style="margin-right: 300px;" class="right hide-on-med-and-down">
-	    <li><a href="">로그인</a></li>
-	    <li><a href="">회원가입 </a></li>
-    </ul>
-  </div>
-</nav>	
-	
-	
-	
+ <nav class="nav-extended" >
+    <div class="nav-wrapper" style="background-color: #993333;">
+      <a href="#" class="brand-logo" style="margin-left: 300px;">뿜뽀</a>
+      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down" style="margin-right: 300px;">
+        <li><a href="sass.html">로그인</a></li>
+        <li><a href="badges.html">회원가입</a></li>
+      </ul>
+    </div>
+    <div class="nav-content" style="background-color: #993333;">
+      <ul class="tabs tabs-transparent" style="margin-left: 300px;">
+        <li class="tab"><a class="active" href="#test1">리뷰게시판</a></li>
+        <li class="tab"><a class="active" href="#test2">자유게시판</a></li>
+        <li class="tab"><a class="active" href="#test3">질문게시판</a></li>
+        <li class="tab"><a class="active" href="#test4">장터게시판</a></li>
+      </ul>
+    </div>
+  </nav>
+ 
 </body>
 </html>
