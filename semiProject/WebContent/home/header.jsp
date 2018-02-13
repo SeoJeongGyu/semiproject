@@ -21,7 +21,18 @@
       <li><a href="">리뷰게시판</a></li>
       <li><a href="">자유게시판 </a></li>
       <li><a href="">질문게시판</a></li>
-      <li><a href="">중고장터</a></li>
+      <li><a href="">
+  <a class='dropdown-button btn' href='#'  data-activates='dropdown1'>장터게시판</a>
+
+  <ul id='dropdown1' class='dropdown-content'>
+    <li><a href="#!">one</a></li>
+    <li class="divider"></li>
+    <li><a href="#!">two</a></li>
+    <li class="divider"></li>
+  </ul>
+        
+      
+      </a></li>
     </ul>
     <ul id="nav-mobile" style="margin-right: 300px;" class="right hide-on-med-and-down">
 	    <li><a href="">로그인</a></li>
