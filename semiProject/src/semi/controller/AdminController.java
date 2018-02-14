@@ -14,10 +14,22 @@ public class AdminController extends HttpServlet{
         String cmd = req.getParameter("cmd");
         System.out.println(cmd);
         if(cmd.equals("member")) {
+            member(req,resp);
+        }else if(cmd.equals("board")) {
+            
+        }else if(cmd.equals("report")) {
             
         }
         
         
     }
-    
+    public void member(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        
+    }
+    public void board(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        
+    }
+    public void report(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        
+    }
 }
