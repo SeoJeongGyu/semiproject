@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import semi.vo.SellVo;
 import test.dbcp.DbcpBean;
 
-public class sellDao {
+public class SellDao {
 	public int delete(int sno) {
 		Connection con=null;
 		PreparedStatement pstmt=null;
