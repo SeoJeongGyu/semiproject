@@ -4,6 +4,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
         $('#materialnote').materialnote({
+            width: 860,
             height: 350
         });
     });
@@ -11,4 +12,4 @@ $(document).ready(function() {
     $('#materialnote').materialnote();
   });
 </script>
-	<textarea name="content" id="materialnote" value=""></textarea>
+	<textarea name="scontent" id="materialnote" value=""></textarea>

@@ -14,10 +14,6 @@
    .input-field input[type=text]:focus + label {
      color: #993333;
    }
-   /* valid color */
-   .validate {
-     box-shadow: 0 1px 0 0 #993333;
-   }
 </style>
 <script type="text/javascript">
   $(document).ready(function() {
@@ -77,9 +73,8 @@
       </div> 
       <div class="row">
         <div class="input-field col s12">
+          <label for="scontent">내용</label> <br><br>
        	 <jsp:include page="/home/summernote.jsp"></jsp:include>
-          <input name="scontent" type="text" class="validate">
-          <label for="scontent">내용</label>
         </div>
       </div>
       
