@@ -6,8 +6,11 @@
 <%@ include file="/home/api.jsp"%>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<style>
-</style>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('select').material_select();
+	});
+</script>
 </head>
 <body>
 	<div class="card-panel" align="center">
@@ -51,29 +54,25 @@
 		</tbody>
 	</table>
 	<br>
-	<nav>
-    <div class="nav-wrapper">
-      <form>
-        <div class="input-field">
-          <input id="search" type="search" required>
-          <label class="label-icon" for="search"><i class="material-icons">search</i></label>
-          <div align="center">
-          	<a class="waves-effect waves-light btn">검색</a>&nbsp;&nbsp;
-		  	<a class="waves-effect waves-light btn">글쓰기</a>
-		  </div>
-          <i class="material-icons">close</i>
-        </div>
-      </form>
-    </div>
-  </nav>
-  <ul class="pagination">
-    <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-    <li class="active"><a href="#!">1</a></li>
-    <li class="waves-effect"><a href="#!">2</a></li>
-    <li class="waves-effect"><a href="#!">3</a></li>
-    <li class="waves-effect"><a href="#!">4</a></li>
-    <li class="waves-effect"><a href="#!">5</a></li>
-    <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
-  </ul>
+	<div class="row">
+		<form class="col s12">
+			<div class="row">
+				<div class="input-field col s1">
+					<select>
+						<option value="1">제목</option>
+						<option value="2">내용</option>
+						<option value="3">닉네임</option>
+					</select>
+				</div>
+				<div class="input-field col s2">
+					<input id="icon_prefix" type="text" class="validate">
+				</div>
+				<a class="waves-effect waves-light btn"
+					style="margin-top: 25px; background-color: #993333;">검색</a>&nbsp;&nbsp;
+				<a class="waves-effect waves-light btn"
+					style="margin-top: 25px; background-color: #993333;">글쓰기</a>
+			</div>
+		</form>
+	</div>
 </body>
 </html>
