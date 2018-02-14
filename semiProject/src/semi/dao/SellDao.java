@@ -10,6 +10,23 @@ import semi.vo.SellVo;
 import test.dbcp.DbcpBean;
 
 public class SellDao {
+	public int updateHit(SellVo vo) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		try {
+			con=DbcpBean.getConn();
+			String sql="update sell set shit=shit+1 where sno=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, vo.getSno());
+			return pstmt.executeUpdate();
+			
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return -1;
+		}finally {
+			DbcpBean.closeConn(con, pstmt, null);
+		}
+	}
 	public int delete(int sno) {
 		Connection con=null;
 		PreparedStatement pstmt=null;

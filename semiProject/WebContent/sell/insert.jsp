@@ -14,8 +14,9 @@
    .input-field input[type=text]:focus + label {
      color: #993333;
    }
+   
    .row{width: 860px;}
- 
+
 </style>
 <script type="text/javascript">
   $(document).ready(function() {
@@ -28,14 +29,14 @@
 <div class="row">
    <form class="col s12" method="post" action="/semiProject/sell.do?cmd=insertOk">
 	<div class="input-field col s12">
-	    <select name="os">
+	    <select name="os" class="select">
 	      <option value="os" disabled selected>선택하세요</option>
 	      <option value="1">ios</option>
 	      <option value="2">안드로이드</option>
 	    </select>
 	    <label>OS</label>
 	  </div>
-	  <div class="input-field col s12">
+	  <div class="input-field col s12" class="select">
 	    <select name="telecom">
 	      <option value="telecom" disabled selected>선택하세요</option>
 	      <option value="1">SKT</option>
@@ -46,7 +47,7 @@
 	    <label>통신사</label>
 	  </div>
 	  <div class="input-field col s12">
-	    <select name="company">
+	    <select name="company" class="select">
 	      <option value="company" disabled selected>선택하세요</option>
 	      <option value="1">삼성</option>
 	      <option value="2">애플</option>
@@ -75,9 +76,7 @@
       </div> 
       <div class="row">
         <div class="input-field col s12">
-          <label for="scontent">내용</label>
-          <br>
-          <br>
+          <label for="scontent">내용</label> <br><br>
        	 <jsp:include page="/home/summernote.jsp"></jsp:include>
         </div>
       </div>

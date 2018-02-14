@@ -4,6 +4,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
         $('#materialnote').materialnote({
+            width: 860,
             height: 350
         });
     });

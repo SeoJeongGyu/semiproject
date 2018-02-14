@@ -32,7 +32,6 @@ public class SellController extends HttpServlet{
 	}
 	private void insertOk(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException{
-		//System.out.println("왔다");
 		int os = Integer.parseInt(req.getParameter("os"));
 		int telecom = Integer.parseInt(req.getParameter("telecom"));
 		//System.out.println("왔다"+ telecom);
