@@ -30,6 +30,6 @@ function btn(){
     <li><a href="<%=request.getContextPath()%>/admin.do?cmd=report">신고물관리</a></li>
     <li><div class="divider"></div></li>
   </ul>
-  <a href="javascript:btn()" data-activates="slide-out" class="button-collapse" ><i class="material-icons" style="font-size: 70px;" >menu</i></a>
+  <a href="javascript:btn()" data-activates="slide-out" class="button-collapse" ><i class="material-icons" style="font-size: 70px; color: #ee6e73;" >menu</i></a>
 </body>
 </html>

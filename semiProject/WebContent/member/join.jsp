@@ -1,13 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <style>
-	#id,#pwd{
+	#id,#pwd,#rpwd,#name,#nickname,#phone,#email{
 		border-bottom:1px solid #993333; 
 		box-shadow:0 1px 0 0 #993333;
 	}
 	
 </style>
-<div class="row">
+<div class="row" style="margin-left: 420px;">
     <form class="col s12" action="<%=request.getContextPath()%>/member.do">
       <div class="row">
         <div class="input-field col s3" style="margin-top: 50px;">
@@ -24,30 +24,30 @@
        <div class="row">
           <div class="input-field col s3">
           <input id="rpwd" type="password" class="validate" data-length="20">
-          <label for="rpwd" style="font-size: 20px;">패스워드확인</label>
+          <label for="rpwd" style="font-size: 20px; color: #993333;" >패스워드확인</label>
         </div>
       </div>
       <div class="row">
         <div class="input-field col s3">
           <input id="name" name="name" type="text" class="validate" >
-          <label for="name" style="font-size: 20px;">이름</label>
+          <label for="name" style="font-size: 20px; color:#993333;">이름</label>
         </div>
         <div class="input-field col s3">
           <input id="nickname" name="nickname" type="text" class="validate" data-length="10">
-          <label for="nickname" style="font-size: 20px;">닉네임</label>
+          <label for="nickname" style="font-size: 20px; color:#993333;">닉네임</label>
         </div>
        </div>
       <div class="row">
         <div class="input-field col s3">
           <input id="phone" name="phone" type="text" class="validate" data-length="11">
-          <label for="phone" style="font-size: 20px;">폰번호</label>
+          <label for="phone" style="font-size: 20px; color:#993333;">폰번호</label>
         </div>
        </div>
       <div class="row">
         <div class="col s6">
           <div class="input-field inline">
             <input id="email" type="email" class="validate" style="width: 450px; font-size: 20px;">
-            <label for="email" style="font-size: 20px;" data-error="올바르지 않은 이메일 형식입니다." data-success="사용할 수 있는 이메일 입니다.">Email</label>
+            <label for="email" style="font-size: 20px; color:#993333;" data-error="올바르지 않은 이메일 형식입니다." data-success="사용할 수 있는 이메일 입니다.">Email</label>
           </div>
         </div>
       </div>
