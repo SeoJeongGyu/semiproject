@@ -16,7 +16,7 @@
 <body>
 <div id="wrap">
 	<div id="header">
-		<jsp:include page="/home/header.jsp"></jsp:include>
+		<jsp:include page="/admin/sidenav.jsp"></jsp:include>
 	</div>
 	<div id="content" style="width: 1350px;">
 		<c:choose>
@@ -35,4 +35,3 @@
 </div>
 </body>
 </html>
->>>>>>> branch 'jg' of https://github.com/SeoJeongGyu/semiproject.git
