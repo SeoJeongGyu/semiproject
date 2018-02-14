@@ -7,4 +7,7 @@
   <!-- Compiled and minified JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">       
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+        <!-- include skelenote css/js-->
+        <link href="<%=request.getContextPath()%>/dist/materialnote.css" rel="stylesheet" type="text/css">
+        <script src="<%=request.getContextPath()%>/dist/materialnote.js"></script>

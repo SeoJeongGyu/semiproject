@@ -32,7 +32,7 @@ public class SellDao {
 		PreparedStatement pstmt=null;
 		try {
 			con=DbcpBean.getConn();
-			String sql="insert into sell values(sell_seq.nextval,?,?,?,?,?,?,?,sysdate,?,?,?,?)";
+			String sql="insert into sell values(sell_seq.nextval,?,?,?,?,?,?,?,sysdate,?,?,?,?,?)";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, vo.getOs());
 			pstmt.setInt(2, vo.getTelecom());
@@ -45,6 +45,7 @@ public class SellDao {
 			pstmt.setInt(9, vo.getShit());
 			pstmt.setInt(10, vo.getSuccess());
 			pstmt.setString(11, vo.getId());
+			pstmt.setInt(12, vo.getSreport());
 			return pstmt.executeUpdate();
 			
 		}catch(SQLException se) {
@@ -66,10 +67,10 @@ public class SellDao {
 			rs=pstmt.executeQuery();
 			ArrayList<SellVo> list=new ArrayList<>();
 			while(rs.next()) {
-				SellVo vo=new SellVo(rs.getInt("snum"),rs.getInt("os"),rs.getInt("telecom"),
+				SellVo vo=new SellVo(rs.getInt("sno"),rs.getInt("os"),rs.getInt("telecom"),
 						rs.getInt("company"),rs.getString("loc"),rs.getInt("price"),
 						rs.getString("stitle"),rs.getString("scontent"),rs.getDate("sdate"),
-						rs.getInt("sgrade"),rs.getInt("shit"),rs.getInt("success"),rs.getString("id"));
+						rs.getInt("sgrade"),rs.getInt("shit"),rs.getInt("success"),rs.getString("id"),rs.getInt("sreport"));
 				list.add(vo);
 			}
 			return list;

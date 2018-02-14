@@ -32,18 +32,20 @@ public class SellController extends HttpServlet{
 	}
 	private void insertOk(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException{
+		//System.out.println("왔다");
 		int os = Integer.parseInt(req.getParameter("os"));
 		int telecom = Integer.parseInt(req.getParameter("telecom"));
+		//System.out.println("왔다"+ telecom);
 		int company = Integer.parseInt(req.getParameter("company"));
 		String loc = req.getParameter("loc");
 		int price = Integer.parseInt(req.getParameter("price"));
 		String stitle = req.getParameter("stitle");
 		String scontent = req.getParameter("scontent");
 		
-		SellVo vo=new SellVo(0, os, telecom, company, loc, price, stitle, scontent, null, 0, 0, 0, null);
+		SellVo vo=new SellVo(0, os, telecom, company, loc, price, stitle, scontent, null, 0, 0, 0, "aaa",0);
 		SellDao dao=new SellDao();
 		int n=dao.insert(vo);
-		
+		System.out.println("n:"+ n);
 		if(n>0) {
 			req.setAttribute("page", "/sell/sellList.jsp");
 			req.getRequestDispatcher("/main.jsp").forward(req, resp);
@@ -57,8 +59,7 @@ public class SellController extends HttpServlet{
 		SellDao dao=new SellDao();
 		ArrayList<SellVo> slist=dao.list();
 		req.setAttribute("slist", slist);	
-		req.setAttribute("page", "/sell/sellList.jsp");	
-		//System.out.println("왔다감");
+		req.setAttribute("page", "/sell/sellList.jsp");
 		RequestDispatcher rd=req.getRequestDispatcher("/main.jsp");
 		rd.forward(req, resp);
 	}

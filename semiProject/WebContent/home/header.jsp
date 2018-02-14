@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<style type="text/css">
+
+</style>
 <%@ include file="api.jsp" %>
 
 <script type="text/javascript">
@@ -13,8 +19,8 @@ $(".dropdown-button").dropdown();
       <a href="#" class="brand-logo" style="margin-left: 300px;">뿜뽀</a>
       <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
       <ul id="nav-mobile" class="right hide-on-med-and-down" style="margin-right: 300px;">
-        <li><a href="<%=request.getContextPath()%>/member.do?cmd=login">로그인</a></li>
-        <li><a href="<%=request.getContextPath()%>/member.do?cmd=join">회원가입</a></li>
+        <li><a href="sass.html">로그인</a></li>
+        <li><a href="badges.html">회원가입</a></li>
       </ul>
     </div>
     <!-- Dropdown Structure 드롭박스 내용 -->
@@ -35,3 +41,6 @@ $(".dropdown-button").dropdown();
     </ul>
   </div>
 </nav>
+ 
+</body>
+</html>
