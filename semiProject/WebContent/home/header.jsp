@@ -13,7 +13,7 @@ $(".dropdown-button").dropdown();
       <a href="#" class="brand-logo" style="margin-left: 300px;">뿜뽀</a>
       <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
       <ul id="nav-mobile" class="right hide-on-med-and-down" style="margin-right: 300px;">
-        <li><a href="sass.html">로그인</a></li>
+        <li><a href="<%=request.getContextPath()%>/member.do?cmd=login">로그인</a></li>
         <li><a href="<%=request.getContextPath()%>/member.do?cmd=join">회원가입</a></li>
       </ul>
     </div>

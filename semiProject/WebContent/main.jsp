@@ -22,7 +22,7 @@
 	<div id="content" style="width: 1350px;">
 		<c:choose>
 			<c:when test="${requestScope.page==null}">
-				<%-- <jsp:include page="member/join.jsp"></jsp:include> --%>
+				<jsp:include page="aaa.jsp"></jsp:include>
 					이곳은 메인
 			</c:when>
 			<c:otherwise>

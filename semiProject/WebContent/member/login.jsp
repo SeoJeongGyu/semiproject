@@ -4,9 +4,38 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<%@ include file="/home/api.jsp" %>
+<style type="text/css">
+#id{
+     border-bottom: 1px solid #993333;
+     box-shadow: 0 1px 0 0 #993333;
+   }
+#pwd{
+	border-bottom: 1px solid #993333;
+     box-shadow: 0 1px 0 0 #993333;
+}
+
+</style>
 <title>Insert title here</title>
 </head>
 <body>
-
+	<div id="login.jsp" style="width: 470px; height: 527px; margin-top: 100px;">
+    <form class="col s12 ">
+      <div class="row">
+        <div class="input-field col s6">
+          <input id="id" type="text" class="validate" style="width: 460px; height: 60px;">
+          <label for="id" style="color: #993333; font-size: 20px;">아이디</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <input id="pwd" type="text" class="validate" style=" width: 460px; height: 60px;">
+          <label for="pwd" style="color: #993333; font-size: 20px;">비밀번호</label>
+        </div>
+      </div>
+      <button class="btn waves-effect waves-light" type="submit" name="action" style="margin-left:10px; width: 460px; height: 60px; background-color: #993333; margin-top: 30px;" >로그인
+  	</button>
+    </form>
+  </div>
 </body>
 </html>
