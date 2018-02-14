@@ -1,49 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-<style type="text/css">
- #sellList{padding-right: 150px; padding-left: 150px;}
-</style>
-</head>
-<body>
-<div class="header">
-	<jsp:include page="/home/header.jsp"/>
-</div>
-<div class="main" id="sellList">
 
+
+<div class="main" id="sellList">
  <table class="highlight">
         <thead>
           <tr>
-              <th>Name</th>
-              <th>Item Name</th>
-              <th>Item Price</th>
+              <th>글번호</th>
+              <th>제목</th>
+              <th>가격</th>
+              <th>작성자</th>
           </tr>
         </thead>
-
         <tbody>
           <tr>
             <td>Alvin</td>
             <td>Eclair</td>
             <td>$0.87</td>
           </tr>
-          <tr>
-            <td>Alan</td>
-            <td>Jellybean</td>
-            <td>$3.76</td>
-          </tr>
-          <tr>
-            <td>Jonathan</td>
-            <td>Lollipop</td>
-            <td>$7.00</td>
-          </tr>
+      
         </tbody>
       </table>
-
-
+    <a class="waves-effect waves-light btn" href="/semiProject/sell.do?cmd=insert" style="background-color:#993333;margin-left: 1200px;">
+    <i class="material-icons" >create</i></a>
+    
 </div>
-</body>
-</html>

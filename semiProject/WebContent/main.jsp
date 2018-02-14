@@ -12,18 +12,18 @@
 <body>
 <%
 	//보여질 페이지를 파라미터로 얻어오기
-	String spage=request.getParameter("page");
-	if(spage==null){
+	String spage=(String)request.getAttribute("page");
+	/* if(spage==null){
 	    spage="home.jsp";
-	}
-
+	}*/
+ 
 %>
 <body>
 <div id="wrap">
 	<div id="header">
 		<jsp:include page="/home/header.jsp"></jsp:include>
 	</div>
-	<div id="content" style="width: 1400px;">
+	<div id="content" style="width: 1300px;">
 		<jsp:include page="<%=spage %>"></jsp:include>
 	</div>
 	<%-- <div id="footer">

@@ -60,9 +60,10 @@ public class SellDao {
 		ResultSet rs=null;
 		try {
 			con=DbcpBean.getConn();
+			//System.out.println("con:"+con);
 			String sql="select * from sell";
 			pstmt=con.prepareStatement(sql);
-			pstmt.executeQuery();
+			rs=pstmt.executeQuery();
 			ArrayList<SellVo> list=new ArrayList<>();
 			while(rs.next()) {
 				SellVo vo=new SellVo(rs.getInt("snum"),rs.getInt("os"),rs.getInt("telecom"),
@@ -76,7 +77,7 @@ public class SellDao {
 			System.out.println(se.getMessage());
 			return null;
 		}finally {
-			DbcpBean.closeConn(con, pstmt, null);
+			DbcpBean.closeConn(con, pstmt, rs);
 		}
 	}
 }

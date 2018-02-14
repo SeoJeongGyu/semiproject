@@ -31,7 +31,6 @@ public class DbcpBean {
 	
 	public static void closeConn(Connection con) {
 		try {
-			con =ds.getConnection();
 			if(con!=null) con.close();
 		}catch(SQLException se) {
 			System.out.println(se.getMessage());
@@ -41,7 +40,6 @@ public class DbcpBean {
 	}
 	public static void closeConn(Connection con,Statement pstmt,ResultSet rs) {
 		try {
-			con =ds.getConnection();
 			if(con!=null) con.close();
 			if(pstmt!=null) pstmt.close();
 			if(rs!=null) rs.close();
