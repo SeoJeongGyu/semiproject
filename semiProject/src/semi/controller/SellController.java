@@ -45,7 +45,7 @@ public class SellController extends HttpServlet{
 		SellVo vo=new SellVo(0, os, telecom, company, loc, price, stitle, scontent, null, 0, 0, 0, "aaa",0);
 		SellDao dao=new SellDao();
 		int n=dao.insert(vo);
-		System.out.println("n:"+ n);
+		//System.out.println("n:"+ n);
 		if(n>0) {
 			req.setAttribute("page", "/sell/sellList.jsp");
 			req.getRequestDispatcher("/main.jsp").forward(req, resp);
