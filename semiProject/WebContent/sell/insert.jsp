@@ -81,7 +81,7 @@
         </div>
       </div>
       
-      <button class="btn waves-effect waves-light" type="submit" style="background-color:#993333; margin-left:20px; width: 200px">
+      <button class="btn waves-effect waves-light" type="submit" style="background-color:#993333; margin-left:340px; width: 200px">
       	<i class="large material-icons">done</i></button>
    </form>
   </div>
