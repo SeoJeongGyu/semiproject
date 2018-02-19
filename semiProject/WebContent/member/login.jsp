@@ -14,8 +14,12 @@
 	border-bottom: 1px solid #993333;
      box-shadow: 0 1px 0 0 #993333;
 }
-
 </style>
+<script type="text/javascript">
+	if('${requestScope.result}'!=""){
+		alert('${requestScope.result}');
+	}
+</script>
 <title>Insert title here</title>
 </head>
 <body>

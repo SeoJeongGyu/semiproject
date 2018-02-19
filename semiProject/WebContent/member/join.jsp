@@ -7,14 +7,40 @@
 	}
 </style>
 <script type="text/javascript">
-var reg_id = /^[a-z0-9_-]{6,15}$/;
-var reg_pw = /^[a-z0-9_-]{6,20}$/;
-var reg_email = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-var reg_name = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]{2,}/;
-var reg_nickname = /[0-9a-zA-Zㄱ-ㅎ|ㅏ-ㅣ|가-힣]{2,10}/;
-var reg_phone = /^\d{3}\d{3,4}\d{4}$/;
-var birthday = /^\d{2}\/\d{2}\/\d{2}$/;
-
+	var reg_id = /^[a-z0-9_-]{6,15}$/;
+	var reg_pw = /^[a-z0-9_-]{6,20}$/;
+	var reg_email = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+	var reg_name = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]{2,}/;
+	var reg_nickname = /[0-9a-zA-Zㄱ-ㅎ|ㅏ-ㅣ|가-힣]{2,10}/;
+	var reg_phone = /^\d{3}\d{3,4}\d{4}$/;
+	var birthday = /^\d{2}\/\d{2}\/\d{2}$/;
+	if('${requestScope.result}'!=""){
+		alert('${requestScope.result}');
+	}
+	var xhr = null;
+	function checkId(){
+	    var id = document.getElementById("id").value;
+	    var checkId = document.getElementById("checkId");
+	    if(id.length>=6){
+	        checkId.innerHTML="";
+		    xhr=new XMLHttpRequest();
+			xhr.onreadystatechange=callback;
+		    xhr.open('get', '<%=request.getContextPath()%>/member.do?cmd=checkId&id='+id, true);
+		    xhr.send();
+	    }else{
+	        checkId.innerHTML="6자리 이상 써주세요";
+	    }
+	}
+	function callback(){
+	    var dcheckId = document.getElementById("checkId");
+	    if(xhr.readyState==4&&xhr.status==200){
+	        var data = xhr.responseXML;
+	        var checkId= data.getElementsByTagName("result")[0].firstChild.nodeValue;
+	        dcheckId.innerHTML=checkId;
+	    }
+	}
+	
+	
 	function checkJoin(){
 	    console.log("안녕");
 	    var id=document.getElementById("id");
@@ -49,10 +75,10 @@ var birthday = /^\d{2}\/\d{2}\/\d{2}$/;
 	
 </script>
 <div class="row" style="margin-left: 420px;">
-    <form class="col s12" action="<%=request.getContextPath()%>/member.do?cmd=join" name="frm">
+    <form class="col s12" method="post" action="<%=request.getContextPath()%>/member.do?cmd=memberInsert" name="frm">
       <div class="row">
-        <div class="input-field col s3" style="margin-top: 50px;">
-          <input id="id" name="id" type="text" class="validate" data-length="15">
+        <div class="input-field col s3" style="margin-top: 50px;">  
+          <input id="id" name="id" type="text" class="validate" data-length="15" onkeyup="checkId()"><div id="checkId" style="color:#993333;"></div>
           <label for="id" style="font-size: 20px; color:#993333; ">아이디</label>
         </div>
        </div>
