@@ -23,17 +23,17 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<div id="login.jsp" style="width: 470px; height: 527px; margin-top: 100px;">
-    <form class="col s12 ">
+	<div id="" style="width: 470px; height: 527px; margin-top: 100px;">
+    <form  method="post" action="<%=request.getContextPath()%>/member.do?cmd=loginOk" class="col s12 ">
       <div class="row">
         <div class="input-field col s6">
-          <input id="id" type="text" class="validate" style="width: 460px; height: 60px;">
+          <input id="id" name="id" type="text" class="validate" style="width: 460px; height: 60px;">
           <label for="id" style="color: #993333; font-size: 20px;">아이디</label>
         </div>
       </div>
       <div class="row">
         <div class="input-field col s6">
-          <input id="pwd" type="text" class="validate" style=" width: 460px; height: 60px;">
+          <input id="pwd" name="pwd" type="text" class="validate" style=" width: 460px; height: 60px;">
           <label for="pwd" style="color: #993333; font-size: 20px;">비밀번호</label>
         </div>
       </div>

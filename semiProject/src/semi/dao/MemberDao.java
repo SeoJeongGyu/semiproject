@@ -14,6 +14,29 @@ public class MemberDao {
     public static MemberDao getInstance() {
         return instance;
     }
+    public int loginOk(String id,String pwd) {
+        Connection con=null;
+        PreparedStatement pstmt=null;
+        ResultSet rs=null;
+        int n=0;
+        try {
+            con=DbcpBean.getConn();
+            String sql = "select * from member where id = ? and pwd = ?";
+            pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, id);
+            pstmt.setString(2, pwd);
+            rs=pstmt.executeQuery();
+            if(rs.next()) {
+                n=1;
+            }
+            return n;
+        } catch (SQLException se) {
+            System.out.println(se.getMessage());
+            return -1;
+        } finally {
+            DbcpBean.closeConn(con, pstmt, rs);
+        }
+    }
     public int checkId(String id) {
         Connection con=null;
         PreparedStatement pstmt=null;
