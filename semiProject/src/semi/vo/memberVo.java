@@ -4,17 +4,17 @@ import java.sql.Date;
 
 public class memberVo {
     private String id;
-    private String pw;
+    private String pwd;
     private String nickname;
     private String name;
     private String phone;
     private String email;
     private Date regdate;
     memberVo(){}
-    public memberVo(String id, String pw, String nickname, String name, String phone, String email, Date regdate) {
+    public memberVo(String id, String pwd, String nickname, String name, String phone, String email, Date regdate) {
         super();
         this.id = id;
-        this.pw = pw;
+        this.pwd = pwd;
         this.nickname = nickname;
         this.name = name;
         this.phone = phone;
@@ -27,11 +27,11 @@ public class memberVo {
     public void setId(String id) {
         this.id = id;
     }
-    public String getPw() {
-        return pw;
+    public String getPwd() {
+        return pwd;
     }
-    public void setPw(String pw) {
-        this.pw = pw;
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
     }
     public String getNickname() {
         return nickname;

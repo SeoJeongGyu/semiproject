@@ -49,7 +49,7 @@ var birthday = /^\d{2}\/\d{2}\/\d{2}$/;
 	
 </script>
 <div class="row" style="margin-left: 420px;">
-    <form class="col s12" action="<%=request.getContextPath()%>/member.do" name="frm">
+    <form class="col s12" action="<%=request.getContextPath()%>/member.do?cmd=join" name="frm">
       <div class="row">
         <div class="input-field col s3" style="margin-top: 50px;">
           <input id="id" name="id" type="text" class="validate" data-length="15">
