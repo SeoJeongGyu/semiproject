@@ -1,14 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<table border="1">
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('select').material_select();
+  });
+</script>
+<table border="1" style="width:650px;margin-left:0px ">
 		<br>
 		<tr>
 		<th>운영체제 </th>
 		<td><input type="checkbox" id="ios" name="os"/>
 		<label for="ios">ios</label></td>
-		<td><input type="checkbox" id="android" name="os" />
+		<td style="width:150px"><input type="checkbox" id="android" name="os" />
 		<label for="android">안드로이드</label></td>
 	 	</tr>
 	 	<tr>
@@ -35,8 +39,7 @@
 	 	</tr>
 </table>
     <br>
- 
-        
+       
 <div class="main" id="sellList">
  <table class="highlight">
         <thead>
@@ -63,12 +66,22 @@
     
 </div>
 <div>
-	<select name="select" >
-		<option value="id">작성자</option>
-		<option value="stitle">제목</option>
-		<option value="scontent">내용</option>
-	</select>
-	<input type="text" name="search">
-	<input type="button" name="sbutton" value="검색" >
+	<div class="column">
+			<select name="searchField" id="searchField" class="ui fluid dropdown">
+				<option value="제목">제목</option>
+				<option value="아이디">아이디</option>
+				<option value="내용">내용</option>
+			</select>
+		</div>
+			<div class="ui search">
+				<div class="ui icon input">
+					<input class="prompt" type="text" placeholder="검색" value="" id="searchText"> 
+				</div>
+			</div>
+		</div>	
+		<div>
+			<button class="btn waves-effect waves-light" type="submit" style="background-color:#993333;float: right">
+			<i class="material-icons">search</i></button>
 </div>
+
 
