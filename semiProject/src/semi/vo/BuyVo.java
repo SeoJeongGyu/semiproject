@@ -2,7 +2,7 @@ package semi.vo;
 
 import java.sql.Date;
 
-public class buyVo {
+public class BuyVo {
 	private int bno;
 	private String btitle;
 	private String bcontent;
@@ -12,9 +12,9 @@ public class buyVo {
 	private String id;
 	private int breport;
 	
-	public buyVo() {}
+	public BuyVo() {}
 
-	public buyVo(int bno, String btitle, String bcontent, Date bdate, int bgrade, int bhit, String id, int breport) {
+	public BuyVo(int bno, String btitle, String bcontent, Date bdate, int bgrade, int bhit, String id, int breport) {
 		super();
 		this.bno = bno;
 		this.btitle = btitle;

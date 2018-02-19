@@ -5,6 +5,11 @@
   $(document).ready(function() {
     $('select').material_select();
   });
+  
+  function getDetail(sno){
+	  console.log(sno);
+	  location.href="sell.do?cmd=sdetail&sno="+sno;
+  }
 </script>
 <table border="1" style="width:650px;margin-left:0px ">
 		<br>
@@ -44,7 +49,7 @@
  <table class="highlight">
         <thead>
           <tr>
-              <th>글번호</th>
+              <th>판매상태</th>
               <th>제목</th>
               <th>가격</th>
               <th>작성자</th>
@@ -52,36 +57,66 @@
         </thead>
         <tbody>
           <c:forEach var="sell" items="${requestScope.slist }">
-			<tr>
-				<td>${sell.sno }</td>
-				<td>${sell.stitle }</td>
+			<tr onclick="getDetail(${sell.sno })">
+			<c:choose>
+				<c:when test="${sell.success==0 }">			
+					<td>판매중</td>
+				</c:when>
+				<c:otherwise>
+					<td>판매완료</td>
+				</c:otherwise>
+			</c:choose>
+				<td><a href="sell.do?cmd=sdetail&sno=${sell.sno }">${sell.stitle }</a></td>
 				<td>${sell.price }</td>
 				<td>${sell.id }</td>
 			</tr>
 		</c:forEach>
         </tbody>
       </table>
+ 
+  <div class="row">   
+  <br>  
+<ul class="pagination">
+<c:if test="${startPage>5 }">
+	<li class="disabled"><a href="sell.do?cmd=sellList&pageNum=${startPage-1 }"><i class="material-icons">chevron_left</i></a></li>
+    
+</c:if>
+	<c:forEach var="i" begin="${startPage }" end="${endPage }">
+		<c:choose>
+			<c:when test="${pageNum==i }">
+				<li class="active"><a href="sell.do?cmd=sellList&pageNum=${i}">${i}</a></li>
+			</c:when>
+			<c:otherwise>
+			<li class="waves-effect"><a href="sell.do?cmd=sellList&pageNum=${i}">${i}</a></li>
+			</c:otherwise>
+		</c:choose>
+	</c:forEach>
+<c:if test="${pageCount>endPage }">
+<li class="waves-effect"><a href="sell.do?cmd=sellList&pageNum=${endPage+1 }"><i class="material-icons">chevron_right</i></a></li>
+ 
+</c:if>
+</ul>
+</div>
+
+
     <a class="waves-effect waves-light btn" href="/semiProject/sell.do?cmd=insert" style="background-color:#993333;margin-left: 1200px;">
     <i class="material-icons" >create</i></a>
-    
-</div>
-<div>
-	<div class="column">
-			<select name="searchField" id="searchField" class="ui fluid dropdown">
-				<option value="제목">제목</option>
-				<option value="아이디">아이디</option>
-				<option value="내용">내용</option>
-			</select>
-		</div>
-			<div class="ui search">
-				<div class="ui icon input">
-					<input class="prompt" type="text" placeholder="검색" value="" id="searchText"> 
-				</div>
-			</div>
-		</div>	
-		<div>
-			<button class="btn waves-effect waves-light" type="submit" style="background-color:#993333;float: right">
-			<i class="material-icons">search</i></button>
-</div>
-
-
+ <div class="row">
+    <form class="col s12">
+    <div class="input-field col s12" style="width: 100px; margin-left: 10px;">
+    <select>
+      <option value="1">제목</option>
+      <option value="2">내용</option>
+      <option value="3">아이디</option>
+    </select>
+  </div>
+      <div class="row">
+        <div class="input-field col s2">
+          <input id="" type="text" class="validate">
+        </div>
+      <button class="btn waves-effect waves-light" type="submit" name="action" style="margin-top: 25px;background-color: #993333">
+      <i class="material-icons">search</i></button>
+      </div>
+    </form>
+  </div>
+  </div>

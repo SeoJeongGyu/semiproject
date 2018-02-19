@@ -56,6 +56,14 @@
 	    </select>
 	    <label>제조사</label>
 	  </div>
+	  <div class="input-field col s12">
+	    <select name="success" class="select">
+	      <option value="success" disabled selected>선택하세요</option>
+	      <option value="1">거래중</option>
+	      <option value="2">거래완료</option>
+	    </select>
+	    <label>거래상태</label>
+	  </div>
       <div class="row">
         <div class="input-field col s12">
           <input name="loc" type="text" class="validate">
