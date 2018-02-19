@@ -1,9 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <!-- Compiled and minified CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
@@ -35,33 +35,30 @@ $(document).ready(function() {
 	});
 
 </script>
+<script>
 
+$(document).ready(function() {
+    Materialize.updateTextFields();
+  });</script>
 </head>
 <body>
-<div>
-		<form action="imageUpload" id="imageUpload" name="imageUpload"
-			method="post" enctype="multipart/form-data">
-			<table class="bordered" width="100px">
-			<tr><td>리뷰 작성하기</td></tr>
-				<tr>
-				<td>대표사진</td>
-				
-				<td> 
-				<!-- Scaled in -->
-  <a id="scale-demo" href="abc"class="btn-floating btn-small scale-transition">
-    <i class="material-icons">+</i>
-  </a>
-				</td>
-				</tr>
-				
-				<tr>
-				<td><input type="file" name="file" id=""/><input type="submit" value="올리기" />
-				</td>
-				</tr>
-				<tr><td><textarea name="content" id="summernote" value=""></textarea></td></tr>
-			</table>
-		</form>
-	</div>
+<h1>�븞�뀞</h1>
 
+  <div class="row">
+    <form class="col s12">
+      <div class="row">
+        <div class="input-field col s6">
+          <i class="material-icons prefix">account_circle</i>
+          <input id="icon_prefix" type="text" class="validate">
+          <label for="icon_prefix">First Name</label>
+        </div>
+        <div class="input-field col s6">
+          <i class="material-icons prefix">phone</i>
+          <input id="icon_telephone" type="tel" class="validate">
+          <label for="icon_telephone">Telephone</label>
+        </div>
+      </div>
+    </form>
+  </div>
 </body>
 </html>
