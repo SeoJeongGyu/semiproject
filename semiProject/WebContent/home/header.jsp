@@ -21,6 +21,7 @@ $(".dropdown-button").dropdown();
       <ul id="nav-mobile" class="right hide-on-med-and-down" style="margin-right: 300px;">
         <li><a href="<%=request.getContextPath()%>/member.do?cmd=login">로그인</a></li>
         <li><a href="<%=request.getContextPath()%>/member.do?cmd=join">회원가입</a></li>
+        <li><a href="<%=request.getContextPath()%>/member.do?cmd=mypage">마이페이지</a></li>
       </ul>
     </div>
     <!-- Dropdown Structure 드롭박스 내용 -->

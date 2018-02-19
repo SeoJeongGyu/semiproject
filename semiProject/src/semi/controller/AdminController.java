@@ -20,7 +20,12 @@ public class AdminController extends HttpServlet{
             board(req,resp);
         }else if(cmd.equals("report")) {
             report(req,resp);
+        }else if(cmd.equals("mypage")) {
+            mypage(req,resp);
         }
+    }
+    public void mypage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        
     }
     public void member(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("page", "/admin/member.jsp");
