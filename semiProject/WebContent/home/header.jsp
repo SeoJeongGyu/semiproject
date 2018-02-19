@@ -29,9 +29,6 @@ $(".dropdown-button").dropdown();
 				<li><a href="<%=request.getContextPath()%>/member.do?cmd=mypage">마이페이지</a></li>
 			</c:otherwise>
 		</c:choose>
-        
-        
-        
       </ul>
     </div>
     <!-- Dropdown Structure 드롭박스 내용 -->
