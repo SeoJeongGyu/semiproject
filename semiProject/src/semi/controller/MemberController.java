@@ -25,7 +25,7 @@ public class MemberController  extends HttpServlet{
         }
     }
     public void join(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        
+        String id=req.getParameter("id");
     }
     
 }
