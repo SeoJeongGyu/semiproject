@@ -76,6 +76,7 @@ public class SellController extends HttpServlet{
 		if(spageNum!=null) {
 			pageNum=Integer.parseInt(spageNum);
 		}
+		
 		int startRow=(pageNum-1)*10+1;
 		int endRow=startRow+9;
 	
