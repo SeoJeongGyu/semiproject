@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript">
 	$(document).ready(function() {
 	  $('select').material_select();
@@ -9,28 +10,33 @@
  <table class="highlight">
         <thead>
           <tr>
-              <th>Name</th>
-              <th>Item Name</th>
-              <th>Item Price</th>
+              <th>
+	              <p><input type="checkbox" id="test5" />
+			      <label for="test5"></label></p>
+			  </th>
+              <th>아이디</th>
+              <th>이름</th>
+              <th>닉네임</th>
+              <th>폰번호</th>
+              <th>이메일</th>
+              <th>가입날짜</th>
           </tr>
         </thead>
-
         <tbody>
-          <tr>
-            <td>Alvin</td>
-            <td>Eclair</td>
-            <td>$0.87</td>
-          </tr>
-          <tr>
-            <td>Alan</td>
-            <td>Jellybean</td>
-            <td>$3.76</td>
-          </tr>
-          <tr>
-            <td>Jonathan</td>
-            <td>Lollipop</td>
-            <td>$7.00</td>
-          </tr>
+        	<c:forEach var="vo" items="${requestScope.list }">
+	          <tr>
+	            <td>
+		            <p><input type="checkbox" id="${vo.id }" />
+				    <label for="${vo.id }"></label></p>
+			    </td>
+	            <td>${vo.id }</td>
+	            <td>${vo.name }</td>
+	            <td>${vo.nickname }</td>
+	            <td>${vo.phone }</td>
+	            <td>${vo.email }</td>
+	            <td>${vo.regdate }</td>
+	          </tr>
+	        </c:forEach>  
         </tbody>
       </table>
      <div class="row">

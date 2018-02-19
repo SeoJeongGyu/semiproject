@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import semi.dao.MemberDao;
-import semi.vo.memberVo;
+import semi.vo.MemberVo;
 
 @WebServlet("/member.do")
 public class MemberController  extends HttpServlet{
@@ -36,6 +36,7 @@ public class MemberController  extends HttpServlet{
             loginOk(req,resp);
         }
     }
+    
     public void loginOk(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id=req.getParameter("id");
         String pwd=req.getParameter("pwd");
@@ -79,7 +80,7 @@ public class MemberController  extends HttpServlet{
         System.out.println("name : "+name);
         System.out.println("phone : "+phone);
         System.out.println("email : "+email);
-        memberVo vo = new memberVo(id, pwd, nickname, name, phone, email, null);
+        MemberVo vo = new MemberVo(id, pwd, nickname, name, phone, email, null);
         int n = MemberDao.getInstance().insert(vo);
         if(n>0) {
             req.setAttribute("page", "/member/login.jsp");
