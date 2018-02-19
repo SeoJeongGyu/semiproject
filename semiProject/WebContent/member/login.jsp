@@ -27,7 +27,7 @@
     <form class="col s12 ">
       <div class="row">
         <div class="input-field col s6">
-          <input id="id" type="text" class="validate" style="width: 460px; height: 60px;">
+          <input id="id" type="text" class="validate" style="width: 600px; height: 60px;">
           <label for="id" style="color: #993333; font-size: 20px;">아이디</label>
         </div>
       </div>
