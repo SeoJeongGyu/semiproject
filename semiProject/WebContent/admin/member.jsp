@@ -1,3 +1,5 @@
+<%@page import="semi.vo.MemberVo"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -5,14 +7,27 @@
 	$(document).ready(function() {
 	  $('select').material_select();
 	});
+	function checkAll(){
+		var check=document.getElementsByName("check");
+		var checkAll=document.getElementById("checkAll");
+		if(checkAll.checked==true){
+			for(var i=0; i<check.length;i++){
+			    check[i].checked=true;
+			}
+		}else{
+		    for(var i=0; i<check.length;i++){
+			    check[i].checked=false;
+			}
+		}
+	}
 </script>    
  <h4 class="truncate">맴버 관리</h4>
  <table class="highlight">
         <thead>
           <tr>
               <th>
-	              <p><input type="checkbox" id="test5" />
-			      <label for="test5"></label></p>
+	              <p><input type="checkbox" id="checkAll" onclick="checkAll()"/>
+			      <label for="checkAll"></label></p>
 			  </th>
               <th>아이디</th>
               <th>이름</th>
@@ -26,7 +41,7 @@
         	<c:forEach var="vo" items="${requestScope.list }">
 	          <tr>
 	            <td>
-		            <p><input type="checkbox" id="${vo.id }" />
+		            <p><input type="checkbox" name="check" id="${vo.id }" />
 				    <label for="${vo.id }"></label></p>
 			    </td>
 	            <td>${vo.id }</td>
@@ -61,7 +76,7 @@
         <div class="input-field col s2">
           <input id="" type="text" class="validate">
         </div>
-      <button class="btn waves-effect waves-light" type="submit" name="action" style="margin-top: 25px;">검색</button>
+      <button class="btn waves-effect waves-light" type="submit" name="action" style="margin-top: 25px; background-color: #ee6e73;">검색</button>
       </div>
     </form>
   </div>

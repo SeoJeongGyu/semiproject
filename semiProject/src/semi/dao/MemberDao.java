@@ -15,6 +15,24 @@ public class MemberDao {
     public static MemberDao getInstance() {
         return instance;
     }
+    public int getMax() {
+        Connection con=null;
+        PreparedStatement pstmt=null;
+        ResultSet rs=null;
+        try {
+            con=DbcpBean.getConn();
+            String sql = "select count(id) cnt from member";
+            pstmt = con.prepareStatement(sql);
+            rs=pstmt.executeQuery();
+            rs.next();
+            return rs.getInt("cnt");
+        } catch (SQLException se) {
+            System.out.println(se.getMessage());
+            return -1;
+        } finally {
+            DbcpBean.closeConn(con, pstmt, rs);
+        }
+    }
     public ArrayList<MemberVo> selectAll(){
         Connection con=null;
         PreparedStatement pstmt=null;
@@ -92,8 +110,8 @@ public class MemberDao {
             pstmt=con.prepareStatement(sql);
             pstmt.setString(1, vo.getId());
             pstmt.setString(2, vo.getPwd());
-            pstmt.setString(3, vo.getNickname());
-            pstmt.setString(4, vo.getName());
+            pstmt.setString(3, vo.getName());
+            pstmt.setString(4, vo.getNickname());
             pstmt.setString(5, vo.getPhone());
             pstmt.setString(6, vo.getEmail());
             int n = pstmt.executeUpdate();
