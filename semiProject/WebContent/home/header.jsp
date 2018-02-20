@@ -15,21 +15,10 @@ $(".dropdown-button").dropdown();
 </head>
 <body>
  <nav class="nav-extended" >
-    <div class="nav-wrapper" style="background-color: #993333;">
-      <a href="#" class="brand-logo" style="margin-left: 300px;">뿜뽀</a>
+    <div class="nav-wrapper" style="background-color:white; ">
+      <a href="#" class="brand-logo" style="margin-left: 300px"><img src="../logo/로고.png"></a>
       <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-      <ul id="nav-mobile" class="right hide-on-med-and-down" style="margin-right: 300px;">
-        <c:choose>
-			<c:when test="${empty sessionScope.id }">
-				<li><a href="<%=request.getContextPath()%>/member.do?cmd=login">로그인</a></li>
-        		<li><a href="<%=request.getContextPath()%>/member.do?cmd=join">회원가입</a></li>
-			</c:when>
-			<c:otherwise>
-				<li><a href="<%=request.getContextPath()%>/member/logout.jsp">로그아웃</a></li>
-				<li><a href="<%=request.getContextPath()%>/member.do?cmd=mypage">마이페이지</a></li>
-			</c:otherwise>
-		</c:choose>
-      </ul>
+
     </div>
     <!-- Dropdown Structure 드롭박스 내용 -->
 	<ul id="dropdown1" class="dropdown-content" style="background-color: #993333;">
@@ -47,6 +36,18 @@ $(".dropdown-button").dropdown();
       <!-- Dropdown Trigger -->
       <li><a class="dropdown-button" href="#!" data-activates="dropdown1">장터게시판<i class="material-icons right">arrow_drop_down</i></a></li>
     </ul>
+    <ul id="nav-mobile" class="right hide-on-med-and-down" style="margin-right: 300px;">
+        <c:choose>
+			<c:when test="${empty sessionScope.id }">
+				<li><a href="<%=request.getContextPath()%>/member.do?cmd=login">로그인</a></li>
+        		<li><a href="<%=request.getContextPath()%>/member.do?cmd=join">회원가입</a></li>
+			</c:when>
+			<c:otherwise>
+				<li><a href="<%=request.getContextPath()%>/member/logout.jsp">로그아웃</a></li>
+				<li><a href="<%=request.getContextPath()%>/member.do?cmd=mypage">마이페이지</a></li>
+			</c:otherwise>
+		</c:choose>
+      </ul>
   </div>
 </nav>
  
