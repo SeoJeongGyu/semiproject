@@ -23,7 +23,7 @@ function btn(){
 </head>
 <body>
    <ul id="slide-out" class="side-nav">
-    <li><a href="<%=request.getContextPath()%>/admin.do?cmd=member">회원관리</a></li>
+    <li><a href="<%=request.getContextPath()%>/memberAdmin.do?cmd=list">회원관리</a></li>
     <li><div class="divider"></div></li>
     <li><a href="<%=request.getContextPath()%>/admin.do?cmd=board">게시물관리</a></li>
     <li><div class="divider"></div></li>
