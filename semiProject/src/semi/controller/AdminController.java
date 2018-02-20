@@ -1,6 +1,7 @@
 package semi.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,6 +9,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import semi.dao.MemberDao;
+import semi.vo.MemberVo;
 @WebServlet("/admin.do")
 public class AdminController extends HttpServlet{
     @Override
@@ -28,6 +32,8 @@ public class AdminController extends HttpServlet{
         
     }
     public void member(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        ArrayList<MemberVo> list = MemberDao.getInstance().selectAll();
+        req.setAttribute("list", list);
         req.setAttribute("page", "/admin/member.jsp");
         RequestDispatcher rd = req.getRequestDispatcher("admin.jsp");
         rd.forward(req, resp);

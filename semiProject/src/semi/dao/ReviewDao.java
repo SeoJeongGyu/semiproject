@@ -5,16 +5,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import semi.jdbc.DBConnection;
+import test.dbcp.DbcpBean;
 
 public class ReviewDao {
-	// ��ü���� ���� ���ϱ�(����¡ ó���ϱ� ���� �ʿ�)
+	//페이지 수 얻어오기
 	public int getCount() {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
-			conn = DBConnection.getConn();
+			conn = DbcpBean.getConn();
 			String sql = "select NVL(count(rno),0) cnt from review";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
@@ -25,7 +25,7 @@ public class ReviewDao {
 			System.out.println(se.getMessage());
 			return -1;
 		} finally {
-			DBConnection.closeConn(conn, pstmt, rs);
+			DbcpBean.closeConn(conn, pstmt, rs);
 		}
 
 	}

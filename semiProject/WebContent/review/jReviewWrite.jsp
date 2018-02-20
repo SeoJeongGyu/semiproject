@@ -65,7 +65,7 @@ $(document).ready(function() {
     <form class="col s12 " >
       <div align="left">
    
-   <label for="id" style=" font-size: 20px;">사진등록</label>  <a id="scale-demo" class="btn-floating btn-small scale-transition" onclick="fileupload()">
+   <label for="id" style=" font-size: 20px;">대표 사진등록</label>  <a id="scale-demo" class="btn-floating btn-small scale-transition" onclick="fileUpload()">
     <i class="material-icons">add_a_photo</i>
   </a>				<!-- Scaled in -->
 

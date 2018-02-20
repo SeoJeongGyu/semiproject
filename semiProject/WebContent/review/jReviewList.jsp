@@ -1,21 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
      <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<script type="text/javascript">
+	$(document).ready(function() {
+	  $('select').material_select();
+	});
+</script>
 
-  <!-- Compiled and minified CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
 
-  <!-- Compiled and minified JavaScript -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-</head>
-<body style="margin-left: auto; margin-right:auto;">
+<center>
 <div style="margin-left:auto;margin-right:auto;">
-	<table border="1" align="center">
+	<table border="1" >
 	<tr><td><ul style="overflow:hidden;">
 		<li id="tap_skt" style="float:left; overflow: hidden; width: 89px; border-right: 1px solid rgb(212, 212, 212); text-align: center; padding:15px; background-color: rgb(255, 255, 255);"><input type="checkbox" name="w[1]" id="w1" value="1" style="display:none"><img src="http://image3.cetizen.com/2007_cetizen/market/2015/icon/skt.png" id="market_tap1">
 			<span id="tap_title_skt" style="display: block; margin-top: 5px; color: rgb(75, 76, 81);" class="p11 ">SKT</span>
@@ -113,7 +108,7 @@
             
 </div>
 <ul class="pagination">
-    <li class="disabled"><a href="#!"><i class="material-icons">이전</i></a></li>
+    <li class="disabled"><a href="#!"><i class="material-icons"></i></a></li>
     <li class="active"><a href="#!">1</a></li>
     <li class="waves-effect"><a href="#!">2</a></li>
     <li class="waves-effect"><a href="#!">3</a></li>
@@ -121,6 +116,23 @@
     <li class="waves-effect"><a href="#!">5</a></li>
     <li class="waves-effect"><a href="#!"><i class="material-icons">다음</i></a></li>
   </ul>
+  
     
-</body>
-</html>
+      </center>
+      <div class="input-field col s12" style="width: 100px; margin-left: 10px;">
+  
+  </div>
+      <div class="row">
+      <div class="input-field col s12" style="width: 100px; margin-left: 10px;">
+        <select>
+      <option value="1">제목</option>
+      <option value="2">내용</option>
+      <option value="3">아이디</option>
+    </select>
+      </div>
+        <div class="input-field col s2">
+          <input id="" type="text" class="validate">
+        </div>
+      <button class="btn waves-effect waves-light" type="submit" name="action" style="margin-top: 25px;">검색</button>
+      </div>
+      

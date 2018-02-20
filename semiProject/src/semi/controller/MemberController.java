@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import semi.dao.MemberDao;
-import semi.vo.memberVo;
+import semi.vo.MemberVo;
 
 @WebServlet("/member.do")
 public class MemberController  extends HttpServlet{
@@ -32,6 +32,25 @@ public class MemberController  extends HttpServlet{
             memberInsert(req,resp);
         }else if(cmd.equals("checkId")) {
             checkId(req,resp);
+        }else if(cmd.equals("loginOk")) {
+            loginOk(req,resp);
+        }
+    }
+    
+    public void loginOk(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String id=req.getParameter("id");
+        String pwd=req.getParameter("pwd");
+        System.out.println(id);
+        System.out.println(pwd);
+        int n = MemberDao.getInstance().loginOk(id, pwd);
+        if(n>0) {
+            req.getSession().setAttribute("id",id);
+            resp.sendRedirect(req.getContextPath()+"/main.jsp");
+        }else {
+            req.setAttribute("page", "/member/login.jsp");
+            req.setAttribute("result", "아이디와 비밀번호를 확인하세요.");
+            RequestDispatcher rd = req.getRequestDispatcher("main.jsp");
+            rd.forward(req, resp);
         }
     }
     public void checkId(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -61,7 +80,7 @@ public class MemberController  extends HttpServlet{
         System.out.println("name : "+name);
         System.out.println("phone : "+phone);
         System.out.println("email : "+email);
-        memberVo vo = new memberVo(id, pwd, nickname, name, phone, email, null);
+        MemberVo vo = new MemberVo(id, pwd, nickname, name, phone, email, null);
         int n = MemberDao.getInstance().insert(vo);
         if(n>0) {
             req.setAttribute("page", "/member/login.jsp");

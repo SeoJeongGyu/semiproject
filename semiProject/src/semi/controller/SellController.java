@@ -28,11 +28,24 @@ public class SellController extends HttpServlet{
         	req.getRequestDispatcher("/main.jsp").forward(req, resp);
         }else if(cmd.equals("insertOk")) {
         	insertOk(req,resp);
+        }else if(cmd.equals("sdetail")) {
+        	detail(req,resp);
         }
+	}
+	
+	private void detail(HttpServletRequest req, HttpServletResponse resp) 
+			throws ServletException, IOException{
+		int sno=Integer.parseInt(req.getParameter("sno"));
+		SellDao dao=SellDao.getInstance();
+		SellVo vo=dao.detail(sno);
+		dao.updateHit(vo);
+		req.setAttribute("vo", vo);
+		req.setAttribute("page", "sell/sdetail.jsp");
+		req.getRequestDispatcher("/main.jsp").forward(req, resp);
+		
 	}
 	private void insertOk(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException{
-		//System.out.println("왔다");
 		int os = Integer.parseInt(req.getParameter("os"));
 		int telecom = Integer.parseInt(req.getParameter("telecom"));
 		//System.out.println("왔다"+ telecom);
@@ -41,27 +54,50 @@ public class SellController extends HttpServlet{
 		int price = Integer.parseInt(req.getParameter("price"));
 		String stitle = req.getParameter("stitle");
 		String scontent = req.getParameter("scontent");
+		int success=Integer.parseInt(req.getParameter("success"));
 		
-		SellVo vo=new SellVo(0, os, telecom, company, loc, price, stitle, scontent, null, 0, 0, 0, "aaa",0);
-		SellDao dao=new SellDao();
+		SellVo vo=new SellVo(0, os, telecom, company, loc, price, stitle, scontent, null, 0, 0, success, "aaa",0);
+		SellDao dao=SellDao.getInstance();
 		int n=dao.insert(vo);
-		System.out.println("n:"+ n);
+		//System.out.println("n:"+ n);
 		if(n>0) {
-			req.setAttribute("page", "/sell/sellList.jsp");
+			req.setAttribute("page", "/sell.do?cmd=sellList");
 			req.getRequestDispatcher("/main.jsp").forward(req, resp);
 		}else {
 			
 		}
 	}
-	
 	private void list(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException{
-		SellDao dao=new SellDao();
-		ArrayList<SellVo> slist=dao.list();
-		req.setAttribute("slist", slist);	
+		SellDao dao=SellDao.getInstance();
+		
+		String spageNum=req.getParameter("pageNum");
+		int pageNum=1;
+		if(spageNum!=null) {
+			pageNum=Integer.parseInt(spageNum);
+		}
+		
+		int startRow=(pageNum-1)*10+1;
+		int endRow=startRow+9;
+	
+		ArrayList<SellVo> slist=dao.list(startRow,endRow);
+		
+		int pageCount=(int)Math.ceil(dao.getCount()/10.0);
+		
+		int startPage = ((pageNum-1)/5)*5 + 1 ; 
+		int endPage = startPage + 4; 
+		if(pageCount<endPage) {
+			endPage=pageCount;
+		}
+			
+		req.setAttribute("slist", slist);
+		req.setAttribute("pageCount", pageCount);
+		req.setAttribute("startPage", startPage);
+		req.setAttribute("endPage", endPage);
+		req.setAttribute("pageNum", pageNum);
 		req.setAttribute("page", "/sell/sellList.jsp");
-		RequestDispatcher rd=req.getRequestDispatcher("/main.jsp");
-		rd.forward(req, resp);
+		req.getRequestDispatcher("/main.jsp").forward(req, resp);
+		
 	}
 	
 }

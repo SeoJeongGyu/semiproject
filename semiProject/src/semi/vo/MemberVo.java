@@ -2,7 +2,7 @@ package semi.vo;
 
 import java.sql.Date;
 
-public class memberVo {
+public class MemberVo {
     private String id;
     private String pwd;
     private String nickname;
@@ -10,8 +10,8 @@ public class memberVo {
     private String phone;
     private String email;
     private Date regdate;
-    memberVo(){}
-    public memberVo(String id, String pwd, String nickname, String name, String phone, String email, Date regdate) {
+    public MemberVo(){}
+    public MemberVo(String id, String pwd, String nickname, String name, String phone, String email, Date regdate) {
         super();
         this.id = id;
         this.pwd = pwd;

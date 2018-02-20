@@ -10,9 +10,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import semi.dao.ReviewDao;
 @WebServlet("/review.do")
-public class ReviewListController extends HttpServlet{
+public class ReviewController extends HttpServlet{
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    	String cmd= req.getParameter("cmd");
+    	if(cmd.equals("list")) {
+    		list(req,resp);
+    	}else if(cmd.equals("write")) {
+    		write(req,resp);
+    	}
+    }
+    	public void list(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    	    	
     	String spageNum=req.getParameter("pageNum");
     	int pageNum=1;
     	if(spageNum!=null) {
@@ -29,14 +38,17 @@ public class ReviewListController extends HttpServlet{
     	if(pageCount<endPage) {
     		endPage=pageCount;
     	}
- 
+    	req.setAttribute("page", "/review/jReviewList.jsp");
     	req.setAttribute("pageCount",pageCount);
 		req.setAttribute("startPage", startPage);
 		req.setAttribute("endPage",endPage);
 		req.setAttribute("pageNum", pageNum);
-		req.getRequestDispatcher("/review/jReviewList.jsp").forward(req, resp);
+		req.getRequestDispatcher("main.jsp").forward(req, resp);
     	
+    	 }
+    	public void write(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     	
-    
+    		
+    	}
     }
-}
+
