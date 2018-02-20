@@ -8,14 +8,14 @@ public class ScommentVo {
 	private int scref;
 	private int sclev;
 	private int scstep;
-	private int scgrade;
+	private int screport;
 	private Date scdate;
 	private int sno;
 	private String id;
 	
 	public ScommentVo () {}
 
-	public ScommentVo(int scno, String sccontent, int scref, int sclev, int scstep, int scgrade, Date scdate, int sno,
+	public ScommentVo(int scno, String sccontent, int scref, int sclev, int scstep, int screport, Date scdate, int sno,
 			String id) {
 		super();
 		this.scno = scno;
@@ -23,7 +23,7 @@ public class ScommentVo {
 		this.scref = scref;
 		this.sclev = sclev;
 		this.scstep = scstep;
-		this.scgrade = scgrade;
+		this.screport = screport;
 		this.scdate = scdate;
 		this.sno = sno;
 		this.id = id;
@@ -69,12 +69,12 @@ public class ScommentVo {
 		this.scstep = scstep;
 	}
 
-	public int getScgrade() {
-		return scgrade;
+	public int getScReport() {
+		return screport;
 	}
 
-	public void setScgrade(int scgrade) {
-		this.scgrade = scgrade;
+	public void setScReport(int screport) {
+		this.screport = screport;
 	}
 
 	public Date getScdate() {

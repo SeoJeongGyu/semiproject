@@ -2,44 +2,83 @@ package semi.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import semi.dao.ScommentDao;
 import semi.vo.ScommentVo;
 
+@WebServlet("/scomment.do")
 public class ScommentController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("utf-8");
 		String cmd=req.getParameter("cmd");
 		System.out.println("cmd:" + cmd);
-		if(cmd.equals("insert")) {
+		String id=(String)req.getSession().getAttribute("id");
+		if(cmd.equals("insert") && id!=null ) {
 			insert(req,resp);
+		}else if(cmd.equals("list")) {
+			list(req,resp);
 		}
 	}
+	
 	private void insert(HttpServletRequest req, HttpServletResponse resp) throws ServletException,IOException {
 		//1. 파라미터로 전달된 값을 db에 저장
-		String id=req.getParameter("id");
-		String sccontent=req.getParameter("sccontent");
-		ScommentVo vo=new ScommentVo(0, sccontent, 0, 0, 0, 0, null, 0, id);
-		//dao를 통해 db에 저장하기
-		ScommentDao dao= ScommentDao.getInstance();
+		String sccontent = req.getParameter("sccontent");
+		System.out.println(sccontent);
+		String id=(String)req.getSession().getAttribute("id");
+		int sno=Integer.parseInt(req.getParameter("sno"));
+		System.out.println("sno:"+sno);
+		System.out.println("id:"+id);
+		System.out.println("sccontent:"+sccontent);
+		ScommentDao dao=ScommentDao.getInstance();
+		ScommentVo vo=new ScommentVo(0, sccontent, 0, 0, 0, 0, null, sno, id);
 		int n=dao.insert(vo);
-		//2. 결과를 xml로 응답하기(페이지 이동하면 안됨)
-		resp.setContentType("text/xml;charset=utf-8");
-		PrintWriter pw=resp.getWriter();
-		pw.println("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
-		pw.println("<result>");
+		//System.out.println("n:"+n);
+		JSONObject json=new JSONObject();
 		if(n>0) {
-			pw.println("<code>success</code>");
+			json.put("result", "success");
 		}else {
-			pw.println("<code>fail</code>");
+			json.put("result", "fail");
 		}
-		pw.println("</result>");
+		resp.setContentType("text/plain;charset=utf-8");
+		PrintWriter pw=resp.getWriter();
+		pw.print(json);
 		pw.close();
+	}	
+	
+	private void list(HttpServletRequest req, HttpServletResponse resp) throws ServletException,IOException {
+		ScommentDao dao=ScommentDao.getInstance();
+		
+		int sno=Integer.parseInt(req.getParameter("sno"));
+		
+		ArrayList<ScommentVo> list=dao.list(sno);
+		
+		//json배열로 응답하기
+		JSONArray arr=new JSONArray();
+		for(int i=0;i<list.size();i++){
+			ScommentVo vo=list.get(i);
+			JSONObject obj=new JSONObject();
+			//obj.put("num",vo.getNum());
+			//obj.put("id",vo.getId());
+			obj.put("comments",vo.getSccontent());
+			arr.put(obj); //json객체를 배열에 담기
+			
+		}
+		resp.setContentType("text/plain;charset=utf-8");
+		PrintWriter pw=resp.getWriter();
+		pw.println(arr);
+		pw.close();
+		
+		
 	}
 }

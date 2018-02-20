@@ -41,7 +41,7 @@ public class SellDao {
 				int success=rs.getInt("success");
 				String id=rs.getString("id");
 				
-				SellVo vo=new SellVo(sno, os, telecom, company, loc, price, stitle, scontent, sdate, 0, shit, success, id, 0);
+				SellVo vo=new SellVo(sno, os, telecom, company, loc, price, stitle, scontent, sdate, 0, shit, success, 0, id);
 				return vo;
 			}else {
 				return null;
@@ -153,7 +153,7 @@ public class SellDao {
 				SellVo vo=new SellVo(rs.getInt("sno"),rs.getInt("os"),rs.getInt("telecom"),
 						rs.getInt("company"),rs.getString("loc"),rs.getInt("price"),
 						rs.getString("stitle"),rs.getString("scontent"),rs.getDate("sdate"),
-						rs.getInt("sgrade"),rs.getInt("shit"),rs.getInt("success"),rs.getString("id"),rs.getInt("sreport"));
+						rs.getInt("sgrade"),rs.getInt("shit"),rs.getInt("success"),rs.getInt("sreport"),rs.getString("id"));
 				list.add(vo);
 			}
 			return list;
