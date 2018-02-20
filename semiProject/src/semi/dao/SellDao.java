@@ -105,8 +105,8 @@ public class SellDao {
 			pstmt.setInt(8, vo.getSgrade());
 			pstmt.setInt(9, vo.getShit());
 			pstmt.setInt(10, vo.getSuccess());
-			pstmt.setString(11, vo.getId());
-			pstmt.setInt(12, vo.getSreport());
+			pstmt.setInt(11, vo.getSreport());
+			pstmt.setString(12, vo.getId());
 			return pstmt.executeUpdate();
 			
 		}catch(SQLException se) {
