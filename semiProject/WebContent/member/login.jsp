@@ -17,13 +17,17 @@
 </style>
 <script type="text/javascript">
 	if('${requestScope.result}'!=""){
-		alert('${requestScope.result}');
+	    window.onload=function(){
+		    var joinSuccess = document.getElementById("joinSuccess");
+		    joinSuccess.style.display = "block"; 
+	    }
 	}
 </script>
 <title>Insert title here</title>
 </head>
 <body>
 	<div id="" style="width: 470px; height: 527px; margin-top: 100px;">
+	<div id="joinSuccess" align="center" style="display: none;"><h4 >회원가입에 성공하였습니다.</h4></div>
     <form  method="post" action="<%=request.getContextPath()%>/member.do?cmd=loginOk" class="col s12 ">
       <div class="row">
         <div class="input-field col s6">
@@ -33,7 +37,7 @@
       </div>
       <div class="row">
         <div class="input-field col s6">
-          <input id="pwd" name="pwd" type="text" class="validate" style=" width: 460px; height: 60px;">
+        <input id="pwd"  name="pwd" type="password" class="validate" style=" width: 460px; height: 60px;">
           <label for="pwd" style="color: #993333; font-size: 20px;">비밀번호</label>
         </div>
       </div>
