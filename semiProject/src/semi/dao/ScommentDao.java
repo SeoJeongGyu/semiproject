@@ -30,8 +30,8 @@ public class ScommentDao {
 			while(rs.next()) {
 				//int scno= rs.getInt("scno");
 				String sccontent=rs.getString("sccontent");
-				//String id=rs.getString("id");
-				ScommentVo vo=new ScommentVo(0, sccontent, 0, 0, 0, 0, null, sno, null);
+				String id=rs.getString("id");
+				ScommentVo vo=new ScommentVo(0, sccontent, 0, 0, 0, 0, null, sno, id);
 				list.add(vo);
 			}
 			return list;

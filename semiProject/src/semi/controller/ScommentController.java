@@ -22,7 +22,7 @@ public class ScommentController extends HttpServlet {
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("utf-8");
 		String cmd=req.getParameter("cmd");
-		System.out.println("cmd:" + cmd);
+		//System.out.println("cmd:" + cmd);
 		String id=(String)req.getSession().getAttribute("id");
 		if(cmd.equals("insert") && id!=null ) {
 			insert(req,resp);
@@ -34,12 +34,9 @@ public class ScommentController extends HttpServlet {
 	private void insert(HttpServletRequest req, HttpServletResponse resp) throws ServletException,IOException {
 		//1. 파라미터로 전달된 값을 db에 저장
 		String sccontent = req.getParameter("sccontent");
-		System.out.println(sccontent);
+		//System.out.println(sccontent);
 		String id=(String)req.getSession().getAttribute("id");
 		int sno=Integer.parseInt(req.getParameter("sno"));
-		System.out.println("sno:"+sno);
-		System.out.println("id:"+id);
-		System.out.println("sccontent:"+sccontent);
 		ScommentDao dao=ScommentDao.getInstance();
 		ScommentVo vo=new ScommentVo(0, sccontent, 0, 0, 0, 0, null, sno, id);
 		int n=dao.insert(vo);
@@ -69,7 +66,7 @@ public class ScommentController extends HttpServlet {
 			ScommentVo vo=list.get(i);
 			JSONObject obj=new JSONObject();
 			//obj.put("num",vo.getNum());
-			//obj.put("id",vo.getId());
+			obj.put("id",vo.getId());
 			obj.put("comments",vo.getSccontent());
 			arr.put(obj); //json객체를 배열에 담기
 			

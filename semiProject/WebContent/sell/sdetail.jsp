@@ -22,7 +22,7 @@ function list(){
 		var div=document.getElementById("commlist");
 		commlist.innerHTML="";
 		for(var i=0;i<json.length;i++){
-			div.innerHTML+=json[i].comments+"<br>";
+			div.innerHTML+="작성자:"+json[i].id+"	내용:"+json[i].comments+"<br>";
 		}
 	}
 }
@@ -145,7 +145,7 @@ function list(){
 	</tr>
 </table>
 <div >
-	<div id="commlist" ></div>
+	<div id="commlist"></div>
 		<div id="commAdd">
 			<textarea rows="3" cols="30" id="sccontent"></textarea>
 			<input type="button" value="등록" onclick="addComm()">
