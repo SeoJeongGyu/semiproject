@@ -17,7 +17,10 @@ public class ReviewController extends HttpServlet{
     	if(cmd.equals("list")) {
     		list(req,resp);
     	}else if(cmd.equals("write")) {
-    		write(req,resp);
+    		req.setAttribute("page", "/review/jReviewWrite.jsp");
+        	req.getRequestDispatcher("/main.jsp").forward(req, resp);
+    	}else if(cmd.equals("writeOk")) {
+    		
     	}
     }
     	public void list(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -51,7 +54,7 @@ public class ReviewController extends HttpServlet{
 		req.getRequestDispatcher("main.jsp").forward(req, resp);
     	
     	 }
-    	public void write(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    	public void writeOk(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     	
     		
     	}

@@ -75,7 +75,7 @@
 	
 </div>
 
-<a class="btn-floating btn-large red">
+<a class="btn-floating btn-large red" href="<%=request.getContextPath() %>/review.do?cmd=write">
       <i class="large material-icons">mode_edit</i>
     </a>
 
