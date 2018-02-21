@@ -38,6 +38,11 @@ public class ReviewController extends HttpServlet{
     	if(pageCount<endPage) {
     		endPage=pageCount;
     	}
+    	System.out.println(pageCount);
+    	System.out.println(startPage);
+    	System.out.println(endPage);
+    	System.out.println(startRow);
+    	System.out.println(endRow);
     	req.setAttribute("page", "/review/jReviewList.jsp");
     	req.setAttribute("pageCount",pageCount);
 		req.setAttribute("startPage", startPage);

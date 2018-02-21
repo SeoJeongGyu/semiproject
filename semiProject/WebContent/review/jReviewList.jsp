@@ -8,8 +8,7 @@
 </script>
 
 
-<center>
-<div style="margin-left:auto;margin-right:auto;">
+<div>
 	<table border="1" >
 	<tr><td><ul style="overflow:hidden;">
 		<li id="tap_skt" style="float:left; overflow: hidden; width: 89px; border-right: 1px solid rgb(212, 212, 212); text-align: center; padding:15px; background-color: rgb(255, 255, 255);"><input type="checkbox" name="w[1]" id="w1" value="1" style="display:none"><img src="http://image3.cetizen.com/2007_cetizen/market/2015/icon/skt.png" id="market_tap1">
@@ -73,9 +72,12 @@
 	</c:otherwise>
 </c:choose>
 
-
 	
 </div>
+
+<a class="btn-floating btn-large red">
+      <i class="large material-icons">mode_edit</i>
+    </a>
 
 <div>
 <table class="bordered">
@@ -107,20 +109,22 @@
       </table>
             
 </div>
-<ul class="pagination">
-    <li class="disabled"><a href="#!"><i class="material-icons"></i></a></li>
-    <li class="active"><a href="#!">1</a></li>
-    <li class="waves-effect"><a href="#!">2</a></li>
-    <li class="waves-effect"><a href="#!">3</a></li>
-    <li class="waves-effect"><a href="#!">4</a></li>
-    <li class="waves-effect"><a href="#!">5</a></li>
-    <li class="waves-effect"><a href="#!"><i class="material-icons">다음</i></a></li>
-  </ul>
+
+   	<ul class="pagination">
+	    <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+	    <li class="active"><a href="#!">1</a></li>
+	    <li class="waves-effect"><a href="#!">2</a></li>
+	    <li class="waves-effect"><a href="#!">3</a></li>
+	    <li class="waves-effect"><a href="#!">4</a></li>
+	    <li class="waves-effect"><a href="#!">5</a></li>
+	    <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+  	</ul>
   
-    
-      </center>
+
+ 
+   
       <div class="input-field col s12" style="width: 100px; margin-left: 10px;">
-  
+ 
   </div>
       <div class="row">
       <div class="input-field col s12" style="width: 100px; margin-left: 10px;">

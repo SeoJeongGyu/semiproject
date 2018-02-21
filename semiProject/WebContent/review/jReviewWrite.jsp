@@ -32,10 +32,9 @@
 <script>
 $(document).ready(function() {
      $('#summernote').summernote({
-             height: 300,                 // set editor height
-             minHeight: null,             // set minimum height of editor
-             maxHeight: null,             // set maximum height of editor
-             focus: true                  // set focus to editable area after initializing summernote
+             height: 300,
+             width:860// set editor height
+
      });
 });
 </script>
@@ -53,7 +52,16 @@ $(document).ready(function() {
   
   <script>
   function fileUpload(){
-	  alert("hello");
+	  xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = fileupload;
+	xhr.open('get','jReviewWrite.jsp',true);
+	xhr.send();
+  }
+  function fileupload(){
+	  if(xhr.readyState ==4 && xhr.status ==200){
+		 var div=document.getElementById("file");
+		 div.style.display="block";
+	  }
   }
   </script>
 </head>
@@ -61,23 +69,42 @@ $(document).ready(function() {
 <center>
 
 
-<div id="login.jsp" style="width: 1000px; height: 527px; margin-top: 100px;">
-    <form class="col s12 " >
+<div id="write" style="width: 1000px; height: 527px; margin-top: 100px;">
+
+    <form class="col s12 "  action="jReviewWrite.jsp">
       <div align="left">
    
-   <label for="id" style=" font-size: 20px;">대표 사진등록</label>  <a id="scale-demo" class="btn-floating btn-small scale-transition" onclick="fileUpload()">
+   <label for="id" style=" font-size: 20px;">대표&nbsp;사진등록</label>  <a id="scale-demo" class="btn-floating blue pulse" onclick="fileUpload()">
     <i class="material-icons">add_a_photo</i>
   </a>				<!-- Scaled in -->
 
       </div>
     </form>
     
+   
     
-    <form class="cpls12">
+    <form class="cols12">
+    
+    <!-- 파일첨부하는 div  -->
+     <div id="file"  style="display:none;">
+      <div class="file-field input-field">
+      <div class="btn" style="width:60px;height:40px;">
+        <span>첨부</span>
+ 		<input type="file">
+      </div>
+      <div class="file-path-wrapper">
+        <input class="file-path validate" type="text"  style="font-size: 30px; width:500px;margin-top: 10px;  margin-right:500px;">
+      </div>
+    </div>
+    
+    </div>
+    
+    
+    
       <div class="row">
         <div class="input-field col s6">
-          <input id="pwd" type="text" class="validate" style=" width: 460px; height: 60px;">
-          <label for="pwd" style="font-size: 20px; margin-left:10px; ">제목</label>
+          <input id="title" type="text" class="validate" style=" width: 460px; font-size:30px; height: 60px;">
+          <label for="title" style="font-size: 20px; margin-left:10px; ">제목</label>
         </div>
       </div>
 

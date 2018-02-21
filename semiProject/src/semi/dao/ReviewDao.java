@@ -20,6 +20,7 @@ public class ReviewDao {
 			rs = pstmt.executeQuery();
 			rs.next();
 			int cnt = rs.getInt("cnt");
+			System.out.println("cnt:"+cnt);
 			return cnt;
 		} catch (SQLException se) {
 			System.out.println(se.getMessage());

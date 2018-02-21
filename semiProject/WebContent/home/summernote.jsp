@@ -5,7 +5,7 @@
 	$(document).ready(function() {
         $('#materialnote').materialnote({
             width: 860,
-            height: 350
+            height: 300
         });
     });
 $(document).ready(function() {
