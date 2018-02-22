@@ -56,13 +56,33 @@
       </table>
      <div class="row">
    	<ul class="pagination">
-	    <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-	    <li class="active"><a href="#!">1</a></li>
-	    <li class="waves-effect"><a href="#!">2</a></li>
-	    <li class="waves-effect"><a href="#!">3</a></li>
-	    <li class="waves-effect"><a href="#!">4</a></li>
-	    <li class="waves-effect"><a href="#!">5</a></li>
-	    <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+   	<c:choose>
+   		<c:when test="${pageNum>2}">
+   			<li class="waves-effect"><a href="memberAdmin.do?cmd=list&pageNum=${startPage-1}"><i class="material-icons">chevron_left</i></a></li>
+		</c:when>
+		<c:otherwise>
+			<li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+		</c:otherwise>
+	</c:choose>    
+	    <c:forEach var="i" begin="${requestScope.startPage }" end="${requestScope.endPage }">
+		    <c:choose>
+			    <c:when test="${pageNum==i }">
+			    	<li class="active"><a href="memberAdmin.do?cmd=list&pageNum=${i }">${i }</a></li>
+			    </c:when>
+			    <c:otherwise>
+			    	<li class="waves-effect"><a href="memberAdmin.do?cmd=list&pageNum=${i }">${i }</a></li>
+			    </c:otherwise>
+		    </c:choose>
+	    </c:forEach>
+	    <c:choose>
+	    	<c:when test="${pageCount>endPage }">
+	    		<li class="waves-effect"><a href="memberAdmin.do?cmd=list&pageNum=${endPage+1 }"><i class="material-icons">chevron_right</i></a></li>
+	    	</c:when>
+	    	<c:otherwise>
+	    		<li class="disabled"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+	    	</c:otherwise>
+	    </c:choose>
+	    <!-- <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li> -->
   	</ul>
     <form class="col s12">
     <div class="input-field col s12" style="width: 100px; margin-left: 10px;">

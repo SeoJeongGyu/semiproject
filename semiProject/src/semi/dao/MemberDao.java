@@ -33,14 +33,21 @@ public class MemberDao {
             DbcpBean.closeConn(con, pstmt, rs);
         }
     }
-    public ArrayList<MemberVo> selectAll(){
+    public ArrayList<MemberVo> selectAll(int startRow,int endRow){
         Connection con=null;
         PreparedStatement pstmt=null;
         ResultSet rs=null;
         try {
             con=DbcpBean.getConn();
-            String sql = "select * from member order by regdate desc";
+            String sql= "select * from(" + 
+                    "  select aa.*,rownum rnum from (" + 
+                    "   select * from member" + 
+                    "        order by regdate desc" + 
+                    "   )aa" + 
+                    ") where rnum>=? and rnum<=?";
             pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, startRow);
+            pstmt.setInt(2, endRow);
             rs=pstmt.executeQuery();
             ArrayList<MemberVo> list =new  ArrayList<MemberVo>();
             while(rs.next()) {

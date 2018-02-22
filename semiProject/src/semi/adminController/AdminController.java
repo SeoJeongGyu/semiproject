@@ -18,9 +18,7 @@ public class AdminController extends HttpServlet{
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String cmd = req.getParameter("cmd");
         System.out.println(cmd);
-        if(cmd.equals("member")) {
-            member(req,resp);
-        }else if(cmd.equals("board")) {
+        if(cmd.equals("board")) {
             board(req,resp);
         }else if(cmd.equals("report")) {
             report(req,resp);
@@ -30,13 +28,6 @@ public class AdminController extends HttpServlet{
     }
     public void mypage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         
-    }
-    public void member(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ArrayList<MemberVo> list = MemberDao.getInstance().selectAll();
-        req.setAttribute("list", list);
-        req.setAttribute("page", "/admin/member.jsp");
-        RequestDispatcher rd = req.getRequestDispatcher("admin.jsp");
-        rd.forward(req, resp);
     }
     public void board(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("page", "/admin/board.jsp");

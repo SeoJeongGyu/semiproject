@@ -25,18 +25,37 @@ public class MemberAdminController extends HttpServlet{
         }
         public void list(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
             String spageNum = req.getParameter("pageNum");
+            System.out.println("spageNum:"+spageNum);
             int pageNum=1;
+            
             if(spageNum!=null) {
+                if(Integer.parseInt(spageNum)<0) {
+                    spageNum="1";
+                }
                 pageNum=Integer.parseInt(spageNum);
             }
-            int startRow = (pageNum-1)*5+1;
-            int endRow = startRow+4;
-            
-            
-            ArrayList<MemberVo> list = MemberDao.getInstance().selectAll();
+            System.out.println("pageNum:"+pageNum);
+            int startRow = (pageNum-1)*10+1;
+            System.out.println("startRow:"+startRow);
+            int endRow = startRow+9;
+            System.out.println("endRow:"+endRow);
             int getMax = MemberDao.getInstance().getMax();
-            System.out.println(getMax);
+            System.out.println("getMax:"+getMax);
+            int pageCount = (int)Math.ceil(getMax/10.0);
+            System.out.println("pageCount:"+pageCount);
+            int startPage = ((pageNum-1)/2*2)+1;
+            System.out.println("startPage:"+startPage);
+            int endPage = startPage+1;
+            if(pageCount<endPage) {
+                endPage=pageCount;
+            }
+            System.out.println("endPage:"+endPage);
+            ArrayList<MemberVo> list = MemberDao.getInstance().selectAll(startRow,endRow);
             req.setAttribute("list", list);
+            req.setAttribute("pageCount", pageCount);
+            req.setAttribute("startPage", startPage);
+            req.setAttribute("endPage", endPage);
+            req.setAttribute("pageNum", pageNum);
             req.setAttribute("page", "/admin/member.jsp");
             RequestDispatcher rd = req.getRequestDispatcher("admin.jsp");
             rd.forward(req, resp);
