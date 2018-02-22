@@ -19,6 +19,9 @@
 	if('${requestScope.result}'!=""){
 	    window.onload=function(){
 		    var joinSuccess = document.getElementById("joinSuccess");
+		    if('${requestScope.result}'=="아이디와 비밀번호를 확인하세요."){
+		    	joinSuccess.innerHTML='<h4 >${requestScope.result}</h4 >';
+		    }
 		    joinSuccess.style.display = "block"; 
 	    }
 	}
@@ -31,13 +34,13 @@
     <form  method="post" action="<%=request.getContextPath()%>/member.do?cmd=loginOk" class="col s12 ">
       <div class="row">
         <div class="input-field col s6">
-          <input id="id" name="id" type="text" class="validate" style="width: 460px; height: 60px;">
+          <input id="id" name="id" type="text" class="validate" style="width: 460px; height: 60px;" value="qqqqqq">
           <label for="id" style="color: #993333; font-size: 20px;">아이디</label>
         </div>
       </div>
       <div class="row">
         <div class="input-field col s6">
-        <input id="pwd"  name="pwd" type="password" class="validate" style=" width: 460px; height: 60px;">
+        <input id="pwd"  name="pwd" type="password" class="validate" style=" width: 460px; height: 60px;" value="qqqqqq">
           <label for="pwd" style="color: #993333; font-size: 20px;">비밀번호</label>
         </div>
       </div>

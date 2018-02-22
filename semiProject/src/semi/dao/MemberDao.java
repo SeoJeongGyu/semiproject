@@ -15,6 +15,90 @@ public class MemberDao {
     public static MemberDao getInstance() {
         return instance;
     }
+    public int delete(String sql) {
+        Connection con=null;
+        PreparedStatement pstmt=null;
+        try {
+            con=DbcpBean.getConn();
+            System.out.println("1");
+            pstmt=con.prepareStatement(sql);
+            System.out.println("2");
+            int n = pstmt.executeUpdate();
+            System.out.println("3");
+            return n;
+        } catch (SQLException se) {
+            System.out.println(se.getMessage());
+            return -1;
+        }finally {
+            DbcpBean.closeConn(con, pstmt, null);
+        }
+    }
+    
+    public ArrayList<MemberVo>searchMember(String select ,String text,int startRow,int endRow){
+        Connection con=null;
+        PreparedStatement pstmt=null;
+        ResultSet rs=null;
+        String sqlplus="";
+        System.out.println(select);
+        if(select.equals("0")) {
+            sqlplus="where id like'%"+text+"%'";
+        }else if(select.equals("1")) {
+            sqlplus="where name like'%"+text+"%'";
+        }else if(select.equals("2")) {
+            sqlplus="where email like'%"+text+"%'";
+        }
+        try {
+            con=DbcpBean.getConn();
+            String sql= "select * from(" + 
+                    "  select aa.*,rownum rnum from (" + 
+                    "   select * from member "+sqlplus+
+                    "        order by regdate desc" + 
+                    "   )aa" + 
+                    ") where rnum>=? and rnum<=?";
+            pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, startRow);
+            pstmt.setInt(2, endRow);
+            rs=pstmt.executeQuery();
+            ArrayList<MemberVo> list =new  ArrayList<MemberVo>();
+            while(rs.next()) {
+                list.add(new MemberVo(rs.getString("id"),rs.getString("pwd"),
+                        rs.getString("nickname"),rs.getString("name"),rs.getString("phone"),
+                        rs.getString("email"),rs.getDate("regdate")));
+            }
+            return list;
+        } catch (SQLException se) {
+            System.out.println(se.getMessage());
+            return null;
+        } finally {
+            DbcpBean.closeConn(con, pstmt, rs);
+        }
+    }
+    public int getMax(String select ,String text){
+        Connection con=null;
+        PreparedStatement pstmt=null;
+        ResultSet rs=null;
+        String sqlplus="";
+        if(select.equals("0")) {
+            sqlplus="where id like'%"+text+"%'";
+        }else if(select.equals("1")) {
+            sqlplus="where name like'%"+text+"%'";
+        }else if(select.equals("2")) {
+            sqlplus="where email like'%"+text+"%'";
+        }
+        try {
+            con=DbcpBean.getConn();
+            String sql= "select count(id) cnt from member "+sqlplus;
+            pstmt = con.prepareStatement(sql);
+            rs=pstmt.executeQuery();
+            rs.next();
+            return rs.getInt("cnt");
+        } catch (SQLException se) {
+            System.out.println(se.getMessage());
+            return -1;
+        } finally {
+            DbcpBean.closeConn(con, pstmt, rs);
+        }
+    }
     public int getMax() {
         Connection con=null;
         PreparedStatement pstmt=null;
