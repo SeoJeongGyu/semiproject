@@ -17,7 +17,7 @@
      </fieldset> 
      <script type="text/javascript"> 
          var div= document.getElementById("messageWindow"); 
-         var webSocket = new WebSocket('ws://localhost:8081/semiProject/broadcasting'); 
+         var webSocket = new WebSocket('ws://192.168.0.2:8081/semiProject/broadcasting'); 
          var inputMessage = document.getElementById('inputMessage'); 
      webSocket.onerror = function(event) { 
        onError(event) 
@@ -45,7 +45,7 @@
   
      function send() { 
          div.innerHTML += '${sessionScope.id}'+" : " + inputMessage.value + "<br>"; 
-         webSocket.send(inputMessage.value); 
+         webSocket.send(inputMessage.value+","+id); 
          inputMessage.value = ""; 
      } 
    </script> 
