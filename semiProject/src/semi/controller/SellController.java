@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.websocket.Session;
 
+import semi.dao.ScommentDao;
 import semi.dao.SellDao;
+import semi.vo.ScommentVo;
 import semi.vo.SellVo;
 
 @WebServlet("/sell.do")
@@ -38,6 +40,7 @@ public class SellController extends HttpServlet{
 	private void detail(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException{
 		int sno=Integer.parseInt(req.getParameter("sno"));
+		
 		SellDao dao=SellDao.getInstance();
 		SellVo vo=dao.detail(sno);
 		dao.updateHit(vo);

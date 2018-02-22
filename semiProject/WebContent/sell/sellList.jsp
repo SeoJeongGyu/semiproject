@@ -7,9 +7,28 @@
   });
   
   function getDetail(sno){
-	  console.log(sno);
+	  //console.log(sno);
 	  location.href="sell.do?cmd=sdetail&sno="+sno;
   }
+  
+  
+  var xhr=null;
+  function ios(){
+	  var ios=document.getElementById("ios").value;
+	  var android=document.getElementById("android").value;
+	  var val=document.getElementsByName("os");
+	  alert(val);
+	  var sql="select * from sell where os=";
+	  
+	  
+	  xhr=new XMLHttpRequest();
+	  xhr.onreadystatechange=getIos;
+	  xhr.open('get', , true);
+	  xhr.send();
+  }
+  
+  
+  
 </script>
 <table border="1" style="width:650px;margin-left:0px ">
 		<br>
