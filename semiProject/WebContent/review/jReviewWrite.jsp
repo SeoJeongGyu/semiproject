@@ -10,12 +10,11 @@ $(document).ready(function() {
   function fileUpload(){
 	xhr = new XMLHttpRequest();
 	xhr.onreadystatechange = fileupload;
-	xhr.open('get','jReviewWrite.jsp',true);
+	xhr.open('get','<%=request.getContextPath() %>/review/jReviewWrite.jsp',true);
 	xhr.send();
   }
   function fileupload(){
 	  if(xhr.readyState ==4 && xhr.status ==200){
-		  alert("hello");
 		 var div=document.getElementById("file");
 		 div.style.display="block";
 	  }
@@ -65,8 +64,8 @@ $(document).ready(function() {
       </div>
 
  	 <jsp:include page="/home/summernote.jsp"></jsp:include>
- 	
-  	<button class="btn waves-effect waves-light" type="submit" name="action" style=" width:170px; height:50px;">Submit
+ 	<br>
+  	<button class="btn waves-effect waves-light" type="submit" name="action" style=" width:140px; height:50px;">전송
     <i class="material-icons right">send</i>
   </button>
   

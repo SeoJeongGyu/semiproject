@@ -7,7 +7,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import semi.dao.ReviewDao;
 @WebServlet("/review.do")
 public class ReviewController extends HttpServlet{
@@ -20,7 +19,7 @@ public class ReviewController extends HttpServlet{
     		req.setAttribute("page", "/review/jReviewWrite.jsp");
         	req.getRequestDispatcher("/main.jsp").forward(req, resp);
     	}else if(cmd.equals("writeOk")) {
-    		
+    		writeOk(req,resp);
     	}
     }
     	public void list(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -55,7 +54,7 @@ public class ReviewController extends HttpServlet{
     	
     	 }
     	public void writeOk(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    	
+    
     		
     	}
     }
