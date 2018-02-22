@@ -23,12 +23,11 @@ $(document).ready(function() {
 
 
 
-
+<!-- 전체를 감싸는 div -->
 <div id="write" style="width: 1000px; height: 527px; margin-top: 100px;">
 
-    
+    <!-- 사진 등록 AJAX div  -->
       <div align="left">
-   
    <label for="id" style=" font-size: 20px;">대표&nbsp;사진등록</label>  <a id="scale-demo" class="btn-floating blue pulse" onclick="fileUpload()">
     <i class="material-icons">add_a_photo</i>
   </a>				<!-- Scaled in -->
@@ -37,8 +36,8 @@ $(document).ready(function() {
 
     
    
-    
-    <form class="cols12" action="<%=request.getContextPath() %>/review.do?cmd=writeOk" method="post">
+    <!-- 전체 form  -->
+    <form class="cols12" action="<%=request.getContextPath() %>/review.do?cmd=writeOk" method="post" enctype="multipart/form-data">
     
     <!-- 파일첨부하는 div  -->
      <div id="file"  style="display:none;">
@@ -46,6 +45,7 @@ $(document).ready(function() {
       <div class="btn" style="width:100px;height:40px;">
         <span>첨부</span>
  		<input type="file">
+ 		
       </div>
       <div class="file-path-wrapper">
         <input class="file-path validate" type="text"  style="font-size: 30px; width:500px;margin-right:500px;">
@@ -62,10 +62,10 @@ $(document).ready(function() {
           <label for="title" style="font-size: 20px; margin-left:10px; ">제목</label>
         </div>
       </div>
-
+<input type="text" value="hello22" name="hello">	
  	 <jsp:include page="/home/summernote.jsp"></jsp:include>
  	<br>
-  	<button class="btn waves-effect waves-light" type="submit" name="action" style=" width:140px; height:50px;">전송
+  	<button class="btn waves-effect waves-light" type="submit" style=" width:140px; height:50px;">전송
     <i class="material-icons right">send</i>
   </button>
   

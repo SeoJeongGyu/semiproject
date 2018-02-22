@@ -7,6 +7,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+
 import semi.dao.ReviewDao;
 @WebServlet("/review.do")
 public class ReviewController extends HttpServlet{
@@ -54,8 +58,18 @@ public class ReviewController extends HttpServlet{
     	
     	 }
     	public void writeOk(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    
-    		
+    		String uploadPath = req.getServletContext().getRealPath("/upload");
+    		/*MultipartRequest mr = new MultipartRequest(
+    				req,
+    				uploadPath,
+    				1024 * 1024 * 5,
+    				"utf-8",
+    				new DefaultFileRenamePolicy()
+    				);*/
+    		System.out.println("request getContentType : " + req.getContentType());
+    		String hello=req.getParameter("hello");
+    		System.out.println(hello);
+  
     	}
     }
 
