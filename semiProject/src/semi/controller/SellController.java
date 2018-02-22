@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.websocket.Session;
 
 import semi.dao.SellDao;
 import semi.vo.SellVo;
@@ -21,9 +22,10 @@ public class SellController extends HttpServlet{
 		String cmd = req.getParameter("cmd");
 		//System.out.println("cmd:"+cmd);
 		String context=req.getContextPath();
+		String id=(String)req.getSession().getAttribute("id");
 		if(cmd.equals("sellList")) {
 			list(req,resp);
-        }else if(cmd.equals("insert")) {
+        }else if(cmd.equals("insert") && id!=null) {
         	req.setAttribute("page", "/sell/insert.jsp");
         	req.getRequestDispatcher("/main.jsp").forward(req, resp);
         }else if(cmd.equals("insertOk")) {
@@ -46,6 +48,7 @@ public class SellController extends HttpServlet{
 	}
 	private void insertOk(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException{
+		String id=(String)req.getSession().getAttribute("id");
 		int os = Integer.parseInt(req.getParameter("os"));
 		int telecom = Integer.parseInt(req.getParameter("telecom"));
 		//System.out.println("¿Ô´Ù"+ telecom);
@@ -56,7 +59,7 @@ public class SellController extends HttpServlet{
 		String scontent = req.getParameter("scontent");
 		int success=Integer.parseInt(req.getParameter("success"));
 		
-		SellVo vo=new SellVo(0, os, telecom, company, loc, price, stitle, scontent, null, 0, 0, success, "aaa",0);
+		SellVo vo=new SellVo(0, os, telecom, company, loc, price, stitle, scontent, null, 0, 0, success,0,id);
 		SellDao dao=SellDao.getInstance();
 		int n=dao.insert(vo);
 		//System.out.println("n:"+ n);

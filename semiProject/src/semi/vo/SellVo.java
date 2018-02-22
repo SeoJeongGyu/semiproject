@@ -15,13 +15,13 @@ public class SellVo {
 	private int sgrade;
 	private int shit;
 	private int success;
-	private String id;
 	private int sreport;
+	private String id;
 	
 	public SellVo() {}
 	
 	public SellVo(int sno, int os, int telecom, int company, String loc, int price, String stitle, String scontent,
-			Date sdate, int sgrade, int shit, int success, String id, int sreport) {
+			Date sdate, int sgrade, int shit, int success, int sreport ,String id) {
 		super();
 		this.sno = sno;
 		this.os = os;
@@ -35,8 +35,8 @@ public class SellVo {
 		this.sgrade = sgrade;
 		this.shit = shit;
 		this.success = success;
-		this.id = id;
 		this.sreport = sreport;
+		this.id = id;
 	}
 
 	public int getSno() {
@@ -135,6 +135,16 @@ public class SellVo {
 		this.success = success;
 	}
 
+	
+	public int getSreport() {
+		return sreport;
+	}
+
+	public void setSreport(int sreport) {
+		this.sreport = sreport;
+	}
+	
+	
 	public String getId() {
 		return id;
 	}
@@ -143,13 +153,7 @@ public class SellVo {
 		this.id = id;
 	}
 
-	public int getSreport() {
-		return sreport;
-	}
 
-	public void setSreport(int sreport) {
-		this.sreport = sreport;
-	}
 	
 	
 	

@@ -1,39 +1,60 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<style type="text/css">
+	#commlist{width:1350px;border:1px solid #aaa; padding:2px;margin-top: 3px;}
+</style>
 <script>
+window.onload=getlist;
 var xhr=null;
-function addComm(){
-	var comm=document.getElementById("comments").value;
+function getlist(){
 	xhr=new XMLHttpRequest();
-	xhr.onreadystatechange=callback;
-	xhr.open('post','scomment.do?cmd=insert',true);
-	xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-	var params="comments=" + comm;
-	xhr.send(params);
+	xhr.onreadystatechange=list;
+	xhr.open('get', 'scomment.do?cmd=list&sno=${vo.sno}', true);
+	xhr.send();
 }
-function callback(){
+function list(){
 	if(xhr.readyState==4 && xhr.status==200){
-		//alert("success");
-		var xml=xhr.responseXML;
-		var code=xml.getElementsByTagName("code")[0].firstChild.nodeValue;
-		if(code=='success'){
-			//입력된 내용 지우기
-			document.getElementById("id").value="";
-			document.getElementById("comments").value="";
-			//댓글목록 불러오기
-			getlist(); 
-			
-		}else{
-			alert("댓글등록실패");
+		var list=xhr.responseText;
+		//alert(list);
+		var json=JSON.parse(list); //json객체로 변환하기(ie8이상)
+		var div=document.getElementById("commlist");
+		commlist.innerHTML="";
+		for(var i=0;i<json.length;i++){
+			div.innerHTML+="작성자:"+json[i].id+"	내용:"+json[i].comments+"<br>";
 		}
 	}
 }
 
+	var xhr1=null;
+	function addComm(){
+		var comm=document.getElementById("sccontent").value;
+		xhr1=new XMLHttpRequest();
+		xhr1.onreadystatechange=callback;
+		xhr1.open('post','scomment.do?cmd=insert&sccontent='+comm+'&sno=${vo.sno }',true);
+		//post방식은경우 아래와 같이 Content-Type지정해야 함
+		xhr1.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+		var params="sccontent=" + comm;
+		//post방식으로 데이터를 보낼때는 send메소드를 이용한다.
+		xhr1.send(params);
+	}
+	function callback(){
+		if(xhr1.readyState==4 && xhr1.status==200){
+			var result=xhr1.responseText;
+			//alert(result);
+			var json=JSON.parse(result);
+			if(json.result=="success"){
+				document.getElementById("sccontent").value="";
+				getlist();
+			}else{
+				alert("댓글등록실패!");
+			}		
+		}
+	}
+
 </script>
-
-
-<table border="1" width="600">
+<table border="1" width="600" onload="getlist()">
 	<tr>
 		<td>작성자</td>
 		<td>${vo.id }</td>
@@ -123,10 +144,10 @@ function callback(){
 		</td>
 	</tr>
 </table>
-<div>
+<div >
 	<div id="commlist"></div>
 		<div id="commAdd">
-			<textarea rows="3" cols="30" id="comments"></textarea>
+			<textarea rows="3" cols="30" id="sccontent"></textarea>
 			<input type="button" value="등록" onclick="addComm()">
-	</div>
+		</div>
 </div>
