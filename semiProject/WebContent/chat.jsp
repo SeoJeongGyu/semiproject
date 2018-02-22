@@ -1,15 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
      <fieldset> 
-     <div class="row">
-	    <form class="col s12">
-	      <div class="row">
-	        <div class="input-field col s12">
-	          <textarea id="messageWindow" class="materialize-textarea"></textarea>
-	          <label for="messageWindow">Textarea</label>
-	        </div>
-	      </div>
-	    </form>
+     <div class="row" id="messageWindow" style="width:600px; height:500px; background-color: pink;">
+	    
  		</div>
          <br/> 
          
@@ -23,7 +16,7 @@
   <button class="btn waves-effect waves-light" type="submit" name="action" onclick="send()">전송</button>
      </fieldset> 
      <script type="text/javascript"> 
-         var textarea = document.getElementById("messageWindow"); 
+         var div= document.getElementById("messageWindow"); 
          var webSocket = new WebSocket('ws://localhost:8081/semiProject/broadcasting'); 
          var inputMessage = document.getElementById('inputMessage'); 
      webSocket.onerror = function(event) { 
@@ -39,11 +32,11 @@
      }; 
   
      function onMessage(event) { 
-         textarea.value += "상대 : " + event.data + "\n"; 
+         div.innerHTML += "상대 : " + event.data + "<br>"; 
      } 
   
      function onOpen(event) { 
-         textarea.value += "연결 성공\n"; 
+         div.innerHTML += "연결 성공<br>"; 
      } 
   
      function onError(event) { 
@@ -51,7 +44,7 @@
      } 
   
      function send() { 
-         textarea.value += '${sessionScope.id}'+" : " + inputMessage.value + "\n"; 
+         div.innerHTML += '${sessionScope.id}'+" : " + inputMessage.value + "<br>"; 
          webSocket.send(inputMessage.value); 
          inputMessage.value = ""; 
      } 
