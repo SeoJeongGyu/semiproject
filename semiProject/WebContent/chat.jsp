@@ -32,7 +32,9 @@
      }; 
   
      function onMessage(event) { 
-         div.innerHTML += "상대 : " + event.data + "<br>"; 
+         var data=event.data;
+         div.innerHTML += "상대 : " + event.msg + "<br>"; 
+         alert(data.id);
      } 
   
      function onOpen(event) { 
@@ -45,7 +47,7 @@
   
      function send() { 
          div.innerHTML += '${sessionScope.id}'+" : " + inputMessage.value + "<br>"; 
-         webSocket.send(inputMessage.value+","+id); 
+         webSocket.send({"msg":inputMessage.value,"id":'${sessionScope.id}'}); 
          inputMessage.value = ""; 
      } 
    </script> 
