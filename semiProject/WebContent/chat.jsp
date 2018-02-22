@@ -17,7 +17,7 @@
      </fieldset> 
      <script type="text/javascript"> 
          var div= document.getElementById("messageWindow"); 
-         var webSocket = new WebSocket('ws://localhost:8081/semiProject/broadcasting'); 
+         var webSocket = new WebSocket('ws://192.168.0.2:8081/semiProject/broadcasting'); 
          var inputMessage = document.getElementById('inputMessage'); 
      webSocket.onerror = function(event) { 
        onError(event) 
@@ -32,7 +32,9 @@
      }; 
   
      function onMessage(event) { 
-         div.innerHTML += "상대 : " + event.data + "<br>"; 
+         var data=event.data;
+         div.innerHTML += "상대 : " + event.msg + "<br>"; 
+         alert(data.id);
      } 
   
      function onOpen(event) { 
@@ -45,7 +47,7 @@
   
      function send() { 
          div.innerHTML += '${sessionScope.id}'+" : " + inputMessage.value + "<br>"; 
-         webSocket.send(inputMessage.value); 
+         webSocket.send({"msg":inputMessage.value,"id":'${sessionScope.id}'}); 
          inputMessage.value = ""; 
      } 
    </script> 

@@ -17,14 +17,14 @@ import java.io.IOException;
     .synchronizedSet(new HashSet<Session>()); 
  
   @OnMessage 
-  public void onMessage(String message, Session session) throws IOException { 
+  public void onMessage(Object message, Session session) throws Exception { 
    System.out.println(message); 
    synchronized (clients) { 
     // Iterate over the connected sessions 
     // and broadcast the received message 
     for (Session client : clients) { 
      if (!client.equals(session)) { 
-      client.getBasicRemote().sendText(message); 
+      client.getBasicRemote().sendObject(message);
      } 
     } 
    } 
