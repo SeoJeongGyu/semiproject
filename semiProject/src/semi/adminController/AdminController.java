@@ -16,6 +16,7 @@ import semi.vo.MemberVo;
 public class AdminController extends HttpServlet{
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("utf-8");
         String cmd = req.getParameter("cmd");
         System.out.println(cmd);
         if(cmd.equals("board")) {

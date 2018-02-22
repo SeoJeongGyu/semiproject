@@ -19,6 +19,9 @@
 	if('${requestScope.result}'!=""){
 	    window.onload=function(){
 		    var joinSuccess = document.getElementById("joinSuccess");
+		    if('${requestScope.result}'=="아이디와 비밀번호를 확인하세요."){
+		    	joinSuccess.innerHTML='<h4 >${requestScope.result}</h4 >';
+		    }
 		    joinSuccess.style.display = "block"; 
 	    }
 	}
