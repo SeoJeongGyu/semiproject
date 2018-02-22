@@ -13,6 +13,7 @@
     <li class="tab col s3"><a href="#sell">팝니다게시판</a></li>
     <li class="tab col s3"><a href="#buy">삽니다게시판</a></li>
   </ul>
+  <div id="board"></div>
   <jsp:include page="/admin/review.jsp" />
   <jsp:include page="/admin/freeboard.jsp" />
   <jsp:include page="/admin/qna.jsp" />

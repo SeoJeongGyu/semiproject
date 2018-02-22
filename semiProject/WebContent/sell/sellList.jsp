@@ -105,9 +105,9 @@
     <form class="col s12">
     <div class="input-field col s12" style="width: 100px; margin-left: 10px;">
     <select>
-      <option value="1">제목</option>
-      <option value="2">내용</option>
-      <option value="3">아이디</option>
+      <option value="0">제목</option>
+      <option value="1">내용</option>
+      <option value="2">아이디</option>
     </select>
   </div>
       <div class="row">
