@@ -7,13 +7,15 @@
 </script>
  <h4 class="truncate">게시판 관리</h4>
   <ul id="tabs-swipe-demo" class="tabs">
-    <li class="tab col s3"><a class="active" href="#freeboard">리뷰게시판</a></li>
-    <li class="tab col s3"><a href="#test-swipe-2">자유게시판</a></li>
-    <li class="tab col s3"><a href="#test-swipe-3">질문게시판</a></li>
-    <li class="tab col s3"><a href="#test-swipe-4">팝니다게시판</a></li>
-    <li class="tab col s3"><a href="#test-swipe-4">삽니다게시판</a></li>
+    <li class="tab col s3"><a class="active" href="#review">리뷰게시판</a></li>
+    <li class="tab col s3"><a href="#freeboard">자유게시판</a></li>
+    <li class="tab col s3"><a href="#qna">질문게시판</a></li>
+    <li class="tab col s3"><a href="#sell">팝니다게시판</a></li>
+    <li class="tab col s3"><a href="#buy">삽니다게시판</a></li>
   </ul>
-  <jsp:include page="<%=request.getContextPath()%>/admin/freeboard.jsp" />
-  <div id="test-swipe-2" class="col s12">Test 2</div>
-  <div id="test-swipe-3" class="col s12">Test 3</div>
-  <div id="test-swipe-4" class="col s12">Test 4</div>
+  <jsp:include page="/admin/review.jsp" />
+  <jsp:include page="/admin/freeboard.jsp" />
+  <jsp:include page="/admin/qna.jsp" />
+  <jsp:include page="/admin/sell.jsp" />
+  <jsp:include page="/admin/buy.jsp" />
+ 

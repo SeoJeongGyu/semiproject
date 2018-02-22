@@ -34,9 +34,16 @@ public class MemberController  extends HttpServlet{
             checkId(req,resp);
         }else if(cmd.equals("loginOk")) {
             loginOk(req,resp);
+        }else if(cmd.equals("chat")) {
+            chat(req,resp);
         }
     }
     
+    public void chat(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute("page", "/chat.jsp");
+        RequestDispatcher rd = req.getRequestDispatcher("main.jsp");
+        rd.forward(req, resp);
+    }
     public void loginOk(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id=req.getParameter("id");
         String pwd=req.getParameter("pwd");
@@ -55,7 +62,6 @@ public class MemberController  extends HttpServlet{
         String id = req.getParameter("id");
         resp.setContentType("text/xml;charset=utf-8");
         PrintWriter pw = resp.getWriter();
-        System.out.println(id);
         int n = MemberDao.getInstance().checkId(id);
         pw.println("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
         if(n>0) {
@@ -72,12 +78,6 @@ public class MemberController  extends HttpServlet{
         String name = req.getParameter("name"); 
         String phone = req.getParameter("phone"); 
         String email = req.getParameter("email"); 
-        System.out.println("id : "+id);
-        System.out.println("pwd : "+pwd);
-        System.out.println("nickname : "+nickname);
-        System.out.println("name : "+name);
-        System.out.println("phone : "+phone);
-        System.out.println("email : "+email);
         MemberVo vo = new MemberVo(id, pwd, nickname, name, phone, email, null);
         int n = MemberDao.getInstance().insert(vo);
         if(n>0) {
