@@ -4,11 +4,17 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import semi.vo.ReviewVo;
 import test.dbcp.DbcpBean;
 
 public class ReviewDao {
+	private static ReviewDao instance=new ReviewDao();
+	private ReviewDao() {}
+	public static ReviewDao getInstance() {
+		return instance;
+	}
 	public int getMaxNum() {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -58,7 +64,7 @@ public class ReviewDao {
 		try {
 			conn = DbcpBean.getConn();
 			int reviewNum = getMaxNum() + 1;
-			String sql="insert into review values(?,?,?,sysdate,0,?,?,?,?,?);";
+			String sql="insert into review values(?,?,?,sysdate,0,?,?,?,?,?)";
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setInt(1, reviewNum);
 			pstmt.setString(2,vo.getRtitle());
@@ -76,5 +82,29 @@ public class ReviewDao {
 			DbcpBean.closeConn(conn, pstmt, null);
 		}
 		
+	}
+	public ArrayList<ReviewVo> listAll(int startRow,int endRow){
+		Connection conn = null;
+		PreparedStatement pstmt=null;
+		ResultSet rs= null;
+		try {
+			conn=DbcpBean.getConn();
+			String sql="select * from (select aa.*,rownum rnum from(select * from review order by rno desc)aa) where rnum>=? and rnum<=?";
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			rs=pstmt.executeQuery();
+			ArrayList<ReviewVo> list=new ArrayList<>();
+			while(rs.next()) {
+				ReviewVo vo=new ReviewVo(rs.getInt("rno"),rs.getString("rtitle"),rs.getString("rcontent"),rs.getDate("rdate"),rs.getInt("rhit"),rs.getInt("rgrade"),rs.getInt("rreport"),rs.getString("orgfilename"),rs.getString("savefilename"),rs.getString("id"));
+				list.add(vo);
+			}
+			return list;
+		}catch (SQLException se) {
+			System.out.println(se.getMessage());
+			return null;
+		}finally {
+			DbcpBean.closeConn(conn, pstmt, rs);
+		}
 	}
 }

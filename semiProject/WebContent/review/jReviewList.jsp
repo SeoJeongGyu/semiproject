@@ -110,6 +110,26 @@
             
 </div>
 
+<!--  리스트 이미지와 내용 보여주는 div-->
+<div>
+<c:forEach var="review" items="${requestScope.rlist}">
+<div style="clear:both;float:left;margin-top:15px;width:220px;height:140px;text-align:center;overflow:hidden;">
+<img src="/semiProject/upload/${review.savefilename}" style="width:210px; border:1px solid #F0F0F0" >
+</div>
+<div style="float:left;overflow:hidden;width:585px;margin-top:20px;margin-left:10px;">
+	<div style="width:98%;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;padding-bottom:2px;"><a href="/6716/view/3/6716/rview/5/21427/review"><span class="p16 clr100 b"> ${review.rtitle}</span></a></div>
+	<div style="width:98%;margin-top:15px;height:50px;overflow:hidden;" onclick="location.href='/6716/view/3/6716/rview/5/21427/review'" class="pointer">
+		<span class="ln20 clr02">${review.rcontent}</span>
+		</div>
+	<div style="margin-top:10px;overflow:hidden;padding-bottom:2px;" class="p12 clr02">
+	등록 : ${review.rdate}&nbsp;&nbsp;<span class="clr06">|</span>&nbsp;&nbsp;${review.rhit}	</div>
+			</div>
+
+</c:forEach>
+</div>
+<hr>
+<br>
+
    	<ul class="pagination">
 	    <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
 	    <li class="active"><a href="#!">1</a></li>

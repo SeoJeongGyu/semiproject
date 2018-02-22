@@ -1,6 +1,7 @@
 package semi.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,6 +28,8 @@ public class ReviewController extends HttpServlet{
         	req.getRequestDispatcher("/main.jsp").forward(req, resp);
     	}else if(cmd.equals("writeOk")) {
     		writeOk(req,resp);
+    	}else if(cmd.equals("list")) {
+    		list(req,resp);
     	}
     }
     	public void list(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -38,7 +41,7 @@ public class ReviewController extends HttpServlet{
     	}
     	int startRow=(pageNum-1)*10+1; //시작행번호
     	int endRow=startRow+9; //끝행번호
-    	ReviewDao dao=new ReviewDao();
+    	ReviewDao dao=ReviewDao.getInstance();
     	//전체 페이지 갯수 구하기
     	int pageCount=(int)Math.ceil(dao.getCount()/10.0);
     	//시작페이지와 끝페이지 구하기
@@ -47,16 +50,14 @@ public class ReviewController extends HttpServlet{
     	if(pageCount<endPage) {
     		endPage=pageCount;
     	}
-    	System.out.println(pageCount);
-    	System.out.println(startPage);
-    	System.out.println(endPage);
-    	System.out.println(startRow);
-    	System.out.println(endRow);
-    	req.setAttribute("page", "/review/jReviewList.jsp");
+    	ArrayList<ReviewVo> rlist=dao.listAll(startRow, endRow);
+    	
+    	req.setAttribute("rlist", rlist);
     	req.setAttribute("pageCount",pageCount);
 		req.setAttribute("startPage", startPage);
 		req.setAttribute("endPage",endPage);
 		req.setAttribute("pageNum", pageNum);
+		req.setAttribute("page", "/review/jReviewList.jsp");
 		req.getRequestDispatcher("main.jsp").forward(req, resp);
     	
     	 }
@@ -78,8 +79,8 @@ public class ReviewController extends HttpServlet{
     		String savefilename=mr.getFilesystemName("file");
     		String id=(String)req.getSession().getAttribute("id");
     		ReviewVo vo=new ReviewVo(0, rtitle, rcontent, null, 0, 0, 0, orgfilename, savefilename, id);
-    		ReviewDao dao=new ReviewDao();
-    		System.out.println(rtitle);
+    		ReviewDao dao=ReviewDao.getInstance();
+    		System.out.println(rtitle);	
     		System.out.println(rcontent);
     		System.out.println(id);
     		int n= dao.write(vo);
