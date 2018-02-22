@@ -32,13 +32,25 @@ public class ScommentController extends HttpServlet {
 	}
 	
 	private void insert(HttpServletRequest req, HttpServletResponse resp) throws ServletException,IOException {
-		//1. 파라미터로 전달된 값을 db에 저장
 		String sccontent = req.getParameter("sccontent");
-		//System.out.println(sccontent);
+		//System.out.println("mmmmmmmmmmmmmm:"+sccontent);
 		String id=(String)req.getSession().getAttribute("id");
 		int sno=Integer.parseInt(req.getParameter("sno"));
+		String sellcno=req.getParameter("scno");
+		//System.out.println("sno:"+sno+" scno:"+sellcno);
+		int scno=0;
+		int ref=0;
+		int lev=0;
+		int step=0;
+		if(sellcno!=null && !(sellcno.equals(""))) {//답글인경우
+			scno=Integer.parseInt(sellcno);
+			ref=Integer.parseInt(req.getParameter("scref"));
+			lev=Integer.parseInt(req.getParameter("sclev"));
+			step=Integer.parseInt(req.getParameter("scstep"));
+			//System.out.println("ref:"+ref+" lev:"+lev+" step:"+step);
+		}
 		ScommentDao dao=ScommentDao.getInstance();
-		ScommentVo vo=new ScommentVo(0, sccontent, 0, 0, 0, 0, null, sno, id);
+		ScommentVo vo=new ScommentVo(scno, sccontent, ref, lev, step, 0, null, sno, id);
 		int n=dao.insert(vo);
 		//System.out.println("n:"+n);
 		JSONObject json=new JSONObject();
@@ -54,10 +66,8 @@ public class ScommentController extends HttpServlet {
 	}	
 	
 	private void list(HttpServletRequest req, HttpServletResponse resp) throws ServletException,IOException {
-		ScommentDao dao=ScommentDao.getInstance();
-		
 		int sno=Integer.parseInt(req.getParameter("sno"));
-		
+		ScommentDao dao=ScommentDao.getInstance();		
 		ArrayList<ScommentVo> list=dao.list(sno);
 		
 		//json배열로 응답하기
@@ -65,17 +75,18 @@ public class ScommentController extends HttpServlet {
 		for(int i=0;i<list.size();i++){
 			ScommentVo vo=list.get(i);
 			JSONObject obj=new JSONObject();
-			//obj.put("num",vo.getNum());
+			//System.out.println("id:"+vo.getId());
 			obj.put("id",vo.getId());
 			obj.put("comments",vo.getSccontent());
-			arr.put(obj); //json객체를 배열에 담기
-			
+			obj.put("ref", vo.getScref());
+			obj.put("lev", vo.getSclev());
+			obj.put("step", vo.getScstep());
+			obj.put("scno", vo.getScno());
+			arr.put(obj); //json객체를 배열에 담기	
 		}
 		resp.setContentType("text/plain;charset=utf-8");
 		PrintWriter pw=resp.getWriter();
 		pw.println(arr);
-		pw.close();
-		
-		
+		pw.close();	
 	}
 }

@@ -7,9 +7,24 @@
   });
   
   function getDetail(sno){
-	  console.log(sno);
+	  //console.log(sno);
 	  location.href="sell.do?cmd=sdetail&sno="+sno;
   }
+  
+  
+  
+  function getIos(){
+	  var ios=document.getElementById("ios").value;
+	  var android=document.getElementById("android").value;
+	  
+	  var sql="select * from sell where os=";
+	  
+	  
+	  
+  }
+  
+  
+  
 </script>
 <table border="1" style="width:650px;margin-left:0px ">
 		<br>
