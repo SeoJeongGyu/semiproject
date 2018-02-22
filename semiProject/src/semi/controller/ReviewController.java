@@ -12,6 +12,9 @@ import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import semi.dao.ReviewDao;
+import semi.vo.ReviewVo;
+
+
 @WebServlet("/review.do")
 public class ReviewController extends HttpServlet{
     @Override
@@ -58,18 +61,35 @@ public class ReviewController extends HttpServlet{
     	
     	 }
     	public void writeOk(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    		
+    		
     		String uploadPath = req.getServletContext().getRealPath("/upload");
-    		/*MultipartRequest mr = new MultipartRequest(
+    		MultipartRequest mr = new MultipartRequest(
     				req,
     				uploadPath,
     				1024 * 1024 * 5,
     				"utf-8",
     				new DefaultFileRenamePolicy()
-    				);*/
-    		System.out.println("request getContentType : " + req.getContentType());
-    		String hello=req.getParameter("hello");
-    		System.out.println(hello);
+    				);
   
+    		String rtitle=mr.getParameter("title");
+    		String rcontent=mr.getParameter("scontent");
+    		String orgfilename=mr.getOriginalFileName("file");
+    		String savefilename=mr.getFilesystemName("file");
+    		String id=(String)req.getSession().getAttribute("id");
+    		ReviewVo vo=new ReviewVo(0, rtitle, rcontent, null, 0, 0, 0, orgfilename, savefilename, id);
+    		ReviewDao dao=new ReviewDao();
+    		System.out.println(rtitle);
+    		System.out.println(rcontent);
+    		System.out.println(id);
+    		int n= dao.write(vo);
+    		if(n>0) {
+    			System.out.println("success");
+    		}else {
+    			System.out.println("fail");
+    		}
     	}
+    	
+    	
     }
 

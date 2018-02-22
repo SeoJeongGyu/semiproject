@@ -44,7 +44,7 @@ $(document).ready(function() {
       <div class="file-field input-field">
       <div class="btn" style="width:100px;height:40px;">
         <span>첨부</span>
- 		<input type="file">
+ 		<input type="file" name="file">
  		
       </div>
       <div class="file-path-wrapper">
@@ -58,11 +58,10 @@ $(document).ready(function() {
     
       <div class="row">
         <div class="input-field col  s6">
-          <input id="title" type="text" class="validate" style=" width: 460px; font-size:30px; height: 60px;">
+          <input name ="title" type="text" class="validate" style=" width: 460px; font-size:30px; height: 60px;">
           <label for="title" style="font-size: 20px; margin-left:10px; ">제목</label>
         </div>
       </div>
-<input type="text" value="hello22" name="hello">	
  	 <jsp:include page="/home/summernote.jsp"></jsp:include>
  	<br>
   	<button class="btn waves-effect waves-light" type="submit" style=" width:140px; height:50px;">전송
