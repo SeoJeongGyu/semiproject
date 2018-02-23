@@ -33,7 +33,20 @@ public class BoardController extends HttpServlet{
             qna(req,resp);
         }else if(cmd.equals("notices")) {
             notices(req,resp);
+        }else if(cmd.equals("noticesOk")) {
+            noticesOk(req,resp);
         }
+    }
+    public void noticesOk(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+       String title = req.getParameter("title");
+       String content = req.getParameter("content");
+       
+       
+       
+        /*req.setAttribute("page", "/admin/board.jsp");
+        req.setAttribute("page1", "notices");
+        RequestDispatcher rd = req.getRequestDispatcher("admin.jsp");
+        rd.forward(req, resp);*/
     }
     public void notices(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("page", "/admin/board.jsp");
