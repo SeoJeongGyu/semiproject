@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<div id="freeboard" class="col s12">        
 <table class="highlight">
         <thead>
           <tr>
@@ -53,5 +52,4 @@
       <button class="btn waves-effect waves-light" type="submit" name="action" style="margin-top: 25px;">검색</button>
       </div>
     </form>
-  </div>
   </div>

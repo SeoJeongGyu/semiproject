@@ -1,11 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<div id="sell" class="col s12">
-  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript">
-	if('${requestScope==null}'){
-	    location.href="<%=request.getContextPath()%>/boardlist.do?cmd=sell";
-	}
 	$(document).ready(function() {
 	  $('select').material_select();
 	});
@@ -48,7 +44,6 @@
 	    }
 	}
 </script>    
- <h4 class="truncate">맴버 관리</h4>
  <table class="highlight">
         <thead>
           <tr>
@@ -56,12 +51,17 @@
 	              <p><input type="checkbox" id="checkAll" onclick="checkAll()"/>
 			      <label for="checkAll"></label></p>
 			  </th>
-              <th>아이디</th>
-              <th>이름</th>
-              <th>닉네임</th>
-              <th>폰번호</th>
-              <th>이메일</th>
-              <th>가입날짜</th>
+              <th>게시물번호</th>
+              <th>OS</th>
+              <th>통신사</th>
+              <th>회사</th>
+              <th>가격</th>
+              <th>제목</th>
+              <th>내용</th>
+              <th>작성일</th>
+              <th>글등급</th>
+              <th>신고수</th>
+              <th>작성아이디</th>
           </tr>
         </thead>
         <tbody>
@@ -71,12 +71,17 @@
 		            <p><input type="checkbox" name="check" id="${vo.id }" value="${vo.id }" />
 				    <label for="${vo.id }"></label></p>
 			    </td>
-	            <td>${vo.id }</td>
-	            <td>${vo.name }</td>
-	            <td>${vo.nickname }</td>
-	            <td>${vo.phone }</td>
-	            <td>${vo.email }</td>
-	            <td>${vo.regdate }</td>
+			    <td>${vo.sno }</td>
+              <td>${vo.os }</td>
+              <td>${vo.telecom }</td>
+              <td>${vo.company }</td>
+              <td>${vo.price }</td>
+              <td>${vo.stitle }</td>
+              <td>${vo.scontent }</td>
+              <td>${vo.sdate }</td>
+              <td>${vo.sgrade }</td>
+              <td>${vo.sreport }</td>
+              <td>${vo.id }</td>
 	          </tr>
 	        </c:forEach>  
         </tbody>
@@ -86,7 +91,7 @@
    	<ul class="pagination">
    	<c:choose>
    		<c:when test="${pageNum>5}">
-   			<li class="waves-effect"><a href="memberAdmin.do?cmd=list&pageNum=${startPage-1}&text=${requestScope.text}&select=${requestScope.select}"><i class="material-icons">chevron_left</i></a></li>
+   			<li class="waves-effect"><a href="admin.do?cmd=board&pageNum=${startPage-1}&text=${requestScope.text}&select=${requestScope.select}"><i class="material-icons">chevron_left</i></a></li>
 		</c:when>
 		<c:otherwise>
 			<li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
@@ -95,16 +100,16 @@
 	    <c:forEach var="i" begin="${requestScope.startPage }" end="${requestScope.endPage }">
 		    <c:choose>
 			    <c:when test="${pageNum==i }">
-			    	<li class="active"><a href="memberAdmin.do?cmd=list&pageNum=${i }&text=${requestScope.text}&select=${requestScope.select}">${i }</a></li>
+			    	<li class="active"><a href="admin.do?cmd=board&pageNum=${i }&text=${requestScope.text}&select=${requestScope.select}">${i }</a></li>
 			    </c:when>
 			    <c:otherwise>
-			    	<li class="waves-effect"><a href="memberAdmin.do?cmd=list&pageNum=${i }&text=${requestScope.text}&select=${requestScope.select}">${i }</a></li>
+			    	<li class="waves-effect"><a href="admin.do?cmd=board&pageNum=${i }&text=${requestScope.text}&select=${requestScope.select}">${i }</a></li>
 			    </c:otherwise>
 		    </c:choose>
 	    </c:forEach>
 	    <c:choose>
 	    	<c:when test="${pageCount>endPage }">
-	    		<li class="waves-effect"><a href="memberAdmin.do?cmd=list&pageNum=${endPage+1 }&text=${requestScope.text}&select=${requestScope.select}"><i class="material-icons">chevron_right</i></a></li>
+	    		<li class="waves-effect"><a href="admin.do?cmd=board&pageNum=${endPage+1 }&text=${requestScope.text}&select=${requestScope.select}"><i class="material-icons">chevron_right</i></a></li>
 	    	</c:when>
 	    	<c:otherwise>
 	    		<li class="disabled"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
@@ -113,21 +118,20 @@
 	    <!-- <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li> -->
   	</ul>
   	</div>
-  	<div style="margin-left: 1200px;"><a class="waves-effect waves-light btn" style="background-color: #ee6e73;" onclick="del()">회원삭제</a></div>
-    <form class="col s12" method="post" action="<%=request.getContextPath()%>/memberAdmin.do?cmd=list">
-    <div class="row" style="margin-left: 400px;">
-    <div class="input-field col s2" >
-	    <select name="select" >
-		      <option value="0">아이디</option>
-		      <option value="1">이름</option>
-		      <option value="2">이메일</option>
-	    </select>
-  	</div>
-        <div class="input-field col s3" >
-          <input id="" name="text" type="text" class="validate" value="${requestScope.text}">
-        </div>
-      <button class="btn waves-effect waves-light" type="submit" name="action" style="margin-top: 25px; background-color: #ee6e73;">검색</button>
-      </div>
-    </form>
-  </div>
-  </div>
+	  	<div style="margin-left: 1200px;"><a class="waves-effect waves-light btn" style="background-color: #ee6e73;" onclick="del()">게시물삭제</a></div>
+	    <form class="col s12" method="post" action="<%=request.getContextPath()%>/admin.do?cmd=board">
+	    <div class="row" style="margin-left: 400px;">
+	    <div class="input-field col s2" >
+		    <select name="select" >
+			      <option value="0">제목</option>
+			      <option value="1">내용</option>
+			      <option value="2">아이디</option>
+		    </select>
+	  	</div>
+	        <div class="input-field col s3" >
+	          <input id="text" name="text" type="text" class="validate" value="${requestScope.text}">
+	        </div>
+	      <button class="btn waves-effect waves-light" type="submit" name="action" style="margin-top: 25px; background-color: #ee6e73;">검색</button>
+	      </div>
+	    </form>
+	  </div>

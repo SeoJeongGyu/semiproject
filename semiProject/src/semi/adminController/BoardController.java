@@ -22,10 +22,51 @@ public class BoardController extends HttpServlet{
         String cmd= req.getParameter("cmd");
         System.out.println("cmd:"+cmd);
         if(cmd.equals("sell")) {
-            list(req,resp);
+            sell(req,resp);
+        }else if(cmd.equals("freeboard")) {
+            freeboard(req,resp);
+        }else if(cmd.equals("review")) {
+            review(req,resp);
+        }else if(cmd.equals("buy")) {
+            buy(req,resp);
+        }else if(cmd.equals("qna")) {
+            qna(req,resp);
+        }else if(cmd.equals("notices")) {
+            notices(req,resp);
         }
     }
-    public void list(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void notices(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute("page", "/admin/board.jsp");
+        req.setAttribute("page1", "notices");
+        RequestDispatcher rd = req.getRequestDispatcher("admin.jsp");
+        rd.forward(req, resp);
+    }
+    public void buy(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute("page", "/admin/board.jsp");
+        req.setAttribute("page1", "buy");
+        RequestDispatcher rd = req.getRequestDispatcher("admin.jsp");
+        rd.forward(req, resp);
+    }
+    public void qna(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute("page", "/admin/board.jsp");
+        req.setAttribute("page1", "qna");
+        RequestDispatcher rd = req.getRequestDispatcher("admin.jsp");
+        rd.forward(req, resp);
+    }
+    public void review(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute("page", "/admin/board.jsp");
+        req.setAttribute("page1", "review");
+        RequestDispatcher rd = req.getRequestDispatcher("admin.jsp");
+        rd.forward(req, resp);
+    }
+    public void freeboard(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute("page", "/admin/board.jsp");
+        req.setAttribute("page1", "freeboard");
+        RequestDispatcher rd = req.getRequestDispatcher("admin.jsp");
+        rd.forward(req, resp);
+    }
+    public void sell(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("¿©±â¿È");
         String text = req.getParameter("text");
         String spageNum = req.getParameter("pageNum");
         System.out.println("spageNum:"+spageNum);
@@ -70,7 +111,8 @@ public class BoardController extends HttpServlet{
         req.setAttribute("startPage", startPage);
         req.setAttribute("endPage", endPage);
         req.setAttribute("pageNum", pageNum);
-        req.setAttribute("page", "/admin/member.jsp");
+        req.setAttribute("page", "/admin/board.jsp");
+        req.setAttribute("page1", "sell");
         RequestDispatcher rd = req.getRequestDispatcher("admin.jsp");
         rd.forward(req, resp);
     }
