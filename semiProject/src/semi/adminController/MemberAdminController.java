@@ -40,7 +40,6 @@ public class MemberAdminController extends HttpServlet{
         }
         public void list(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
             String text = req.getParameter("text");
-            
                 String spageNum = req.getParameter("pageNum");
                 System.out.println("spageNum:"+spageNum);
                 int pageNum=1;

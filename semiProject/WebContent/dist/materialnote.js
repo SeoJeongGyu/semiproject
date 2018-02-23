@@ -23,7 +23,6 @@
   }
 }(function ($) {
   'use strict';
-
   var isSupportAmd = typeof define === 'function' && define.amd;
 
   /**

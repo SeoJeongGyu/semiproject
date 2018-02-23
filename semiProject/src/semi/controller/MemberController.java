@@ -20,7 +20,6 @@ public class MemberController  extends HttpServlet{
         req.setCharacterEncoding("utf-8");
         String cmd = req.getParameter("cmd");
         System.out.println(cmd);
-        System.out.println("ip:"+req.getRemoteAddr());
         if(cmd.equals("join")) {
             req.setAttribute("page", "/member/join.jsp");
             RequestDispatcher rd = req.getRequestDispatcher("main.jsp");

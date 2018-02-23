@@ -39,7 +39,6 @@ public class MemberDao {
         PreparedStatement pstmt=null;
         ResultSet rs=null;
         String sqlplus="";
-        System.out.println(select);
         if(select.equals("0")) {
             sqlplus="where id like'%"+text+"%'";
         }else if(select.equals("1")) {

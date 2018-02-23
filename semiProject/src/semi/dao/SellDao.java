@@ -162,6 +162,34 @@ public class SellDao {
 			DbcpBean.closeConn(con, pstmt, rs);
 		}
 	}
+	public int getCount(String select ,String text) {
+        Connection con=null;
+        PreparedStatement pstmt=null;
+        ResultSet rs=null;
+        String sqlplus="";
+        if(select.equals("0")) {
+            sqlplus="where stitle like'%"+text+"%'";
+        }else if(select.equals("1")) {
+            sqlplus="where scontent like'%"+text+"%'";
+        }else if(select.equals("2")) {
+            sqlplus="where id like'%"+text+"%'";
+        }
+        try {
+            con=DbcpBean.getConn();
+            String sql="select NVL(count(sno),0) cnt from sell"+sqlplus;
+            pstmt=con.prepareStatement(sql);
+            rs=pstmt.executeQuery();
+            rs.next();
+            int cnt=rs.getInt("cnt");
+            return cnt;
+            
+        }catch(SQLException se) {
+            System.out.println(se.getMessage());
+            return -1;
+        }finally {
+            DbcpBean.closeConn(con, pstmt, rs);
+        }
+    }
 	public ArrayList<SellVo> list(int startRow,int endRow){
 		Connection con=null;
 		PreparedStatement pstmt=null;
@@ -190,4 +218,40 @@ public class SellDao {
 			DbcpBean.closeConn(con, pstmt, rs);
 		}
 	}
+	public ArrayList<SellVo> searchlist(String select ,String text,int startRow,int endRow){
+        Connection con=null;
+        PreparedStatement pstmt=null;
+        ResultSet rs=null;
+        String sqlplus="";
+        if(select.equals("0")) {
+            sqlplus="where stitle like'%"+text+"%'";
+        }else if(select.equals("1")) {
+            sqlplus="where scontent like'%"+text+"%'";
+        }else if(select.equals("2")) {
+            sqlplus="where id like'%"+text+"%'";
+        }
+        try {
+            con=DbcpBean.getConn();
+            //System.out.println("con:"+con);
+            String sql="select * from (select aa.*,rownum rnum from(select * from sell"+sqlplus+" order by sno desc)aa ) where rnum>=? and rnum<=?";
+            pstmt=con.prepareStatement(sql);
+            pstmt.setInt(1, startRow);
+            pstmt.setInt(2, endRow);
+            rs=pstmt.executeQuery();
+            ArrayList<SellVo> list=new ArrayList<>();
+            while(rs.next()) {
+                SellVo vo=new SellVo(rs.getInt("sno"),rs.getInt("os"),rs.getInt("telecom"),
+                        rs.getInt("company"),rs.getString("loc"),rs.getInt("price"),
+                        rs.getString("stitle"),rs.getString("scontent"),rs.getDate("sdate"),
+                        rs.getInt("sgrade"),rs.getInt("shit"),rs.getInt("success"),rs.getInt("sreport"),rs.getString("id"));
+                list.add(vo);
+            }
+            return list;
+        }catch(SQLException se) {
+            System.out.println(se.getMessage());
+            return null;
+        }finally {
+            DbcpBean.closeConn(con, pstmt, rs);
+        }
+    }
 }

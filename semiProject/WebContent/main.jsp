@@ -10,7 +10,7 @@
 	*{margin: 0px; padding: 0px; margin: auto;}
 </style>
 <script type="text/javascript">
-	
+
 </script>
 </head>
 <body>
