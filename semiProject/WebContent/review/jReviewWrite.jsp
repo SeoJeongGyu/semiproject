@@ -19,6 +19,12 @@ $(document).ready(function() {
 		 div.style.display="block";
 	  }
   }
+  
+  $(document).ready(function() {
+	    $('select').material_select();
+	  });
+  
+  
   </script>
 
 
@@ -34,7 +40,7 @@ $(document).ready(function() {
 
       </div>
 
-    
+    <br>
    
     <!-- 전체 form  -->
     <form class="cols12" action="<%=request.getContextPath() %>/review.do?cmd=writeOk" method="post" enctype="multipart/form-data">
@@ -53,13 +59,34 @@ $(document).ready(function() {
     </div>
     
     </div>
-    
-    
-    
+    <div class="row">
+     <div class="input-field col s2" class="select"  >
+	    <select name="telecom" style=" width: 400px; height: 60px;">
+	      <option value="telecom" disabled selected>선택하세요</option>
+	      <option value="1">SKT</option>
+	      <option value="2">KT</option>
+	      <option value="3">LG U+</option>
+	    </select>
+	    <label style="font-size: 15px;">통신사</label>
+	  </div>
+	  </div>
+
+	      <div class="row">
+	  <div class="input-field col s2" class="select">
+	    <select name="company"  style=" width: 400px; height: 60px; ">
+	      <option value="company" disabled selected>선택하세요</option>
+	      <option value="1">애플</option>
+	      <option value="2">삼성</option>
+	      <option value="3">LG</option>
+	      <option value="4">기타</option>
+	    </select>
+	    <label style="font-size: 15px;">제조사</label>
+	  </div>
+      </div>
       <div class="row">
         <div class="input-field col  s6">
           <input name ="title" type="text" class="validate" style=" width: 460px; font-size:30px; height: 60px;">
-          <label for="title" style="font-size: 20px; margin-left:10px; ">제목</label>
+          <label for="title" style="font-size: 15px; ">제목</label>
         </div>
       </div>
  	 <jsp:include page="/home/summernote.jsp"></jsp:include>

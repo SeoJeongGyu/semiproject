@@ -13,10 +13,10 @@ public class ReviewVo {
 	private String orgfilename;
 	private String savefilename;
 	private String id;
-	
-	
+	private int telecom;
+	private int company;
 	public ReviewVo(int rno, String rtitle, String rcontent, Date rdate, int rhit, int rgrade, int rreport,
-			String orgfilename, String savefilename, String id) {
+			String orgfilename, String savefilename, String id, int telecom, int company) {
 		super();
 		this.rno = rno;
 		this.rtitle = rtitle;
@@ -28,6 +28,8 @@ public class ReviewVo {
 		this.orgfilename = orgfilename;
 		this.savefilename = savefilename;
 		this.id = id;
+		this.telecom = telecom;
+		this.company = company;
 	}
 	public int getRno() {
 		return rno;
@@ -89,6 +91,18 @@ public class ReviewVo {
 	public void setId(String id) {
 		this.id = id;
 	}
-	
+	public int getTelecom() {
+		return telecom;
+	}
+	public void setTelecom(int telecom) {
+		this.telecom = telecom;
+	}
+	public int getCompany() {
+		return company;
+	}
+	public void setCompany(int company) {
+		this.company = company;
+	}
+
 
 }

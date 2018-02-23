@@ -64,7 +64,7 @@ public class ReviewDao {
 		try {
 			conn = DbcpBean.getConn();
 			int reviewNum = getMaxNum() + 1;
-			String sql="insert into review values(?,?,?,sysdate,0,?,?,?,?,?)";
+			String sql="insert into review values(?,?,?,sysdate,0,?,?,?,?,?,?,?)";
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setInt(1, reviewNum);
 			pstmt.setString(2,vo.getRtitle());
@@ -74,6 +74,9 @@ public class ReviewDao {
 			pstmt.setString(6, vo.getOrgfilename());
 			pstmt.setString(7,vo.getSavefilename());
 			pstmt.setString(8, vo.getId());
+			pstmt.setInt(9, vo.getTelecom());
+			pstmt.setInt(10, vo.getCompany()
+					);
 			return pstmt.executeUpdate();
 		}catch(SQLException se) {
 			System.out.println(se.getMessage());
@@ -96,7 +99,7 @@ public class ReviewDao {
 			rs=pstmt.executeQuery();
 			ArrayList<ReviewVo> list=new ArrayList<>();
 			while(rs.next()) {
-				ReviewVo vo=new ReviewVo(rs.getInt("rno"),rs.getString("rtitle"),rs.getString("rcontent"),rs.getDate("rdate"),rs.getInt("rhit"),rs.getInt("rgrade"),rs.getInt("rreport"),rs.getString("orgfilename"),rs.getString("savefilename"),rs.getString("id"));
+				ReviewVo vo=new ReviewVo(rs.getInt("rno"),rs.getString("rtitle"),rs.getString("rcontent"),rs.getDate("rdate"),rs.getInt("rhit"),rs.getInt("rgrade"),rs.getInt("rreport"),rs.getString("orgfilename"),rs.getString("savefilename"),rs.getString("id"),rs.getInt("telecom"),rs.getInt("company"));
 				list.add(vo);
 			}
 			return list;

@@ -72,13 +72,16 @@ public class ReviewController extends HttpServlet{
     				"utf-8",
     				new DefaultFileRenamePolicy()
     				);
-  
+    		
     		String rtitle=mr.getParameter("title");
     		String rcontent=mr.getParameter("scontent");
     		String orgfilename=mr.getOriginalFileName("file");
     		String savefilename=mr.getFilesystemName("file");
     		String id=(String)req.getSession().getAttribute("id");
-    		ReviewVo vo=new ReviewVo(0, rtitle, rcontent, null, 0, 0, 0, orgfilename, savefilename, id);
+    		int telecom=Integer.parseInt(mr.getParameter("telecom"));
+    		int company=Integer.parseInt(mr.getParameter("company"));
+    		
+    		ReviewVo vo=new ReviewVo(0, rtitle, rcontent, null, 0, 0, 0, orgfilename, savefilename, id,telecom,company);
     		ReviewDao dao=ReviewDao.getInstance();
     	
     		int n= dao.write(vo);
@@ -88,6 +91,7 @@ public class ReviewController extends HttpServlet{
     			System.out.println("fail");
     		}
     	}
+    	
     	
     	
     }
