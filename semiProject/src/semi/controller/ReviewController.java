@@ -15,84 +15,89 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import semi.dao.ReviewDao;
 import semi.vo.ReviewVo;
 
-
 @WebServlet("/review.do")
-public class ReviewController extends HttpServlet{
-    @Override
-    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    	String cmd= req.getParameter("cmd");
-    	if(cmd.equals("list")) {
-    		list(req,resp);
-    	}else if(cmd.equals("write")) {
-    		req.setAttribute("page", "/review/jReviewWrite.jsp");
-        	req.getRequestDispatcher("/main.jsp").forward(req, resp);
-    	}else if(cmd.equals("writeOk")) {
-    		writeOk(req,resp);
-    	}else if(cmd.equals("list")) {
-    		list(req,resp);
-    	}
-    }
-    	public void list(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    	    	
-    	String spageNum=req.getParameter("pageNum");
-    	int pageNum=1;
-    	if(spageNum!=null) {
-    		pageNum=Integer.parseInt(spageNum);
-    	}
-    	int startRow=(pageNum-1)*10+1; //시작행번호
-    	int endRow=startRow+9; //끝행번호
-    	ReviewDao dao=ReviewDao.getInstance();
-    	//전체 페이지 갯수 구하기
-    	int pageCount=(int)Math.ceil(dao.getCount()/10.0);
-    	//시작페이지와 끝페이지 구하기
-    	int startPage=((pageNum-1)/10*10)+1;
-    	int endPage=startPage+9;
-    	if(pageCount<endPage) {
-    		endPage=pageCount;
-    	}
-    	ArrayList<ReviewVo> rlist=dao.listAll(startRow, endRow);
-    	
-    	req.setAttribute("rlist", rlist);
-    	req.setAttribute("pageCount",pageCount);
+public class ReviewController extends HttpServlet {
+	@Override
+	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("utf-8");
+		String cmd = req.getParameter("cmd");
+		if (cmd.equals("list")) {
+			list(req, resp);
+		} else if (cmd.equals("write")) {
+			req.setAttribute("page", "/review/jReviewWrite.jsp");
+			req.getRequestDispatcher("/main.jsp").forward(req, resp);
+		} else if (cmd.equals("writeOk")) {
+			writeOk(req, resp);
+		} else if (cmd.equals("list")) {
+			list(req, resp);
+		} else if (cmd.equals("content")) {
+			content(req, resp);
+		}
+	}
+
+	public void list(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+		String spageNum = req.getParameter("pageNum");
+		int pageNum = 1;
+		if (spageNum != null) {
+			pageNum = Integer.parseInt(spageNum);
+		}
+		int startRow = (pageNum - 1) * 10 + 1; // 시작행번호
+		int endRow = startRow + 9; // 끝행번호
+		ReviewDao dao = ReviewDao.getInstance();
+		// 전체 페이지 갯수 구하기
+		int pageCount = (int) Math.ceil(dao.getCount() / 10.0);
+		// 시작페이지와 끝페이지 구하기
+		int startPage = ((pageNum - 1) / 10 * 10) + 1;
+		int endPage = startPage + 9;
+		if (pageCount < endPage) {
+			endPage = pageCount;
+		}
+		ArrayList<ReviewVo> rlist = dao.listAll(startRow, endRow);
+
+		req.setAttribute("rlist", rlist);
+		req.setAttribute("pageCount", pageCount);
 		req.setAttribute("startPage", startPage);
-		req.setAttribute("endPage",endPage);
+		req.setAttribute("endPage", endPage);
 		req.setAttribute("pageNum", pageNum);
 		req.setAttribute("page", "/review/jReviewList.jsp");
 		req.getRequestDispatcher("main.jsp").forward(req, resp);
-    	
-    	 }
-    	public void writeOk(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    		
-    		
-    		String uploadPath = req.getServletContext().getRealPath("/upload");
-    		MultipartRequest mr = new MultipartRequest(
-    				req,
-    				uploadPath,
-    				1024 * 1024 * 5,
-    				"utf-8",
-    				new DefaultFileRenamePolicy()
-    				);
-    		
-    		String rtitle=mr.getParameter("title");
-    		String rcontent=mr.getParameter("scontent");
-    		String orgfilename=mr.getOriginalFileName("file");
-    		String savefilename=mr.getFilesystemName("file");
-    		String id=(String)req.getSession().getAttribute("id");
-    		int telecom=Integer.parseInt(mr.getParameter("telecom"));
-    		int company=Integer.parseInt(mr.getParameter("company"));
-    		
-    		ReviewVo vo=new ReviewVo(0, rtitle, rcontent, null, 0, 0, 0, orgfilename, savefilename, id,telecom,company);
-    		ReviewDao dao=ReviewDao.getInstance();
-    	
-    		int n= dao.write(vo);
-    		if(n>0) {
-    			resp.sendRedirect("/semiProject/review.do?cmd=list");
-    		}else {
-    			System.out.println("fail");
-    		}
-    	}
-    	
-    	
-    	
-    }
 
+	}
+
+	public void writeOk(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+		String uploadPath = req.getServletContext().getRealPath("/upload");
+		MultipartRequest mr = new MultipartRequest(req, uploadPath, 1024 * 1024 * 5, "utf-8",
+				new DefaultFileRenamePolicy());
+
+		String rtitle = mr.getParameter("title");
+		String rcontent = mr.getParameter("scontent");
+		String orgfilename = mr.getOriginalFileName("file");
+		String savefilename = mr.getFilesystemName("file");
+		String id = (String) req.getSession().getAttribute("id");
+		int telecom = Integer.parseInt(mr.getParameter("telecom"));
+		int company = Integer.parseInt(mr.getParameter("company"));
+
+		ReviewVo vo = new ReviewVo(0, rtitle, rcontent, null, 0, 0, 0, orgfilename, savefilename, id, telecom, company);
+		ReviewDao dao = ReviewDao.getInstance();
+
+		int n = dao.write(vo);
+		if (n > 0) {
+			resp.sendRedirect("/semiProject/review.do?cmd=list");
+		} else {
+			System.out.println("fail");
+		}
+	}
+
+	public void content(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+		int rno = Integer.parseInt(req.getParameter("rno"));
+		ReviewDao dao = ReviewDao.getInstance();
+		ReviewVo vo = dao.content(rno);
+		req.setAttribute("vo", vo);
+		req.setAttribute("page", "/review/jReviewContent.jsp");
+		req.getRequestDispatcher("main.jsp").forward(req, resp);
+	}
+
+}

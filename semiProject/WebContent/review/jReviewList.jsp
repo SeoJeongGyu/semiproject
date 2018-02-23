@@ -90,8 +90,8 @@
 <img src="/semiProject/upload/${review.savefilename}" style="width:210px; border:1px solid #F0F0F0" >
 </div>
 <div style="float:left;overflow:hidden;width:585px;margin-top:20px;margin-left:10px;">
-	<div style="width:98%;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;padding-bottom:2px;"><a href="/6716/view/3/6716/rview/5/21427/review"><span class="p16 clr100 b"> ${review.rtitle}</span></a></div>
-	<div style="width:98%;margin-top:15px;height:50px;overflow:hidden;" onclick="location.href='/6716/view/3/6716/rview/5/21427/review'">
+	<div style="width:98%;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;padding-bottom:2px;"><a href="/semiProject/review.do?cmd=content&rno=${review.rno}"><span class="p16 clr100 b"> ${review.rtitle}</span></a></div>
+	<div style="width:98%;margin-top:15px;height:50px;overflow:hidden;" onclick="location.href='/semiProject/review.do?cmd=content&rno=${review.rno}'">
 		<span class="ln20 clr02">${review.rcontent}</span>
 		</div>
 		<br>

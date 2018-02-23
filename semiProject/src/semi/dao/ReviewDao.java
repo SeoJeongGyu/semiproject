@@ -1,6 +1,7 @@
 package semi.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -104,6 +105,40 @@ public class ReviewDao {
 			}
 			return list;
 		}catch (SQLException se) {
+			System.out.println(se.getMessage());
+			return null;
+		}finally {
+			DbcpBean.closeConn(conn, pstmt, rs);
+		}
+	}
+	public ReviewVo content(int rno) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn=DbcpBean.getConn();
+			String sql = "select * from review where rno=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, rno);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				int rnum=rs.getInt("rno");
+				String rtitle=rs.getString("rtitle");
+				String rcontent=rs.getString("rcontent");
+				Date rdate=rs.getDate("rdate");
+				int rhit = rs.getInt("rhit");
+				int rgrade=rs.getInt("rgrade");
+				int rreport = rs.getInt("rreport");
+				String orgfilename = rs.getString("orgfilename");
+				String savefilename = rs.getString("savefilename");
+				String id=rs.getString("id");
+				int telecom=rs.getInt("telecom");
+				int company=rs.getInt("company");
+				ReviewVo vo=new ReviewVo(rnum, rtitle, rcontent, rdate, rhit, rgrade, rreport, orgfilename, savefilename, id, telecom, company);
+				return vo;
+			}
+			return null;
+		}catch(SQLException se) {
 			System.out.println(se.getMessage());
 			return null;
 		}finally {
