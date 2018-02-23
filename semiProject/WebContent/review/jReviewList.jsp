@@ -79,57 +79,34 @@
       <i class="large material-icons">mode_edit</i>
     </a>
 
-<div>
-<table class="bordered">
-        <thead>
-          <tr>
-              <th>Name</th>
-              <th>Item Name</th>
-              <th>Item Price</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr>
-            <td>Alvin</td>
-            <td>Eclair</td>
-            <td>$0.87</td>
-          </tr>
-          <tr>
-            <td>Alan</td>
-            <td>Jellybean</td>
-            <td>$3.76</td>
-          </tr>
-          <tr>
-            <td>Jonathan</td>
-            <td>Lollipop</td>
-            <td>$7.00</td>
-          </tr>
-        </tbody>
-      </table>
-            
-</div>
 
 <!--  리스트 이미지와 내용 보여주는 div-->
-<div>
+ <div style="width:1350px; height:1000px;">
+ 
 <c:forEach var="review" items="${requestScope.rlist}">
-<div style="clear:both;float:left;margin-top:15px;width:220px;height:140px;text-align:center;overflow:hidden;">
+
+<div style="clear:both;float:left;margin-top:15px;height:140px;text-align:center;">
+
 <img src="/semiProject/upload/${review.savefilename}" style="width:210px; border:1px solid #F0F0F0" >
 </div>
 <div style="float:left;overflow:hidden;width:585px;margin-top:20px;margin-left:10px;">
 	<div style="width:98%;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;padding-bottom:2px;"><a href="/6716/view/3/6716/rview/5/21427/review"><span class="p16 clr100 b"> ${review.rtitle}</span></a></div>
-	<div style="width:98%;margin-top:15px;height:50px;overflow:hidden;" onclick="location.href='/6716/view/3/6716/rview/5/21427/review'" class="pointer">
+	<div style="width:98%;margin-top:15px;height:50px;overflow:hidden;" onclick="location.href='/6716/view/3/6716/rview/5/21427/review'">
 		<span class="ln20 clr02">${review.rcontent}</span>
 		</div>
+		<br>
 	<div style="margin-top:10px;overflow:hidden;padding-bottom:2px;" class="p12 clr02">
 	등록 : ${review.rdate}&nbsp;&nbsp;<span class="clr06">|</span>&nbsp;&nbsp;${review.rhit}	</div>
+<br>
+
+<div style="margin-top:5px;height:1px;background-color:#E7E7E7;width:999%;"></div> 
 			</div>
 
 </c:forEach>
 </div>
-<hr>
 <br>
 
+<div style="clear:both">
    	<ul class="pagination">
 	    <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
 	    <li class="active"><a href="#!">1</a></li>
@@ -141,11 +118,8 @@
   	</ul>
   
 
- 
-   
-      <div class="input-field col s12" style="width: 100px; margin-left: 10px;">
- 
-  </div>
+ </div>
+
       <div class="row">
       <div class="input-field col s12" style="width: 100px; margin-left: 10px;">
         <select>

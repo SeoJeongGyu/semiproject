@@ -80,12 +80,10 @@ public class ReviewController extends HttpServlet{
     		String id=(String)req.getSession().getAttribute("id");
     		ReviewVo vo=new ReviewVo(0, rtitle, rcontent, null, 0, 0, 0, orgfilename, savefilename, id);
     		ReviewDao dao=ReviewDao.getInstance();
-    		System.out.println(rtitle);	
-    		System.out.println(rcontent);
-    		System.out.println(id);
+    	
     		int n= dao.write(vo);
     		if(n>0) {
-    			System.out.println("success");
+    			resp.sendRedirect("/semiProject/review.do?cmd=list");
     		}else {
     			System.out.println("fail");
     		}
