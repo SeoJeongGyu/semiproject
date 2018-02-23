@@ -1,6 +1,7 @@
 package semi.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -11,7 +12,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.websocket.Session;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import semi.dao.ScommentDao;
 import semi.dao.SellDao;
+import semi.vo.ScommentVo;
 import semi.vo.SellVo;
 
 @WebServlet("/sell.do")
@@ -32,12 +38,15 @@ public class SellController extends HttpServlet{
         	insertOk(req,resp);
         }else if(cmd.equals("sdetail")) {
         	detail(req,resp);
+        }else if(cmd.equals("checkedOs")){
+        	list(req,resp);
         }
 	}
 	
 	private void detail(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException{
 		int sno=Integer.parseInt(req.getParameter("sno"));
+		
 		SellDao dao=SellDao.getInstance();
 		SellVo vo=dao.detail(sno);
 		dao.updateHit(vo);
@@ -70,10 +79,11 @@ public class SellController extends HttpServlet{
 			
 		}
 	}
+	
 	private void list(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException{
 		SellDao dao=SellDao.getInstance();
-		
+
 		String spageNum=req.getParameter("pageNum");
 		int pageNum=1;
 		if(spageNum!=null) {
@@ -82,25 +92,53 @@ public class SellController extends HttpServlet{
 		
 		int startRow=(pageNum-1)*10+1;
 		int endRow=startRow+9;
-	
-		ArrayList<SellVo> slist=dao.list(startRow,endRow);
-		
 		int pageCount=(int)Math.ceil(dao.getCount()/10.0);
-		
 		int startPage = ((pageNum-1)/5)*5 + 1 ; 
 		int endPage = startPage + 4; 
 		if(pageCount<endPage) {
 			endPage=pageCount;
 		}
-			
-		req.setAttribute("slist", slist);
 		req.setAttribute("pageCount", pageCount);
 		req.setAttribute("startPage", startPage);
 		req.setAttribute("endPage", endPage);
 		req.setAttribute("pageNum", pageNum);
-		req.setAttribute("page", "/sell/sellList.jsp");
-		req.getRequestDispatcher("/main.jsp").forward(req, resp);
+		req.setAttribute("page", "/sell/sellList.jsp");	
+		String sql=req.getParameter("sql");
+		//System.out.println("sql:"+sql);
 		
+		if(sql==null || sql.equals("")) {
+			ArrayList<SellVo> slist=dao.list(startRow,endRow);
+			req.setAttribute("slist", slist);
+			req.getRequestDispatcher("/main.jsp").forward(req, resp);
+		}else {
+			//System.out.println("controller sql:"+sql);
+			ArrayList<SellVo> chList=dao.checkedList(sql);
+			req.setAttribute("slist", chList);
+			
+			JSONArray arr=new JSONArray();
+			for(int i=0;i<chList.size();i++) {
+				SellVo vo=chList.get(i);
+				JSONObject obj=new JSONObject();
+				obj.put("success", vo.getSuccess());
+				obj.put("title", vo.getStitle());
+				obj.put("price", vo.getPrice());
+				obj.put("id", vo.getId());
+				obj.put("sno", vo.getSno());
+				arr.put(obj);
+			}
+
+			JSONObject result=new JSONObject();
+			result.put("list", arr);
+			result.put("pageCount",pageCount );
+			result.put("startPage", startPage );
+			result.put("endPage", endPage );
+			result.put("pageNum", pageNum);
+			
+			resp.setContentType("text/plain;charset=utf-8");
+			PrintWriter pw=resp.getWriter();
+			pw.println(result);
+			pw.close();
+		}
 	}
 	
 }

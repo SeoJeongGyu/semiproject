@@ -11,7 +11,7 @@ var xhr=null;
 function getlist(){
 	xhr=new XMLHttpRequest();
 	xhr.onreadystatechange=list;
-	xhr.open('get', 'scomment.do?cmd=list&sno=${vo.sno}', true);
+	xhr.open('get','scomment.do?cmd=list&sno=${vo.sno}', true);
 	xhr.send();
 }
 function list(){
@@ -20,11 +20,67 @@ function list(){
 		//alert(list);
 		var json=JSON.parse(list); //json객체로 변환하기(ie8이상)
 		var div=document.getElementById("commlist");
+		var d=document.createElement("div");
+		var child=document.createElement("div");
 		commlist.innerHTML="";
 		for(var i=0;i<json.length;i++){
-			div.innerHTML+="작성자:"+json[i].id+"	내용:"+json[i].comments+"<br>";
+			//console.log(json[i].lev);
+			if(json[i].lev>0){
+				for(var j=0;j<json[i].lev;j++){
+					//alert("요어어어어어");
+					child.innerHTML += "	ㄴ ";
+				}
+			} 
+			child.innerHTML += "작성자:"+json[i].id+"내용:"+json[i].comments+"<button onclick='recomm(event)'>답글</button>"+
+			"<div style='display:none' ><textarea id='recomm"+i+"'></textarea><input type='button' value='등록' onclick='aaa("+i+",${vo.sno},\""+ json[i].id +"\","+ json[i].ref+","+json[i].lev+","+json[i].step +","+json[i].scno+ ")'><br></div><br>";
+			d.appendChild(child);
+			div.appendChild(d);
+			/* "<form method='post' action='scomment.do?cmd=insert&id="+json[i].id+"&sccontent="+document.getElementById("recomm"+i)+"&scref="+json[i].ref+"&sclev="+json[i].lev+"&scstep="+json[i].step+"&sno=${vo.sno}' >" + */
+		
 		}
 	}
+}
+var xhr2=null;
+function aaa(i,sno,id,ref,lev,step,scno){
+	xhr2=new XMLHttpRequest();
+	var aa= document.getElementById("recomm"+i).value;
+	//console.log(scno);
+	//console.log(ref);
+	//console.log(sno);
+	xhr2.onreadystatechange=callback1;
+	xhr2.open('post','scomment.do?cmd=insert',true);
+	xhr2.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+	var params="id="+id+"&sccontent="+aa+"&scref="+ref+"&sclev="+lev+"&scstep="+step+"&scno="+scno+"&sno="+sno;
+	xhr2.send(params);
+	
+}
+function callback1(){
+	if(xhr2.readyState==4 && xhr2.status==200){
+		var result=xhr2.responseText;
+		//alert(result);
+		var json=JSON.parse(result);
+		if(json.result=="success"){
+			document.getElementById("sccontent").value="";
+			getlist();
+		}else{
+			alert("댓글등록실패!");
+		}		
+	}
+}
+function recomm(event){
+	var comm=event.target.nextSibling;
+	var d=document.createElement("div");
+	
+	
+	if(comm.style.display=="inline"){
+		//alert(comm.style.display);
+		comm.style.display="none";
+	}else{
+		//alert(comm.style.display);
+		comm.style.border="2 solid black";
+		comm.style.display="inline";
+	}
+	comm.appendChild(d);
 }
 
 	var xhr1=null;
@@ -145,7 +201,7 @@ function list(){
 	</tr>
 </table>
 <div >
-	<div id="commlist"></div>
+		<div id="commlist"></div>
 		<div id="commAdd">
 			<textarea rows="3" cols="30" id="sccontent"></textarea>
 			<input type="button" value="등록" onclick="addComm()">

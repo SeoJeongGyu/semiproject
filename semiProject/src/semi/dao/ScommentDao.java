@@ -22,18 +22,25 @@ public class ScommentDao {
 		ResultSet rs=null;
 		try {
 			con=DbcpBean.getConn();
-			String sql="select * from scomment where sno=? order by scno asc";
+			String sql="select * from scomment where sno=? order by scref asc, scno asc, sclev asc, scstep asc";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, sno);
 			rs=pstmt.executeQuery();
 			ArrayList<ScommentVo> list=new ArrayList<>();
 			while(rs.next()) {
-				//int scno= rs.getInt("scno");
 				String sccontent=rs.getString("sccontent");
+				//System.out.println("sccontent:" + sccontent);
+				int ref=rs.getInt("scref");
+				int lev=rs.getInt("sclev");
+				int step=rs.getInt("scstep");
+				int scno=rs.getInt("scno");
+				//System.out.println("scno:" + scno);
 				String id=rs.getString("id");
-				ScommentVo vo=new ScommentVo(0, sccontent, 0, 0, 0, 0, null, sno, id);
+				
+				ScommentVo vo=new ScommentVo(scno, sccontent, ref, lev, step, 0, null, sno, id);
 				list.add(vo);
 			}
+			//System.out.println(list);
 			return list;
 			
 		}catch (SQLException se) {
@@ -47,44 +54,47 @@ public class ScommentDao {
 	
 	public int insert(ScommentVo vo) {
 		Connection con=null;
+		PreparedStatement pstmt=null;
 		PreparedStatement pstmt1=null;
-		PreparedStatement pstmt2=null;
 		try {
 			con=DbcpBean.getConn();
-			//등록된 글번호 얻어오기
-			int sno=vo.getSno();
 			int scno=vo.getScno();
-			int ref=vo.getScref();
 			int lev=vo.getSclev();
 			int step=vo.getScstep();
-			if(scno==0) {//새 글인 경우
-				ref=sno;
-			}else {//답글인 경우
-				String sql="update scomment set step=step+1 where ref=? and step>?";
-				pstmt2=con.prepareStatement(sql);
-				pstmt2.setInt(1, ref);
-				pstmt2.setInt(2, step);
-				pstmt2.executeUpdate();
+			if(scno!=0) {
+				String sql="update scomment set scstep=scstep+1 where scref=? and scstep<?";
+				pstmt1=con.prepareStatement(sql);
+				pstmt1.setInt(1, vo.getScref());
+				pstmt1.setInt(2, step);
+				pstmt1.executeUpdate();
 				lev=lev+1;
 				step=step+1;
+				String sql1 = "insert into scomment values(scno_seq.nextval,?,?,?,?,0,sysdate,?,?)";
+				pstmt=con.prepareStatement(sql1);
+				pstmt.setString(1, vo.getSccontent());
+				pstmt.setInt(2, vo.getScref());
+				pstmt.setInt(3, lev);
+				pstmt.setInt(4, step);
+				pstmt.setInt(5,vo.getSno());
+				pstmt.setString(6, vo.getId());
+				pstmt.executeUpdate();
+			}else {
+				String sql="insert into scomment values(scno_seq.nextval,?,scno_seq.currval,?,?,0,sysdate,?,?)";
+				pstmt=con.prepareStatement(sql);
+				pstmt.setString(1, vo.getSccontent());
+				pstmt.setInt(2,vo.getSclev());
+				pstmt.setInt(3,vo.getScstep());
+				pstmt.setInt(4,vo.getSno());
+				pstmt.setString(5, vo.getId());
+				pstmt.executeUpdate();
 			}
-			String sql="insert into scomment values(scno_seq.nextval,?,?,?,?,0,sysdate,?,?)";
-			//System.out.println("boardnum" + boardNum);
-			pstmt1=con.prepareStatement(sql);
-			pstmt1.setString(1, vo.getSccontent());
-			pstmt1.setInt(2,ref);
-			pstmt1.setInt(3,lev);
-			pstmt1.setInt(4,step);
-			pstmt1.setInt(5,sno);
-			pstmt1.setString(6, vo.getId());
-			return pstmt1.executeUpdate();
-
+			
+			return 1;
 		}catch(SQLException se) {
 			System.out.println(se.getMessage());
 			return -1;
 		}finally {
-			DbcpBean.closeConn(null, pstmt2, null);
-			DbcpBean.closeConn(con, pstmt1, null);
+			DbcpBean.closeConn(con, pstmt, null);
 		}
 	}
 	
