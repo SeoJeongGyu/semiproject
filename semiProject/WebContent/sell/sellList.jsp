@@ -128,7 +128,7 @@
 		 
 		 for(var i=0;i<json.list.length;i++){
 			 html += "<tr onclick='getDetail("+json.list[i].sno+")'>";
-				if(json.list[i].success==0){
+				if(json.list[i].success==1){
 					html += "<td>판매중</td>";
 				}else{
 					html+= "<td>판매완료</td>";
@@ -211,7 +211,7 @@
           <c:forEach var="sell" items="${requestScope.slist }">
 			<tr onclick="getDetail(${sell.sno })">
 			<c:choose>
-				<c:when test="${sell.success==0 }">			
+				<c:when test="${sell.success==1 }">			
 					<td>판매중</td>
 				</c:when>
 				<c:otherwise>
