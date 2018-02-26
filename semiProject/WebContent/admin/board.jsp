@@ -5,6 +5,9 @@
 	console.log('${requestScope.page1}');
 	$(document).ready(function() {
 	  $('select').material_select();
+	  if('requestScope.notices'>0){
+	      alert("공지성공");
+	  }
 	});
 	function freeboard(){
 	    location.href="<%=request.getContextPath()%>/boardlist.do?cmd=freeboard";
@@ -26,7 +29,6 @@
 	}
 </script>
  <h4 class="truncate">게시판 관리</h4>
- <button class="btn waves-effect waves-light" type="button" name="action" style="background-color: #ee6e73;" onclick="notices()">공지글작성</button>
   <c:choose>
   			<c:when test="${requestScope.page1==null}">
 				  <ul id="tabs-swipe-demo" class="tabs">

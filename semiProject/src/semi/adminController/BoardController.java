@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import semi.dao.AdminDao;
 import semi.dao.MemberDao;
 import semi.dao.SellDao;
 import semi.vo.MemberVo;
@@ -39,14 +40,20 @@ public class BoardController extends HttpServlet{
     }
     public void noticesOk(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
        String title = req.getParameter("title");
-       String content = req.getParameter("content");
-       
-       
-       
-        /*req.setAttribute("page", "/admin/board.jsp");
-        req.setAttribute("page1", "notices");
+       String content = req.getParameter("scontent");
+       String chk[] = req.getParameterValues("chk");
+       System.out.println("title:"+title);
+       System.out.println("content:"+content);
+       int n=0;
+       for(int i=0; i<chk.length;i++) {
+           n+=AdminDao.getInstance().notices(chk[i], title, content);
+           System.out.println("n:"+n);
+       }
+        System.out.println("¿Ï¼ºn:"+n);
+        req.setAttribute("page", "/admin/board.jsp");
+        req.setAttribute("notices", n);
         RequestDispatcher rd = req.getRequestDispatcher("admin.jsp");
-        rd.forward(req, resp);*/
+        rd.forward(req, resp);
     }
     public void notices(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("page", "/admin/board.jsp");

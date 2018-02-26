@@ -1,28 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <script type="text/javascript">
-	window.onload=function(){
-	    function chk(){
+	  /*   function send(){
+	        var code="";
 		    var chk = document.getElementsByName("chk");
 		    for(var i=0; i<chk.length;i++){
-		        console.log(chk[i]);
+		        if(chk[i].checked==true){
+		            code+=chk[i].value+",";
+		        }
 		    }
-	    }
-	}
-	
-	
+		    document.frm.submit();
+	    } */
 </script>    
 <div class="row">
-   <form class="col s12" method="post" action="/semiProject/boardlist.do?cmd=noticesOk">
-        <div id="check">
-        <input type="checkbox" id="freeboard" name="chk" value="freeboard" onclick="chk()"/>
-		<label for="freeboard">자유게시판</label>
-		<input type="checkbox" id="qna" name="chk" value="qna" onclick="chk()"/>
-		<label for="qna">질문게시판</label>
-        <input type="checkbox" id="sell" name="chk" value="sell" onclick="chk()"/>
-		<label for="sell">팝니다게시판</label>
-		<input type="checkbox" id="buy" name="chk" value="buy" onclick="chk()"/>
-		<label for="buy">삽니다게시판</label>
+   <form class="col s12" method="post" action="<%=request.getContextPath()%>/boardlist.do?cmd=noticesOk" name="frm">
+        <div id="check" style="margin-left: 30px;">
+        <input type="checkbox" id="fqboard" name="chk" value="fqboard" />
+		<label for="fqboard">자유질문게시판&nbsp;&nbsp;&nbsp;&nbsp;</label>
+        <input type="checkbox" id="sell" name="chk" value="sell" />
+		<label for="sell">팝니다게시판&nbsp;&nbsp;&nbsp;&nbsp;</label>
+		<input type="checkbox" id="buy" name="chk" value="buy" />
+		<label for="buy">삽니다게시판&nbsp;&nbsp;&nbsp;&nbsp;</label>
         </div>
       <div class="row">
         <div class="input-field col s6" style="margin-left: 15px">
