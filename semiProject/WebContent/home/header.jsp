@@ -29,7 +29,7 @@ $(".dropdown-button").dropdown();
   <nav>
   <div class="nav-wrapper" style="background-color: #993333;">
     <ul class="left hide-on-med-and-down" style="margin-left: 300px;">
-      <li><a href="<%=request.getContextPath()%>/notices.do?cmd=notices">공지게시판</a></li>
+      <li><a href="<%=request.getContextPath()%>/notices.do?cmd=notices">공지사항</a></li>
       <li><a href="#">리뷰게시판</a></li>
       <li><a href="#">자유게시판</a></li>
       <!-- Dropdown Trigger -->

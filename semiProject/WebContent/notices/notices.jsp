@@ -2,48 +2,25 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript">
-	function noticesOk(){
-	    location.href="<%=request.getContextPath()%>/boardlist.do?cmd=noticesInsert";
+	$(document).ready(function() {
+	  $('select').material_select();
+	});
+	function getDetail(num){
+	    location.href="notices.do?cmd=detail&num="+num;
 	}
-	function checkAll(){
-		var check=document.getElementsByName("check");
-		var checkAll=document.getElementById("checkAll");
-		if(checkAll.checked==true){
-			for(var i=0; i<check.length;i++){
-			    check[i].checked=true;
-			}
-		}else{
-		    for(var i=0; i<check.length;i++){
-			    check[i].checked=false;
-			}
-		}
-	}
-	function del(){
-	    var chk = document.getElementsByName("check");
-	    var len =0;
-	    var sql ="delete from notices where num in('";
-	    for(var i=0;i<chk.length;i++){
-	        if(chk[i].checked==true){
-	            len++;
-	            if(len>1){
-	                sql+=",'"+chk[i].value+"'";
-	            }else{
-	                sql+=chk[i].value+"'";
-	            }
-	        }
+	window.onload=function(){
+	    var select = document.getElementsByName("select")[0];
+	    console.log('${requestScope.select}');
+	    select.selectedIndex='${requestScope.select}';
+	    if('${requestScope.del}'!=""){
+	        alert('${requestScope.del}');
 	    }
-	    sql+=")";
-	    location.href="<%=request.getContextPath()%>/notices.do?cmd=noticesdelete&sql="+sql;
 	}
-</script>
-<h4 class="truncate">공지사항</h4>
+</script>    
+ <h4 class="truncate">공지사항</h4>
  <table class="highlight">
         <thead>
           <tr>
-          	  <th>
-	          <p><input type="checkbox" id="checkAll" onclick="checkAll()"/>
-			  <label for="checkAll"></label></p>
-			  </th>
               <th>작성번호</th>
               <th>제목</th>
               <th>작성일</th>
@@ -53,10 +30,6 @@
         <tbody>
         	<c:forEach var="vo" items="${requestScope.list }">
 	          <tr onclick="getDetail(${vo.num })">
-	            <td>
-		            <p><input type="checkbox" name="check" id="${vo.num }" value="${vo.num }" />
-				    <label for="${vo.num }"></label></p>
-			    </td>
 	            <td>${vo.num }</td>
 	            <td>${vo.title }</td>
 	            <td>${vo.ndate }</td>
@@ -97,8 +70,6 @@
 	    <!-- <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li> -->
   	</ul>
   	</div>
-  	<div style="margin-left: 1100px;"><a class="waves-effect waves-light btn" style="background-color: #ee6e73;" onclick="noticesOk()">글쓰기</a>&nbsp;&nbsp;&nbsp;<a class="waves-effect waves-light btn" style="background-color: #ee6e73;" onclick="del()">공지삭제</a></div>
-  	
     <form class="col s12" method="post" action="<%=request.getContextPath()%>/boardlist.do?cmd=notices">
     <div class="row" style="margin-left: 400px;">
         <div class="input-field col s3" >

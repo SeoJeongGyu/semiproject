@@ -12,8 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import semi.dao.AdminDao;
 import semi.dao.MemberDao;
+import semi.dao.NoticesDao;
 import semi.dao.SellDao;
 import semi.vo.MemberVo;
+import semi.vo.NoticesVo;
 import semi.vo.SellVo;
 @WebServlet("/boardlist.do")
 public class BoardController extends HttpServlet{
@@ -34,9 +36,64 @@ public class BoardController extends HttpServlet{
             qna(req,resp);
         }else if(cmd.equals("notices")) {
             notices(req,resp);
+        }else if(cmd.equals("noticesInsert")) {
+            noticesInsert(req,resp);
         }else if(cmd.equals("noticesOk")) {
             noticesOk(req,resp);
         }
+    }
+    public void noticesInsert(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute("page", "/admin/board.jsp");
+        req.setAttribute("page1", "noticesInsert");
+        RequestDispatcher rd = req.getRequestDispatcher("admin.jsp");
+        rd.forward(req, resp);
+    }
+    public void notices(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String text = req.getParameter("text");
+        String spageNum = req.getParameter("pageNum");
+        System.out.println("spageNum:"+spageNum);
+        int pageNum=1;
+        if(spageNum!=null) {
+            if(Integer.parseInt(spageNum)<0) {
+                spageNum="1";
+            }
+            pageNum=Integer.parseInt(spageNum);
+        }
+        System.out.println("pageNum:"+pageNum);
+        int startRow = (pageNum-1)*10+1;
+        System.out.println("startRow:"+startRow);
+        int endRow = startRow+9;
+        System.out.println("endRow:"+endRow);
+        int getMax=0;
+        System.out.println("text:"+text);
+        ArrayList<NoticesVo> list = null;
+        if(text==null) {
+            getMax = NoticesDao.getInstance().getMax();
+            list = NoticesDao.getInstance().noticesList(null, startRow, endRow);
+        }else {
+            list = NoticesDao.getInstance().noticesList(text,startRow,endRow);
+            getMax=NoticesDao.getInstance().getMax(text);
+            req.setAttribute("text", text);
+        }
+        System.out.println("getMax:"+getMax);
+        int pageCount = (int)Math.ceil(getMax/10.0);
+        System.out.println("pageCount:"+pageCount);
+        int startPage = ((pageNum-1)/5*5)+1;
+        System.out.println("startPage:"+startPage);
+        int endPage = startPage+4;
+        if(pageCount<endPage) {
+            endPage=pageCount;
+        }
+        System.out.println("endPage:"+endPage);
+        req.setAttribute("list", list);
+        req.setAttribute("pageCount", pageCount);
+        req.setAttribute("startPage", startPage);
+        req.setAttribute("endPage", endPage);
+        req.setAttribute("pageNum", pageNum);
+        req.setAttribute("page", "/admin/board.jsp");
+        req.setAttribute("page1", "notices");
+        RequestDispatcher rd = req.getRequestDispatcher("admin.jsp");
+        rd.forward(req, resp);
     }
     public void noticesOk(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
        String title = req.getParameter("title");
@@ -50,16 +107,7 @@ public class BoardController extends HttpServlet{
            System.out.println("n:"+n);
        }
         System.out.println("¿Ï¼ºn:"+n);
-        req.setAttribute("page", "/admin/board.jsp");
-        req.setAttribute("notices", n);
-        RequestDispatcher rd = req.getRequestDispatcher("admin.jsp");
-        rd.forward(req, resp);
-    }
-    public void notices(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("page", "/admin/board.jsp");
-        req.setAttribute("page1", "notices");
-        RequestDispatcher rd = req.getRequestDispatcher("admin.jsp");
-        rd.forward(req, resp);
+        notices(req,resp);
     }
     public void buy(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("page", "/admin/board.jsp");
@@ -86,7 +134,6 @@ public class BoardController extends HttpServlet{
         rd.forward(req, resp);
     }
     public void sell(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("¿©±â¿È");
         String text = req.getParameter("text");
         String spageNum = req.getParameter("pageNum");
         System.out.println("spageNum:"+spageNum);

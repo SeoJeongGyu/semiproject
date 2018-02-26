@@ -19,7 +19,9 @@ public class AdminDao {
                 con=DbcpBean.getConn();
                 String sql="";
                 System.out.println("table:"+table);
-                if(table.equals("buy")) {
+                if(table.equals("notices")) {
+                    sql="insert into "+table+" values(notices_seq.nextval,?,?,0,sysdate)";
+                }else if(table.equals("buy")) {
                     /*sql="insert into"+table+"values()";*/
                     return 1;
                 }else if(table.equals("fqboard")) {

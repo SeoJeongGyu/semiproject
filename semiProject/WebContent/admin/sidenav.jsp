@@ -25,7 +25,7 @@ function btn(){
    <ul id="slide-out" class="side-nav">
     <li><a href="<%=request.getContextPath()%>/memberAdmin.do?cmd=list">회원관리</a></li>
     <li><div class="divider"></div></li>
-    <li><a href="<%=request.getContextPath()%>/admin.do?cmd=board">게시물관리</a></li>
+    <li><a href="<%=request.getContextPath()%>/boardlist.do?cmd=notices">게시물관리</a></li>
     <li><div class="divider"></div></li>
     <li><a href="<%=request.getContextPath()%>/admin.do?cmd=report">신고물관리</a></li>
     <li><div class="divider"></div></li>
