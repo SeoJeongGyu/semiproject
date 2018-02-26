@@ -1,6 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<script>
+
+<!-- 글작성자와 접속자가 같은지 확인 -->
+function rupdate(){
+	if('${sessionScope.id}' == '${vo.id}'){
+	location.href="review.do?cmd=update&rno={vo.rno}";
+		
+	}else{
+		alert("본인의 글만 수정할 수 있습니다.");
+	}
+}
+
+function rdelete(){
+if('${sessionScope.id}' == '${vo.id}'){
+location.href="review.do?cmd=delete&rno=${vo.rno}&id=${vo.id}";
+	
+}else{
+	alert("본인의 글만 삭제할 수 있습니다.");
+}
+
+}
+</script>
 
 <div id="wrap">
 
@@ -32,40 +54,21 @@
 		<!-- 내용보여주기  -->
 <div id="content" style="margin-left: 250px;"><span>${vo.rcontent }</span></div>
 
-<!--통신사 텔레콤 테이블  -->
-
-<table class="bordered centered">
-        <thead>
-          <tr>
-              <th>통신사;</th>
-              <th>Item Name</th>
-             
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr>
-            <td>Alvin</td>
-         
-          </tr>
-          <tr>
-            <td>Alan</td>
-     
-  
-          </tr>
-     
-        </tbody>
-      </table>
-
-
-
-		<div id="telecom&company">${vo.telecom } ${vo.company }</div>
+		
+		<!--  수정, 삭제, 추천-->
+<div class="fixed-action-btn horizontal">
+    <a class="btn-floating btn-large red">
+      <i class="large material-icons">menu</i>
+    </a>
+    <ul>
+      <li><a class="btn-floating blue" onclick="rupdate()"><i class="material-icons">border_color</i></a></li>
+      <li><a class="btn-floating red"  onclick="rdelete()" ><i class="material-icons">delete</i></a></li>
+      <li><a class="btn-floating green"><i class="material-icons">thumb_up</i></a></li>
+      <li><a class="btn-floating black"><i class="material-icons">sentiment_very_dissatisfied</i></a></li>
+    </ul>
+  </div>
 		<!-- 댓글기능  -->
 		<div id="bottom"></div>
-
-
-
-
 
 	</form>
 </div>

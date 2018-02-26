@@ -32,6 +32,10 @@ public class ReviewController extends HttpServlet {
 			list(req, resp);
 		} else if (cmd.equals("content")) {
 			content(req, resp);
+		}else if (cmd.equals("delete")) {
+			delete(req,resp);
+		}else if (cmd.equals("update")) {
+			update(req,resp);
 		}
 	}
 
@@ -76,10 +80,8 @@ public class ReviewController extends HttpServlet {
 		String orgfilename = mr.getOriginalFileName("file");
 		String savefilename = mr.getFilesystemName("file");
 		String id = (String) req.getSession().getAttribute("id");
-		int telecom = Integer.parseInt(mr.getParameter("telecom"));
 		int company = Integer.parseInt(mr.getParameter("company"));
-
-		ReviewVo vo = new ReviewVo(0, rtitle, rcontent, null, 0, 0, 0, orgfilename, savefilename, id, telecom, company);
+		ReviewVo vo = new ReviewVo(0, rtitle, rcontent, null, 0, 0, 0, orgfilename, savefilename, id, company,0);
 		ReviewDao dao = ReviewDao.getInstance();
 
 		int n = dao.write(vo);
@@ -100,4 +102,30 @@ public class ReviewController extends HttpServlet {
 		req.getRequestDispatcher("main.jsp").forward(req, resp);
 	}
 
-}
+	public void delete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+		int rno = Integer.parseInt(req.getParameter("rno"));
+		String id= req.getParameter("id");
+		ReviewDao dao = ReviewDao.getInstance();
+		int n = dao.delete(rno, id);
+		
+		if(n>0) {
+		req.setAttribute("page", "/review/jReviewList.jsp");
+		req.getRequestDispatcher("main.jsp").forward(req, resp);
+		}else {
+			req.setAttribute("result", "cancel");
+			
+		}
+	}
+	public void update(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		int rno = Integer.parseInt(req.getParameter("rno"));
+		ReviewDao dao=ReviewDao.getInstance();
+		ReviewVo vo=dao.update(rno);
+		req.setAttribute("vo", vo);
+		req.setAttribute("page", "/review/jReviewUpdate.jsp");
+		req.getRequestDispatcher("main.jsp").forward(req, resp);
+	
+		}
+	
+	}
+

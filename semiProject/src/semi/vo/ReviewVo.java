@@ -13,10 +13,20 @@ public class ReviewVo {
 	private String orgfilename;
 	private String savefilename;
 	private String id;
-	private int telecom;
+	private int recommend;
+
+	public int getRecommend() {
+		return recommend;
+	}
+
+	public void setRecommend(int recommend) {
+		this.recommend = recommend;
+	}
+
 	private int company;
+
 	public ReviewVo(int rno, String rtitle, String rcontent, Date rdate, int rhit, int rgrade, int rreport,
-			String orgfilename, String savefilename, String id, int telecom, int company) {
+			String orgfilename, String savefilename, String id, int company, int recommend) {
 		super();
 		this.rno = rno;
 		this.rtitle = rtitle;
@@ -28,81 +38,96 @@ public class ReviewVo {
 		this.orgfilename = orgfilename;
 		this.savefilename = savefilename;
 		this.id = id;
-		this.telecom = telecom;
 		this.company = company;
+		this.recommend = recommend;
 	}
+
 	public int getRno() {
 		return rno;
 	}
+
 	public void setRno(int rno) {
 		this.rno = rno;
 	}
+
 	public String getRtitle() {
 		return rtitle;
 	}
+
 	public void setRtitle(String rtitle) {
 		this.rtitle = rtitle;
 	}
+
 	public String getRcontent() {
 		return rcontent;
 	}
+
 	public void setRcontent(String rcontent) {
 		this.rcontent = rcontent;
 	}
+
 	public Date getRdate() {
 		return rdate;
 	}
+
 	public void setRdate(Date rdate) {
 		this.rdate = rdate;
 	}
+
 	public int getRhit() {
 		return rhit;
 	}
+
 	public void setRhit(int rhit) {
 		this.rhit = rhit;
 	}
+
 	public int getRgrade() {
 		return rgrade;
 	}
+
 	public void setRgrade(int rgrade) {
 		this.rgrade = rgrade;
 	}
+
 	public int getRreport() {
 		return rreport;
 	}
+
 	public void setRreport(int rreport) {
 		this.rreport = rreport;
 	}
+
 	public String getOrgfilename() {
 		return orgfilename;
 	}
+
 	public void setOrgfilename(String orgfilename) {
 		this.orgfilename = orgfilename;
 	}
+
 	public String getSavefilename() {
 		return savefilename;
 	}
+
 	public void setSavefilename(String savefilename) {
 		this.savefilename = savefilename;
 	}
+
 	public String getId() {
 		return id;
 	}
+
 	public void setId(String id) {
 		this.id = id;
 	}
-	public int getTelecom() {
-		return telecom;
-	}
-	public void setTelecom(int telecom) {
-		this.telecom = telecom;
-	}
+
 	public int getCompany() {
 		return company;
 	}
+
 	public void setCompany(int company) {
 		this.company = company;
 	}
-
 
 }
