@@ -33,8 +33,9 @@
 	<div id="joinSuccess" align="center" style="display: none;"><h4 >회원가입에 성공하였습니다.</h4></div>
     <form  method="post" action="<%=request.getContextPath()%>/member.do?cmd=loginOk" class="col s12 ">
       <div class="row">
-        <div class="input-field col s6">
-          <input id="id" name="id" type="text" class="validate" style="width: 460px; height: 60px;" value="qqqqqq">
+        <div class="input-field col s6">  
+          <input id="id" name="id" type="text" class="validate" style="width: 460px; height: 60px;">
+
           <label for="id" style="color: #993333; font-size: 20px;">아이디</label>
         </div>
       </div>
