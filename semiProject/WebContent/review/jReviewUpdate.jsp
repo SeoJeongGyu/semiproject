@@ -4,26 +4,52 @@
   <script>
   $(document).ready(function() {
 	    $('select').material_select();
-	  });
-  </script>
+	 });
+  
 
+  </script>
+  <script type="text/javascript">
+
+  function handleFileSelect() 
+  {
+      var files = document.getElementById('up_files').files[0]; //파일 객체
+
+      var reader = new FileReader();
+
+           
+      reader.onload = (function(theFile) 
+      {
+          return function(e) 
+          {
+              var img_view = ['<img src=" ', e.target.result, ' " title=" ', escape(theFile.name), ' " style="width:210px;height:140px;"/>'].join('');                
+              document.getElementById('list').innerHTML = img_view;
+          };
+      })(files);
+      reader.readAsDataURL(files);    
+  }
+
+</script>
 <center>
+
+
+
+
 
 <!-- 전체를 감싸는 div -->
 <div id="write" style="width: 1000px; height: 527px; margin-top: 100px;">
 
 <div class="row">
-대표사진변경
+<h5>대표사진변경</h5>
     <!-- 사진 등록 AJAX div  -->
-<div style="clear:both;float:left;margin-top:15px;height:140px;text-align:center;">
-
+<div id="list" style="clear:both;float:left;margin-top:15px; overflow:hidden; width:210px;height:140px;text-align:center;">
 <img src="/semiProject/upload/${vo.savefilename}" style="width:210px; border:1px solid #F0F0F0" >
 </div>
+<br><br><br><br><br>
 <div id="file" >
       <div class="file-field input-field">
       <div class="btn" style="width:100px;height:40px;">
         <span>첨부</span>
- 		<input type="file" name="file">
+ 		<input type="file" id="up_files" name="up_files" onchange="handleFileSelect()">
  		
       </div>
       <div class="file-path-wrapper">
