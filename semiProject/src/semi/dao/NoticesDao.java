@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import semi.vo.NoticesVo;
-import semi.vo.SellVo;
 import test.dbcp.DbcpBean;
 
 public class NoticesDao {
@@ -16,6 +15,25 @@ public class NoticesDao {
     private NoticesDao() {}
     public static NoticesDao getInstance() {
         return instance;
+    }
+    public int update(NoticesVo vo) {
+        Connection con=null;
+        PreparedStatement pstmt=null;
+        try {
+            String sql="update notices set title=?,content=? where num=?";
+            con=DbcpBean.getConn();
+            pstmt=con.prepareStatement(sql);
+            pstmt.setString(1, vo.getTitle());
+            pstmt.setString(2, vo.getContent());
+            pstmt.setInt(3, vo.getNum());
+            int n = pstmt.executeUpdate();
+            return n;
+        } catch (SQLException se) {
+            System.out.println(se.getMessage());
+            return -1;
+        }finally {
+            DbcpBean.closeConn(con, pstmt, null);
+        }
     }
     public int delete(String sql) {
         Connection con=null;

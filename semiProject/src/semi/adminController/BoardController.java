@@ -40,7 +40,18 @@ public class BoardController extends HttpServlet{
             noticesInsert(req,resp);
         }else if(cmd.equals("noticesOk")) {
             noticesOk(req,resp);
+        }else if(cmd.equals("noticesUpdate")) {
+            noticesUpdate(req,resp);
         }
+    }
+    public void noticesUpdate(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int num=Integer.parseInt(req.getParameter("num"));
+        NoticesVo vo=NoticesDao.getInstance().detail(num);
+        req.setAttribute("vo", vo);
+        req.setAttribute("page", "/admin/board.jsp");
+        req.setAttribute("page1", "noticesUpdate");
+        RequestDispatcher rd = req.getRequestDispatcher("admin.jsp");
+        rd.forward(req, resp);
     }
     public void noticesInsert(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("page", "/admin/board.jsp");

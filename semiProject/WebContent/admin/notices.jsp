@@ -2,6 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript">
+	function getDetail(num){
+	    location.href="<%=request.getContextPath()%>/notices.do?cmd=detail&admin=admin&num="+num;
+	}
 	function noticesOk(){
 	    location.href="<%=request.getContextPath()%>/boardlist.do?cmd=noticesInsert";
 	}

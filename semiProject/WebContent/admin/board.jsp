@@ -107,8 +107,32 @@
 				    <li class="tab col s3" onclick="sell()"><a href="#sell">팝니다게시판</a></li>
 				    <li class="tab col s3" onclick="buy()"><a href="#buy">삽니다게시판</a></li>
 				 </ul>
-				<div id="notices">
+				<div id="noticesInsert">
 				<jsp:include page="noticesInsert.jsp"></jsp:include>
+				</div>
+			</c:when>
+			<c:when test="${requestScope.page1=='noticesOk'}">
+				<ul id="tabs-swipe-demo" class="tabs">
+					<li class="tab col s3" onclick="notices()"><a class="active" href="#notices">공지사항</a></li>
+				    <li class="tab col s3" onclick="review()"><a href="#review">리뷰게시판</a></li>
+				    <li class="tab col s3" onclick="freeboard()"><a href="#freeboard">자유게시판</a></li>
+				    <li class="tab col s3" onclick="sell()"><a href="#sell">팝니다게시판</a></li>
+				    <li class="tab col s3" onclick="buy()"><a href="#buy">삽니다게시판</a></li>
+				 </ul>
+				<div id="noticesOk">
+				<jsp:include page="noticesOk.jsp"></jsp:include>
+				</div>
+			</c:when>
+			<c:when test="${requestScope.page1=='noticesUpdate'}">
+				<ul id="tabs-swipe-demo" class="tabs">
+					<li class="tab col s3" onclick="notices()"><a class="active" href="#notices">공지사항</a></li>
+				    <li class="tab col s3" onclick="review()"><a href="#review">리뷰게시판</a></li>
+				    <li class="tab col s3" onclick="freeboard()"><a href="#freeboard">자유게시판</a></li>
+				    <li class="tab col s3" onclick="sell()"><a href="#sell">팝니다게시판</a></li>
+				    <li class="tab col s3" onclick="buy()"><a href="#buy">삽니다게시판</a></li>
+				 </ul>
+				<div id="noticesUpdate">
+				<jsp:include page="noticesUpdate.jsp"></jsp:include>
 				</div>
 			</c:when>
 			<%-- <c:otherwise>

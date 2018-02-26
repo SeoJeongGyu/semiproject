@@ -11,16 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import semi.adminController.BoardController;
-import semi.dao.MemberDao;
 import semi.dao.NoticesDao;
-import semi.dao.SellDao;
 import semi.vo.NoticesVo;
-import semi.vo.SellVo;
 @WebServlet("/notices.do")
 public class noticesController extends HttpServlet{
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("utf-8");
         String cmd=req.getParameter("cmd");
         if(cmd.equals("notices")) {
             notices(req,resp);
@@ -28,7 +26,21 @@ public class noticesController extends HttpServlet{
             detail(req,resp);
         }else if(cmd.equals("noticesdelete")) {
             noticesdelete(req,resp);
+        }else if(cmd.equals("update")) {
+            update(req,resp);
         }
+    }
+    public void update(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int num=Integer.parseInt(req.getParameter("num"));
+        String title = req.getParameter("title");
+        String content = req.getParameter("scontent");
+        NoticesVo vo = new NoticesVo(num,title,content,0,null);
+        int n = NoticesDao.getInstance().update(vo);
+        req.setAttribute("vo", vo);
+        req.setAttribute("page", "/admin/board.jsp");
+        req.setAttribute("page1", "noticesOk");
+        RequestDispatcher rd = req.getRequestDispatcher("admin.jsp");
+        rd.forward(req, resp);
     }
     public void noticesdelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String sql=req.getParameter("sql");
@@ -40,12 +52,22 @@ public class noticesController extends HttpServlet{
     }
     public void detail(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int num=Integer.parseInt(req.getParameter("num"));
-        
+        String admin = req.getParameter("admin");
+        System.out.println("admin:"+admin);
         NoticesVo vo=NoticesDao.getInstance().detail(num);
         NoticesDao.getInstance().updateHit(vo);
-        req.setAttribute("vo", vo);
-        req.setAttribute("page", "/notices/noticesOk.jsp");
-        req.getRequestDispatcher("/main.jsp").forward(req, resp);
+        if(admin==null) {
+            req.setAttribute("vo", vo);
+            req.setAttribute("page", "/notices/noticesOk.jsp");
+            req.getRequestDispatcher("/main.jsp").forward(req, resp);
+        }
+        else {
+            req.setAttribute("vo", vo);
+            req.setAttribute("page", "/admin/board.jsp");
+            req.setAttribute("page1", "noticesOk");
+            RequestDispatcher rd = req.getRequestDispatcher("admin.jsp");
+            rd.forward(req, resp);
+        }
         
     }
     public void notices(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

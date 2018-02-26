@@ -6,7 +6,7 @@
 	  $('select').material_select();
 	});
 	function getDetail(num){
-	    location.href="notices.do?cmd=detail&num="+num;
+	    location.href="<%=request.getContextPath()%>/notices.do?cmd=detail&num="+num;
 	}
 	window.onload=function(){
 	    var select = document.getElementsByName("select")[0];
