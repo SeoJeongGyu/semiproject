@@ -12,4 +12,4 @@
 
         <!-- include skelenote css/js-->
         <link href="../dist/materialnote.css" rel="stylesheet" type="text/css">
-        <script src="../dist/materialnote.js"></script>/script>
+        <script src="../dist/materialnote.js"></script>

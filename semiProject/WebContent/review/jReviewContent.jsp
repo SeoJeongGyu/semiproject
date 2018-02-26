@@ -6,7 +6,7 @@
 <!-- 글작성자와 접속자가 같은지 확인 -->
 function rupdate(){
 	if('${sessionScope.id}' == '${vo.id}'){
-	location.href="review.do?cmd=update&rno={vo.rno}";
+	location.href="review.do?cmd=update&rno=${vo.rno}";
 		
 	}else{
 		alert("본인의 글만 수정할 수 있습니다.");
