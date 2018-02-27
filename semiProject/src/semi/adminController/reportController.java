@@ -75,7 +75,6 @@ public class reportController extends HttpServlet{
         System.out.println("endRow:"+endRow);
         int getMax=0;
         ArrayList<SellVo>list = ReportDao.getInstance().SellReport(startRow, endRow);
-            String select = req.getParameter("select");
             getMax=ReportDao.getInstance().sellGetMax();
             list = ReportDao.getInstance().sellReport(startRow, endRow);
         System.out.println("getMax:"+getMax);
