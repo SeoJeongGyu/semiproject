@@ -19,7 +19,7 @@ public class MemberController  extends HttpServlet{
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("utf-8");
         String cmd = req.getParameter("cmd");
-        System.out.println(cmd);
+       // System.out.println(cmd);
         if(cmd.equals("join")) {
             req.setAttribute("page", "/member/join.jsp");
             RequestDispatcher rd = req.getRequestDispatcher("main.jsp");

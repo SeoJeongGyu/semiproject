@@ -11,7 +11,7 @@ var xhr=null;
 function getlist(){
 	xhr=new XMLHttpRequest();
 	xhr.onreadystatechange=list;
-	xhr.open('get','scomment.do?cmd=list&sno=${vo.sno}', true);
+	xhr.open('get','bcomment.do?cmd=list&bno=${vo.bno}', true);
 	xhr.send();
 }
 function list(){
@@ -32,25 +32,22 @@ function list(){
 				}
 			} 
 			child.innerHTML += "작성자:"+json[i].id+"내용:"+json[i].comments+"<button onclick='recomm(event)'>답글</button>"+
-			"<div style='display:none' ><textarea id='recomm"+i+"'></textarea><input type='button' value='등록' onclick='aaa("+i+",${vo.sno},\""+ json[i].id +"\","+ json[i].ref+","+json[i].lev+","+json[i].step +","+json[i].scno+ ")'><br></div><br>";
+			"<div style='display:none' ><textarea id='recomm"+i+"'></textarea><input type='button' value='등록' onclick='aaa("+i+",${vo.bno},\""+ json[i].id +"\","+ json[i].ref+","+json[i].lev+","+json[i].step +","+json[i].scno+ ")'><br></div><br>";
 			d.appendChild(child);
 			div.appendChild(d);
-			/* "<form method='post' action='scomment.do?cmd=insert&id="+json[i].id+"&sccontent="+document.getElementById("recomm"+i)+"&scref="+json[i].ref+"&sclev="+json[i].lev+"&scstep="+json[i].step+"&sno=${vo.sno}' >" + */
+			
 		
 		}
 	}
 }
 var xhr2=null;
-function aaa(i,sno,id,ref,lev,step,scno){
+function aaa(i,bno,id,ref,lev,step,bcno){
 	xhr2=new XMLHttpRequest();
-	var aa= document.getElementById("recomm"+i).value;
-	//console.log(scno);
-	//console.log(ref);
-	//console.log(sno);
+	var aa= document.getElementById("recomm"+i).value;	
 	xhr2.onreadystatechange=callback1;
-	xhr2.open('post','scomment.do?cmd=insert',true);
+	xhr2.open('post','bcomment.do?cmd=insert',true);
 	xhr2.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-	var params="id="+id+"&sccontent="+aa+"&scref="+ref+"&sclev="+lev+"&scstep="+step+"&scno="+scno+"&sno="+sno;
+	var params="id="+id+"&bccontent="+aa+"&bcref="+ref+"&bclev="+lev+"&bcstep="+step+"&bcno="+bcno+"&bno="+bno;
 	xhr2.send(params);
 	
 }
@@ -60,7 +57,7 @@ function callback1(){
 		//alert(result);
 		var json=JSON.parse(result);
 		if(json.result=="success"){
-			document.getElementById("sccontent").value="";
+			document.getElementById("bccontent").value="";
 			getlist();
 		}else{
 			alert("댓글등록실패!");
@@ -79,19 +76,20 @@ function recomm(event){
 		//alert(comm.style.display);
 		comm.style.border="2 solid black";
 		comm.style.display="inline";
+		
 	}
 	comm.appendChild(d);
 }
 
 	var xhr1=null;
 	function addComm(){
-		var comm=document.getElementById("sccontent").value;
+		var comm=document.getElementById("bccontent").value;
 		xhr1=new XMLHttpRequest();
 		xhr1.onreadystatechange=callback;
-		xhr1.open('post','scomment.do?cmd=insert&sccontent='+comm+'&sno=${vo.sno }',true);
+		xhr1.open('post','bcomment.do?cmd=insert&bccontent='+comm+'&bno=${vo.bno }',true);
 		//post방식은경우 아래와 같이 Content-Type지정해야 함
 		xhr1.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-		var params="sccontent=" + comm;
+		var params="bccontent=" + comm;
 		//post방식으로 데이터를 보낼때는 send메소드를 이용한다.
 		xhr1.send(params);
 	}
@@ -101,7 +99,7 @@ function recomm(event){
 			//alert(result);
 			var json=JSON.parse(result);
 			if(json.result=="success"){
-				document.getElementById("sccontent").value="";
+				document.getElementById("bccontent").value="";
 				getlist();
 			}else{
 				alert("댓글등록실패!");
@@ -116,101 +114,44 @@ function recomm(event){
 		<td>${vo.id }</td>
 	</tr>
 	<tr>
-		<td>os</td>
-		<c:choose>
-			<c:when test="${vo.os==1 }">
-				<td>ios</td>
-			</c:when>
-			<c:otherwise>
-				<td>안드로이드</td>
-			</c:otherwise>
-		</c:choose>
-	</tr>
-	<tr>
-		<td>통신사</td>
-		<c:choose>
-			<c:when test="${vo.telecom==1 }">
-				<td>SKT</td>
-			</c:when>
-			<c:when test="${vo.telecom==2 }">
-				<td>KT</td>
-			</c:when>
-			<c:when test="${vo.telecom==3 }">
-				<td>LGU+</td>
-			</c:when>
-			<c:otherwise>
-				<td>기타</td>
-			</c:otherwise>
-		</c:choose>
-	</tr>
-	<tr>
-		<td>제조사</td>
-		<c:choose>
-			<c:when test="${vo.company==1 }">
-				<td>삼성</td>
-			</c:when>
-			<c:when test="${vo.company==2 }">
-				<td>LG</td>
-			</c:when>
-			<c:when test="${vo.company==3 }">
-				<td>애플</td>
-			</c:when>
-			<c:otherwise>
-				<td>기타</td>
-			</c:otherwise>
-		</c:choose>
-	</tr>
-	<tr>
 		<td>조회수</td>
-		<td>${vo.shit }</td>
-	</tr>
-	<tr>
-		<td>가격</td>
-		<td>${vo.price }</td>
+		<td>${vo.bhit }</td>
 	</tr>
 	<tr>
 		<td>거래상황</td>
 		<c:choose>
 			<c:when test="${vo.success==0 }">
-				<td>판매중</td>
+				<td>거래중</td>
 			</c:when>
 			<c:otherwise>
-				<td>판매완료</td>
+				<td>거래완료</td>
 			</c:otherwise>
 		</c:choose>
 	<tr>
-		<td>거래장소</td>
-		<td>${vo.loc }</td>
-	</tr>
-	<tr>
 		<td>작성날짜</td>
-		<td>${vo.sdate }</td>
-	</tr>
-	<tr>
-		<td>작성자</td>
-		<td>${vo.id }</td>
+		<td>${vo.bdate }</td>
 	</tr>
 	<tr>
 		<td>제목</td>
-		<td>${vo.stitle }</td>
+		<td>${vo.btitle }</td>
 	</tr>
 	<tr>
 		<td>내용</td>
-		<td>${vo.scontent }</td>
+		<td>${vo.bcontent }</td>
 	</tr>
 	<tr>
 		<td colspan="2">
-			<a href="sell.do?cmd=sellList">목록으로</a>
+			<a href="buy.do?cmd=buyList">목록으로</a>
 		</td>
 		<td colspan="2">
-			<a href="sell.do?cmd=delete&sno=${vo.sno }&id=${vo.id }">삭제</a>
+			<a href="buy.do?cmd=delete&bno=${vo.bno }&id=${vo.id }">삭제</a>
 		</td>
 	</tr>
 </table>
 <div >
 		<div id="commlist"></div>
 		<div id="commAdd">
-			<textarea rows="3" cols="30" id="sccontent"></textarea>
+			<textarea rows="3" cols="30" id="bccontent"></textarea>
 			<input type="button" value="등록" onclick="addComm()">
 		</div>
 </div>

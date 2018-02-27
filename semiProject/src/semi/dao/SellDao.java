@@ -98,23 +98,33 @@ public class SellDao {
 			DbcpBean.closeConn(con, pstmt, null);
 		}
 	}
-	public int delete(int sno) {
-		Connection con=null;
-		PreparedStatement pstmt=null;
+	
+	public int delete(int sno, String id) {
+		Connection con = null;
+		PreparedStatement pstmt1 = null;
+		PreparedStatement pstmt2= null;
+		ResultSet rs = null;
 		try {
 			con=DbcpBean.getConn();
-			String sql="delete from sell where sno=?";
-			pstmt=con.prepareStatement(sql);
-			pstmt.setInt(1, sno);
-			return pstmt.executeUpdate();
-			
-		}catch(SQLException se) {
-			System.out.println(se.getMessage());
-			return -1;
-		}finally {
-			DbcpBean.closeConn(con, pstmt, null);
-		}
-	}
+			String sql1 = "delete from scomment where sno=?";
+			pstmt1 = con.prepareStatement(sql1);
+			pstmt1.setInt(1, sno);
+			int n1 = pstmt1.executeUpdate();
+			String sql2 = "delete from sell where sno=? and id=?";
+			pstmt2 = con.prepareStatement(sql2);
+			pstmt2.setInt(1, sno);
+			pstmt2.setString(2, id);
+			int n2 = pstmt2.executeUpdate();
+			return n2; 
+	}catch(SQLException se) {
+		System.out.println(se.getMessage());
+		return -1;
+	}finally {
+		DbcpBean.closeConn(con, pstmt1, rs);
+		DbcpBean.closeConn(null, pstmt2, null);
+	}	
+}
+	
 	public int insert(SellVo vo) {
 		Connection con=null;
 		PreparedStatement pstmt=null;
@@ -154,7 +164,7 @@ public class SellDao {
 			rs=pstmt.executeQuery();
 			rs.next();
 			int cnt=rs.getInt("cnt");
-			System.out.println("cnt:" + cnt);
+			//System.out.println("cnt:" + cnt);
 			return cnt;
 			
 		}catch(SQLException se) {
@@ -176,7 +186,7 @@ public class SellDao {
 		}else {
 			sql="";
 		}
-		System.out.println("Sql:" + sql);
+		//System.out.println("Sql:" + sql);
 		try {
 			con=DbcpBean.getConn();
 			String sql1="select NVL(count(sno),0) cnt from sell "+sql;
@@ -241,7 +251,7 @@ public class SellDao {
 						rs.getInt("sgrade"),rs.getInt("shit"),rs.getInt("success"),rs.getInt("sreport"),rs.getString("id"));
 				list.add(vo);
 			}
-			System.out.println("list:" + list);
+			//System.out.println("list:" + list);
 			return list;
 		}catch(SQLException se) {
 			System.out.println(se.getMessage());
