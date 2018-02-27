@@ -5,6 +5,24 @@
 	$(document).ready(function() {
 	  $('select').material_select();
 	});
+	var xhr = null;
+	function listSort(){
+	    var sort = document.getElementsByName("sort");
+	    var result = "";
+	    for(var i=0; i<sort.length; i++){
+	        result=sort[i].value;
+	    }
+	    xhr = new XMLHttpRequest();
+	    xhr.onreadystatechange=callback;
+	    xhr.open("get",'ajax.do?cmd=select&sel='+result,true);
+	    xhr.send();
+	}
+	function callback(){
+	    if(xhr.readyState==4 && xhr.status==200){
+	        
+	    }
+	}
+	
 	function checkAll(){
 		var check=document.getElementsByName("check");
 		var checkAll=document.getElementById("checkAll");
@@ -37,14 +55,23 @@
 	}
 	window.onload=function(){
 	    var select = document.getElementsByName("select")[0];
-	    console.log('${requestScope.select}');
 	    select.selectedIndex='${requestScope.select}';
 	    if('${requestScope.del}'!=""){
 	        alert('${requestScope.del}');
 	    }
 	}
-</script>    
- <table class="highlight">
+</script> 
+<form class="col s12" method="post" action="<%=request.getContextPath()%>/admin.do?cmd=board">
+	    <div class="row">
+	    <div class="input-field col s2" >
+		    <select name="sort" onchange="listSort()">
+			      <option value="">정렬선택</option>
+			      <option value="0">조회순</option>
+			      <option value="1">인기순</option>
+		    </select>
+	  	</div>   
+	  	</div>   
+ 	<table class="highlight">
         <thead>
           <tr>
               <th>
@@ -119,7 +146,6 @@
   	</ul>
   	</div>
 	  	<div style="margin-left: 1200px;"><a class="waves-effect waves-light btn" style="background-color: #ee6e73;" onclick="del()">게시물삭제</a></div>
-	    <form class="col s12" method="post" action="<%=request.getContextPath()%>/admin.do?cmd=board">
 	    <div class="row" style="margin-left: 400px;">
 	    <div class="input-field col s2" >
 		    <select name="select" >

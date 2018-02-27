@@ -14,7 +14,7 @@ import javax.sql.DataSource;
 public class DbcpBean {
 	private static DataSource ds;
 	
-	static{ //static멤버를 초기화할 때는 static블록을 사용한다.
+	static{
 		try {
 			Context initContext = new InitialContext();
 			Context envContext  = (Context)initContext.lookup("java:/comp/env");
