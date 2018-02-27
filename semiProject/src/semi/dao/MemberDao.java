@@ -213,4 +213,27 @@ public class MemberDao {
             DbcpBean.closeConn(con, pstmt, null);
         }
     }
+    
+    public int update(MemberVo vo) {
+    	 Connection con=null;
+         PreparedStatement pstmt=null;
+         try {
+             con=DbcpBean.getConn();
+             String sql="update member set pwd=?, name=?,nickname=?,phone=?,email=? where id=?";
+             pstmt=con.prepareStatement(sql);
+             pstmt.setString(1, vo.getPwd());
+             pstmt.setString(2, vo.getName());
+             pstmt.setString(3, vo.getNickname());
+             pstmt.setString(4, vo.getPhone());
+             pstmt.setString(5, vo.getEmail());
+             pstmt.setString(6, vo.getId());
+             int n = pstmt.executeUpdate();
+             return n;
+         } catch (SQLException se) {
+             System.out.println(se.getMessage());
+             return -1;
+         }finally {
+             DbcpBean.closeConn(con, pstmt, null);
+         }
+     }
 }

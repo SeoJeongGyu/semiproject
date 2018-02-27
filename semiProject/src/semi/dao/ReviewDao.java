@@ -128,7 +128,7 @@ public class ReviewDao {
 		try {
 			conn = DbcpBean.getConn();
 			int reviewNum = getMaxNum() + 1;
-			String sql="insert into review values(?,?,?,sysdate,0,?,?,?,?,?)";
+			String sql="insert into review values(?,?,?,sysdate,0,?,?,?,?,?,?,?)";
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setInt(1, reviewNum);
 			pstmt.setString(2,vo.getRtitle());
@@ -138,6 +138,8 @@ public class ReviewDao {
 			pstmt.setString(6,vo.getSavefilename());
 			pstmt.setString(7, vo.getId());
 			pstmt.setInt(8, vo.getCompany());
+			pstmt.setInt(9, vo.getRreport());
+			pstmt.setInt(10, vo.getRecommend());
 			return pstmt.executeUpdate();
 		}catch(SQLException se) {
 			System.out.println(se.getMessage());
@@ -197,7 +199,9 @@ public class ReviewDao {
 				String savefilename = rs.getString("savefilename");
 				String id=rs.getString("id");
 				int company=rs.getInt("company");
-				ReviewVo vo=new ReviewVo(rnum, rtitle, rcontent, rdate, rhit, rgrade, orgfilename, savefilename, id, company,rs.getInt("rreport"),rs.getInt("recommend"));
+				int rreport = rs.getInt("rreport");
+				int recommend = rs.getInt("recommend");
+				ReviewVo vo=new ReviewVo(rnum, rtitle, rcontent, rdate, rhit, rgrade, orgfilename, savefilename, id, company,rreport,recommend);
 				return vo;
 			}
 		return null;
@@ -251,7 +255,9 @@ public class ReviewDao {
 				String savefilename = rs.getString("savefilename");
 				String id=rs.getString("id");
 				int company=rs.getInt("company");
-				ReviewVo vo=new ReviewVo(rnum, rtitle, rcontent, rdate, rhit, rgrade, orgfilename, savefilename, id, company,rs.getInt("rreport"),rs.getInt("recommend"));
+				int rreport = rs.getInt("rreport");
+				int recommend = rs.getInt("recommend");
+				ReviewVo vo=new ReviewVo(rnum, rtitle, rcontent, rdate, rhit, rgrade, orgfilename, savefilename, id, company,rreport,recommend);
 				return vo;
 			}
 		return null;
@@ -289,13 +295,18 @@ public class ReviewDao {
 	public int recommend(int rno,String id) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
 		
 		try {
 			conn = DbcpBean.getConn();
 			String sql="insert into recommend values(recono_seq.nextval,'review',?,?)";
+			String sql2="update review set recommend=recommend+1 where rno=?";
 			pstmt = conn.prepareStatement(sql);
+			pstmt2=conn.prepareStatement(sql2);
 			pstmt.setInt(1, rno);
 			pstmt.setString(2, id);
+			pstmt2.setInt(1, rno);
+			pstmt2.executeQuery();
 			return pstmt.executeUpdate();
 		
 		}catch (SQLException se) {
@@ -356,13 +367,17 @@ public class ReviewDao {
 	public int police(int rno,String id) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		
+		PreparedStatement pstmt2 = null;
 		try {
 			conn = DbcpBean.getConn();
 			String sql="insert into report values(report_seq.nextval,'review',?,?)";
+			String sql2="update review set rreport=rreport+1 where rno=?";
 			pstmt = conn.prepareStatement(sql);
+			pstmt2=conn.prepareStatement(sql2);
 			pstmt.setInt(1, rno);
 			pstmt.setString(2, id);
+			pstmt2.setInt(1, rno);
+			pstmt2.executeQuery();
 			return pstmt.executeUpdate();
 		
 		}catch (SQLException se) {
