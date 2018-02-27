@@ -8,8 +8,8 @@ if('${result}' !=""){
 
 function rupdate(){
 	if('${sessionScope.id}' == '${vo.id}'){
-	location.href="review.do?cmd=update&rno=${vo.rno}";
-		
+	document.frm.submit();
+
 	}else{
 		alert("본인의 글만 수정할 수 있습니다.");
 	}
@@ -44,7 +44,7 @@ function police(){
 
 <div id="wrap">
 
-	<form action="" method="post">
+	<form id="frm"  name="frm" action="review.do?cmd=update&rno=${vo.rno}" method="post">
 		<!--  상단 작성자, 작성일, 조회수 -->
 		<div
 			style="overflow: hidden; padding-bottom: 5px; border-bottom: 2px solid #4B4C51">
@@ -63,8 +63,7 @@ function police(){
 			</div>
 			
 		</div>
-		<div
-			style="overflow: hidden; padding-bottom: 5px; border-bottom: 2px solid #4B4C51"></div>
+		<div style="overflow: hidden; padding-bottom: 5px; border-bottom: 2px solid #4B4C51"></div>
 
 <!--  제목 보여주기 -->
 <div id="title">
@@ -72,7 +71,7 @@ function police(){
 </div>
 
 		<!-- 내용보여주기  -->
-<div id="content" style="margin-left: 250px;"><span>${vo.rcontent }</span></div>
+<div id="content" style="margin-left: 250px;"><span id="rcontent">${vo.rcontent }</span></div>
 
 		
 		<!--  수정, 삭제, 추천-->
@@ -90,6 +89,8 @@ function police(){
   </div>
 		<!-- 댓글기능  -->
 		<div id="bottom"></div>
-
+	
+	<input type="hidden" value="${vo.rtitle }" name="rtitle">
+	<input type="hidden" value="${vo.rcontent }" name="rcontent">
 	</form>
 </div>

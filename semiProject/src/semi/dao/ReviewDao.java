@@ -411,5 +411,28 @@ public class ReviewDao {
 			DbcpBean.closeConn(conn, pstmt, rs);
 		}
 	}
-	
+	public int update(ReviewVo vo) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = DbcpBean.getConn();
+		
+			String sql="update review set rtitle=?,rcontent=?,orgfilename=?,savefilename=?,company=? where id=? and rno=?";
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1,vo.getRtitle());
+			pstmt.setString(2, vo.getRcontent());
+			pstmt.setString(3, vo.getOrgfilename());
+			pstmt.setString(4,vo.getSavefilename());
+			pstmt.setInt(5, vo.getCompany());
+			pstmt.setString(6, vo.getId());
+			pstmt.setInt(7, vo.getRno());
+			return pstmt.executeUpdate();
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return -1;
+		}finally {
+			DbcpBean.closeConn(conn, pstmt, null);
+		}
+		
+	}
 }

@@ -21,6 +21,7 @@ public class ReviewController extends HttpServlet {
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("utf-8");
 		String cmd = req.getParameter("cmd");
+		System.out.println(cmd);
 		if (cmd.equals("list")) {
 			list(req, resp);
 		} else if (cmd.equals("write")) {
@@ -40,6 +41,8 @@ public class ReviewController extends HttpServlet {
 			recommend(req,resp);
 		}else if(cmd.equals("police")) {
 			police(req,resp);
+		}else if(cmd.equals("updateOk")) {
+			updateOk(req,resp);
 		}
 	}
 
@@ -176,11 +179,30 @@ public class ReviewController extends HttpServlet {
 		}else {
 
 			content(req, resp);
-		}
+			}
 		}
 		
 	}
 	
+	public void updateOk(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	
+		String uploadPath = req.getServletContext().getRealPath("/upload");
+		MultipartRequest mr = new MultipartRequest(req, uploadPath, 1024 * 1024 * 5, "utf-8",
+		new DefaultFileRenamePolicy());
+		int rno=Integer.parseInt(mr.getParameter("rno"));
+		String rtitle = mr.getParameter("title");
+		String rcontent = mr.getParameter("scontent");
+		String orgfilename = mr.getOriginalFileName("up_files");
+		String savefilename = mr.getFilesystemName("up_files");
+		String id = (String) req.getSession().getAttribute("id");
+		int company = Integer.parseInt(mr.getParameter("company"));
+		ReviewVo vo = new ReviewVo(rno, rtitle, rcontent, null, 0, 0, orgfilename, savefilename, id, company,0,0);
+		ReviewDao dao = ReviewDao.getInstance();
+		int n = dao.update(vo);
+		if (n > 0) {
+			resp.sendRedirect("/semiProject/review.do?cmd=list");
+		} else {
+			System.out.println("fail");
+		}
 	}
-
+}
