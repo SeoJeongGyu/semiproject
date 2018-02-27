@@ -6,6 +6,23 @@
 	#commlist{width:1350px;border:1px solid #aaa; padding:2px;margin-top: 3px;}
 </style>
 <script>
+
+function sdelete(){
+	if('${sessionScope.id}' == '${vo.id}'){
+	location.href="sell.do?cmd=delete&sno=${vo.sno}&id=${vo.id}";
+	}else{
+		alert("본인의 글만 삭제할 수 있습니다.");
+	}
+}
+
+function supdate(){
+	if('${sessionScope.id}' == '${vo.id}'){
+	location.href="sell.do?cmd=update&sno=${vo.sno}";	
+	}else{
+		alert("본인의 글만 수정할 수 있습니다.");
+	}
+}
+
 window.onload=getlist;
 var xhr=null;
 function getlist(){
@@ -202,11 +219,22 @@ function recomm(event){
 		<td colspan="2">
 			<a href="sell.do?cmd=sellList">목록으로</a>
 		</td>
-		<td colspan="2">
+		<%-- <td colspan="2">
 			<a href="sell.do?cmd=delete&sno=${vo.sno }&id=${vo.id }">삭제</a>
-		</td>
+		</td> --%>
 	</tr>
 </table>
+	<div class="fixed-action-btn horizontal">
+    <a class="btn-floating btn-large red">
+      <i class="large material-icons">menu</i>
+    </a>
+    <ul>
+      <li><a class="btn-floating blue" onclick="supdate()"><i class="material-icons">border_color</i></a></li>
+      <li><a class="btn-floating red"  onclick="sdelete()" ><i class="material-icons">delete</i></a></li>
+      <li><a class="btn-floating green"><i class="material-icons">thumb_up</i></a></li>
+      <li><a class="btn-floating black"><i class="material-icons">sentiment_very_dissatisfied</i></a></li>
+    </ul>
+  </div>
 <div >
 		<div id="commlist"></div>
 		<div id="commAdd">
