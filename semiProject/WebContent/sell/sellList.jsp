@@ -12,11 +12,11 @@
   }
   
   var xhr=null;
-  function getCheck(){
+  function getSql(){
 	  var os=document.getElementsByName("os");  
 	  var telecom=document.getElementsByName("telecom");  
 	  var company=document.getElementsByName("company");  
-	  var sql="select * from sell where ";  
+	  var sql="";  
 	  var chk=0;
 	  
   	  var ocnt=0;
@@ -71,7 +71,7 @@
 	  for(var i=0; i<company.length;i++){
 			 if(company[i].checked==true){
 				 chk++;
-				 if(tcnt==0){
+				 if(tcnt==0 && ocnt==0){
 					 if(chk>1){
 						 sql += " or company=" + company[i].value;
 						 ccnt++;
@@ -90,22 +90,27 @@
 					}
 				 }
 			 }
-		 } 
+		 }
 	  if(ccnt>0){
 		  sql+=")";
 	  }	  
 	  
 	  if(chk<=0){
-		sql="select * from sell";
+	  //alert(chk);
+		sql="";
 	  }
 	  
 	  console.log("sql 작성중 : " + sql);
+	  return sql;
+  }
+  function getCheck(){
+	  var sql=getSql();
 	  getlist(sql);
   }
    function getlist(sql){
 		xhr=new XMLHttpRequest();
 		xhr.onreadystatechange=callback;
-		xhr.open('get','sell.do?cmd=checkedOs&sql='+sql, true);
+		xhr.open('get','sell.do?cmd=sellList&sql='+sql +'&type=ajax', true);
 		xhr.send();
   }
   function callback(){
@@ -147,9 +152,9 @@
 		 }
 		 for(var i=json.startPage;i<=json.endPage;i++){
 			 if(json.pageNum==i){
-				 html += "<li class='active'><a href='sell.do?cmd=sellList&pageNum="+i+"'>"+i+"</a></li>";
+				 html += "<li class='active'><a href='javascript:aa(" + i + ")'>"+i+"</a></li>";
 			 }else{
-				 html += "<li class='waves-effect'><a href='sell.do?cmd=sellList&pageNum="+i+"'>"+i+"</a></li>";
+				 html += "<li class='waves-effect'><a href='javascript:aa(" + i + ")'>"+i+"</a></li>";
 			 }
 		 }
 		 if(json.pageCount>json.endPage ){
@@ -161,42 +166,136 @@
 	  }
   }
   
+  function aa(pageNum){
+	//  alert(pageNum)
+	  var sql=getSql();
+	  document.getElementById("pageNum").value=pageNum;
+	  document.getElementById("sql").value=sql;
+	  document.frm.submit();
+	// alert("오긴옴");
+
+  }
+  
 </script>
+<form method="post" action="<%=request.getContextPath() %>/sell.do?cmd=sellList&type=form" name="frm">
+<input type="hidden" id="pageNum" name="pageNum" >
+<input type="hidden" id="sql" name="sql" >
 <table border="1" style="width:650px;margin-left:0px ">
 		<br>
 		<tr>
 		<th>운영체제 </th>
-		<td><input type="checkbox" id="ios" name="os" value="1" onclick="getCheck()"/>
-		<label for="ios">ios</label></td>
+		<td>	
+		<c:choose>
+			<c:when test="${requestScope.os1==1}">
+					<input type="checkbox" id="ios" name="os" value="1" onclick="getCheck()" checked="checked">
+			</c:when>
+			<c:otherwise>
+				<input type="checkbox" id="ios" name="os" value="1" onclick="getCheck()">
+			</c:otherwise>
+		</c:choose>
+		<label for="ios">ios</label>
+		</td>
+		
 		<td style="width:150px">
-		<input type="checkbox" id="android" name="os" value="2" onclick="getCheck()"/>
+		<c:choose>
+			<c:when test="${requestScope.os2==2 }">
+				<input type="checkbox" id="android" name="os" value="2" onclick="getCheck()" checked="checked" >
+			</c:when>
+			<c:otherwise>
+				<input type="checkbox" id="android" name="os" value="2" onclick="getCheck()" >
+			</c:otherwise>
+		</c:choose>
 		<label for="android">안드로이드</label></td>
-	 	</tr>
+	 	</tr>	
 	 	<tr>
 	 	<th>통신사 </th>
-		<td><input type="checkbox" id="skt" name="telecom" value="1" onclick="getCheck()"/>
+		<td>
+		
+		<c:choose>
+			<c:when test="${requestScope.telecom1==1 }">
+				<input type="checkbox" id="skt" name="telecom" value="1" onclick="getCheck()" checked="checked"/>
+			</c:when>
+			<c:otherwise>
+				<input type="checkbox" id="skt" name="telecom" value="1" onclick="getCheck()"/>
+			</c:otherwise>
+		</c:choose>
 		<label for="skt">SKT</label></td>
-		<td><input type="checkbox" id="kt" name="telecom" value="2" onclick="getCheck()"/>
+		<td>
+		<c:choose>
+			<c:when test="${requestScope.telecom2==2 }">
+				<input type="checkbox" id="kt" name="telecom" value="2" onclick="getCheck()" checked="checked"/>
+			</c:when>
+			<c:otherwise>
+				<input type="checkbox" id="kt" name="telecom" value="2" onclick="getCheck()"/>
+			</c:otherwise>
+		</c:choose>
 		<label for="kt">KT</label></td>
-		<td><input type="checkbox" id="lgu+" name="telecom" value="3" onclick="getCheck()"/>
+		<td>
+		<c:choose>
+			<c:when test="${requestScope.telecom3==3 }">
+				<input type="checkbox" id="lgu+" name="telecom" value="3" onclick="getCheck()" checked="checked"/>
+			</c:when>
+			<c:otherwise>
+				<input type="checkbox" id="lgu+" name="telecom" value="3" onclick="getCheck()"/>
+			</c:otherwise>
+		</c:choose>
 		<label for="lgu+">LGU+</label></td>
-		<td><input type="checkbox" id="tetc" name="telecom" value="4" onclick="getCheck()"/>
+		<td>
+		<c:choose>
+			<c:when test="${requestScope.telecom4==4 }">
+				<input type="checkbox" id="tetc" name="telecom" value="4" onclick="getCheck()" checked="checked"/>
+			</c:when>
+			<c:otherwise>
+				<input type="checkbox" id="tetc" name="telecom" value="4" onclick="getCheck()"/>
+			</c:otherwise>
+		</c:choose>
 		<label for="tetc">기타</label></td>
 	 	</tr>
 	 	<tr>
 	 	<th>브랜드 </th>
-		<td><input type="checkbox" id="samsung" name="company" value="1" onclick="getCheck()"/>
+		<td>
+		<c:choose>
+			<c:when test="${requestScope.company1==1 }">
+				<input type="checkbox" id="samsung" name="company" value="1" onclick="getCheck()" checked="checked"/>
+			</c:when>
+			<c:otherwise>
+				<input type="checkbox" id="samsung" name="company" value="1" onclick="getCheck()"/>
+			</c:otherwise>
+		</c:choose>
 		<label for="samsung">삼성</label></td>
-		<td><input type="checkbox" id="lg" name="company" value="2" onclick="getCheck()"/>
+		<td>
+		<c:choose>
+			<c:when test="${requestScope.company2==2 }">
+				<input type="checkbox" id="lg" name="company" value="2" onclick="getCheck()" checked="checked"/>
+			</c:when>
+			<c:otherwise>
+				<input type="checkbox" id="lg" name="company" value="2" onclick="getCheck()"/>
+			</c:otherwise>
+		</c:choose>
 		<label for="lg">LG</label></td>
-		<td><input type="checkbox" id="apple" name="company" value="3" onclick="getCheck()"/>
+		<td>
+		<c:choose>
+			<c:when test="${requestScope.company3==3 }">
+				<input type="checkbox" id="apple" name="company" value="3" onclick="getCheck()" checked="checked"/>
+			</c:when>
+			<c:otherwise>
+				<input type="checkbox" id="apple" name="company" value="3" onclick="getCheck()"/>
+			</c:otherwise>
+		</c:choose>
 		<label for="apple">애플</label></td>
-		<td><input type="checkbox" id="cetc" name="company" value="4" onclick="getCheck()"/>
+		<td>
+		<c:choose>
+			<c:when test="${requestScope.company4==4 }">
+				<input type="checkbox" id="cetc" name="company" value="4" onclick="getCheck()" checked="checked"/>
+			</c:when>
+			<c:otherwise>
+				<input type="checkbox" id="cetc" name="company" value="4" onclick="getCheck()"/>
+			</c:otherwise>
+		</c:choose>
 		<label for="cetc">기타</label></td>
 	 	</tr>
 </table>
-    <br>
-       
+    <br> 
 <div class="main" id="sellList">
  <table class="highlight">
         <thead>
@@ -223,53 +322,32 @@
 				<td>${sell.id }</td>
 			</tr>
 		</c:forEach>
-
         </tbody>
-      </table>
- 
+      </table> 
   <div class="row">   
   <br>  
 <ul class="pagination">
 <c:if test="${startPage>5 }">
 	<li class="disabled"><a href="sell.do?cmd=sellList&pageNum=${startPage-1 }"><i class="material-icons">chevron_left</i></a></li>
-    
 </c:if>
 	<c:forEach var="i" begin="${startPage }" end="${endPage }">
 		<c:choose>
 			<c:when test="${pageNum==i }">
-				<li class="active"><a href="sell.do?cmd=sellList&pageNum=${i}">${i}</a></li>
+				<li class="active"><a href="javascript:aa('${i}')" >${i}</a></li>
 			</c:when>
 			<c:otherwise>
-			<li class="waves-effect"><a href="sell.do?cmd=sellList&pageNum=${i}">${i}</a></li>
+			<li class="waves-effect"><a href="javascript:aa('${i}')">${i}</a></li>
 			</c:otherwise>
 		</c:choose>
 	</c:forEach>
 <c:if test="${pageCount>endPage }">
 <li class="waves-effect"><a href="sell.do?cmd=sellList&pageNum=${endPage+1 }"><i class="material-icons">chevron_right</i></a></li>
- 
 </c:if>
 </ul>
 </div>
-
-
     <a class="waves-effect waves-light btn" href="/semiProject/sell.do?cmd=insert" style="background-color:#993333;margin-left: 1200px;">
     <i class="material-icons" >create</i></a>
- <div class="row">
-    <form class="col s12">
-    <div class="input-field col s12" style="width: 100px; margin-left: 10px;">
-    <select>
-      <option value="0">제목</option>
-      <option value="1">내용</option>
-      <option value="2">아이디</option>
-    </select>
+    <br>
   </div>
-      <div class="row">
-        <div class="input-field col s2">
-          <input id="" type="text" class="validate">
-        </div>
-      <button class="btn waves-effect waves-light" type="submit" name="action" style="margin-top: 25px;background-color: #993333">
-      <i class="material-icons">search</i></button>
-      </div>
-    </form>
-  </div>
-  </div>
+  <br>
+  </form>
