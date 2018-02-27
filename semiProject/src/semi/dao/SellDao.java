@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import semi.vo.ReviewVo;
 import semi.vo.SellVo;
 import test.dbcp.DbcpBean;
 
@@ -44,6 +45,40 @@ public class SellDao {
 			DbcpBean.closeConn(con, pstmt, rs);
 		}	
 	}*/
+	
+	public SellVo update(int sno) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con=DbcpBean.getConn();
+			String sql= "select * from sell where sno=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, sno);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				int os=rs.getInt("os");
+				int telecom=rs.getInt("telecom");
+				int company=rs.getInt("company");
+				String loc=rs.getString("loc");
+				int price=rs.getInt("price");
+				String stitle=rs.getString("stitle");
+				String scontent=rs.getString("scontent");
+				Date sdate=rs.getDate("sdate");
+				int shit=rs.getInt("shit");
+				int success=rs.getInt("success");
+				String id=rs.getString("id");
+				SellVo vo=new SellVo(sno, os, telecom, company, loc, price, stitle, scontent, sdate, 0, shit, success, 0, id);
+				return vo;
+			}
+		return null;
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return null;
+		}finally {
+			DbcpBean.closeConn(con, pstmt, rs);
+		}
+	}
 	
 	public SellVo detail(int sno) {
 		Connection con=null;
