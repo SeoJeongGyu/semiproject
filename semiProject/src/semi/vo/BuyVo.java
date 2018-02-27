@@ -9,12 +9,15 @@ public class BuyVo {
 	private Date bdate;
 	private int bgrade;
 	private int bhit;
-	private String id;
+	private int success;
 	private int breport;
+	private String id;
+	
 	
 	public BuyVo() {}
 
-	public BuyVo(int bno, String btitle, String bcontent, Date bdate, int bgrade, int bhit, String id, int breport) {
+	public BuyVo(int bno, String btitle, String bcontent, Date bdate, int bgrade, int bhit, int success, int breport,
+			String id) {
 		super();
 		this.bno = bno;
 		this.btitle = btitle;
@@ -22,8 +25,9 @@ public class BuyVo {
 		this.bdate = bdate;
 		this.bgrade = bgrade;
 		this.bhit = bhit;
-		this.id = id;
+		this.success = success;
 		this.breport = breport;
+		this.id = id;
 	}
 
 	public int getBno() {
@@ -74,12 +78,12 @@ public class BuyVo {
 		this.bhit = bhit;
 	}
 
-	public String getId() {
-		return id;
+	public int getSuccess() {
+		return success;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setSuccess(int success) {
+		this.success = success;
 	}
 
 	public int getBreport() {
@@ -89,9 +93,13 @@ public class BuyVo {
 	public void setBreport(int breport) {
 		this.breport = breport;
 	}
-	
-	
-	
-	
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 
 }

@@ -150,10 +150,10 @@ function recomm(event){
 				<td>삼성</td>
 			</c:when>
 			<c:when test="${vo.company==2 }">
-				<td>애플</td>
+				<td>LG</td>
 			</c:when>
 			<c:when test="${vo.company==3 }">
-				<td>LG</td>
+				<td>애플</td>
 			</c:when>
 			<c:otherwise>
 				<td>기타</td>
@@ -187,6 +187,10 @@ function recomm(event){
 		<td>${vo.sdate }</td>
 	</tr>
 	<tr>
+		<td>작성자</td>
+		<td>${vo.id }</td>
+	</tr>
+	<tr>
 		<td>제목</td>
 		<td>${vo.stitle }</td>
 	</tr>
@@ -197,6 +201,9 @@ function recomm(event){
 	<tr>
 		<td colspan="2">
 			<a href="sell.do?cmd=sellList">목록으로</a>
+		</td>
+		<td colspan="2">
+			<a href="sell.do?cmd=delete">삭제</a>
 		</td>
 	</tr>
 </table>

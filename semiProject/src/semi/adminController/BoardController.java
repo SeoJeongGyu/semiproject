@@ -104,8 +104,9 @@ public class BoardController extends HttpServlet{
         }else {
             System.out.println("select:"+req.getParameter("select"));
             String select = req.getParameter("select");
+            
             getMax=SellDao.getInstance().getCount(select,text);
-            list = SellDao.getInstance().searchlist(select,text,startRow,endRow);
+            list = SellDao.getInstance().searchlist(select,text,startRow,endRow,null);
             req.setAttribute("select", select);
             req.setAttribute("text", text);
         }

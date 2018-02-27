@@ -23,7 +23,7 @@ $(".dropdown-button").dropdown();
 	<ul id="dropdown1" class="dropdown-content" style="background-color: #993333;">
 	  <li><a href="/semiProject/sell.do?cmd=sellList" style="color: white;">팝니다</a></li>
 	  <li class="divider"></li>
-	  <li><a href="#!" style="color: white;">삽니다</a></li>
+	  <li><a href="/semiProject/buy.do?cmd=buyList" style="color: white;">삽니다</a></li>
 	</ul>
   </nav>
   <nav>
