@@ -81,7 +81,7 @@ public class ReviewController extends HttpServlet {
 
 		String rtitle = mr.getParameter("title");
 		String rcontent = mr.getParameter("scontent");
-		System.out.println(rcontent);
+		
 		String orgfilename = mr.getOriginalFileName("file");
 		String savefilename = mr.getFilesystemName("file");
 		String id = (String) req.getSession().getAttribute("id");
