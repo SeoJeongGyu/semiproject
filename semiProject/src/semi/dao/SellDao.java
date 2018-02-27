@@ -18,10 +18,11 @@ public class SellDao {
 		return instance;
 	}
 	
-	public ArrayList<SellVo> checkedList(String sql){
+/*	public ArrayList<SellVo> checkedList(String sql){
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
+		System.out.println(sql);
 		try {
 			con=DbcpBean.getConn();
 			//System.out.println("sql:"+sql);
@@ -42,7 +43,7 @@ public class SellDao {
 		}finally {
 			DbcpBean.closeConn(con, pstmt, rs);
 		}	
-	}
+	}*/
 	
 	public SellVo detail(int sno) {
 		Connection con=null;
@@ -153,8 +154,38 @@ public class SellDao {
 			rs=pstmt.executeQuery();
 			rs.next();
 			int cnt=rs.getInt("cnt");
+			System.out.println("cnt:" + cnt);
 			return cnt;
 			
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return -1;
+		}finally {
+			DbcpBean.closeConn(con, pstmt, rs);
+		}
+	}
+	public int getCount(String sql) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		
+		//System.out.println("sqlsql"+sql);
+		
+		if(sql!="") {
+			sql="where " + sql;
+		}else {
+			sql="";
+		}
+		System.out.println("Sql:" + sql);
+		try {
+			con=DbcpBean.getConn();
+			String sql1="select NVL(count(sno),0) cnt from sell "+sql;
+			//System.out.println("sqldao:"+sql1);
+			pstmt=con.prepareStatement(sql1);
+			rs=pstmt.executeQuery();
+			rs.next();
+			return rs.getInt("cnt");
+
 		}catch(SQLException se) {
 			System.out.println(se.getMessage());
 			return -1;
@@ -197,7 +228,7 @@ public class SellDao {
 		try {
 			con=DbcpBean.getConn();
 			//System.out.println("con:"+con);
-			String sql="select * from (select aa.*,rownum rnum from(select * from sell order by sno desc)aa ) where rnum>=? and rnum<=?";
+			String sql="select * from (select aa.*,rownum rnum from(select * from sell order by sgrade desc ,sno desc)aa ) where rnum>=? and rnum<=?";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
@@ -210,6 +241,7 @@ public class SellDao {
 						rs.getInt("sgrade"),rs.getInt("shit"),rs.getInt("success"),rs.getInt("sreport"),rs.getString("id"));
 				list.add(vo);
 			}
+			System.out.println("list:" + list);
 			return list;
 		}catch(SQLException se) {
 			System.out.println(se.getMessage());
@@ -218,22 +250,33 @@ public class SellDao {
 			DbcpBean.closeConn(con, pstmt, rs);
 		}
 	}
-	public ArrayList<SellVo> searchlist(String select ,String text,int startRow,int endRow){
+	public ArrayList<SellVo> searchlist(String select ,String text,int startRow,int endRow,String chk){
         Connection con=null;
         PreparedStatement pstmt=null;
         ResultSet rs=null;
         String sqlplus="";
-        if(select.equals("0")) {
-            sqlplus="where stitle like'%"+text+"%'";
-        }else if(select.equals("1")) {
-            sqlplus="where scontent like'%"+text+"%'";
-        }else if(select.equals("2")) {
-            sqlplus="where id like'%"+text+"%'";
+        //System.out.println("select : "+select);
+        if(text!=null) {
+	        if(select.equals("0")) {
+	            sqlplus="where stitle like'%"+text+"%'";
+	        }else if(select.equals("1")) {
+	            sqlplus="where scontent like'%"+text+"%'";
+	        }else if(select.equals("2")) {
+	            sqlplus="where id like'%"+text+"%'";
+	        }
         }
+       // System.out.println("text : "+text);
+        if(text==null && (chk!=null && !chk.equals(""))) {
+        	sqlplus = " where "+chk;
+        }else if(text!=null && (chk!=null && chk.equals(""))) {
+        	sqlplus += " and "+chk;
+        }
+        //System.out.println("sqlplus:" + sqlplus);
         try {
             con=DbcpBean.getConn();
             //System.out.println("con:"+con);
             String sql="select * from (select aa.*,rownum rnum from(select * from sell"+sqlplus+" order by sno desc)aa ) where rnum>=? and rnum<=?";
+            //System.out.println("select * from (select aa.*,rownum rnum from(select * from sell"+sqlplus+" order by sno desc)aa ) where rnum>=? and rnum<=?");
             pstmt=con.prepareStatement(sql);
             pstmt.setInt(1, startRow);
             pstmt.setInt(2, endRow);
