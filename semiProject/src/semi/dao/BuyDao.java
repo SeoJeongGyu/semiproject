@@ -204,11 +204,11 @@ public class BuyDao {
         ResultSet rs=null;
         String sqlplus="";
         if(select.equals("0")) {
-            sqlplus="where btitle like'%"+text+"%'";
+            sqlplus=" where btitle like '%"+text+"%' ";
         }else if(select.equals("1")) {
-            sqlplus="where bcontent like'%"+text+"%'";
+            sqlplus=" where bcontent like '%"+text+"%' ";
         }else if(select.equals("2")) {
-            sqlplus="where id like'%"+text+"%'";
+            sqlplus=" where id like '%"+text+"%' ";
         }
         try {
             con=DbcpBean.getConn();
@@ -224,6 +224,7 @@ public class BuyDao {
             rs=pstmt.executeQuery();
             ArrayList<BuyVo> list =new  ArrayList<BuyVo>();
             while(rs.next()) {
+                
                 list.add(new BuyVo(rs.getInt("bno"), rs.getString("btitle"), 
                 		rs.getString("bcontent"), rs.getDate("bdate"), rs.getInt("bgrade"), 
                 		rs.getInt("bhit"), rs.getInt("success"), rs.getInt("breport"), 

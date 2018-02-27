@@ -14,9 +14,11 @@ import semi.dao.AdminDao;
 import semi.dao.BuyDao;
 import semi.dao.NoticesDao;
 import semi.dao.ReportDao;
+import semi.dao.ReviewDao;
 import semi.dao.SellDao;
 import semi.vo.BuyVo;
 import semi.vo.NoticesVo;
+import semi.vo.ReviewVo;
 import semi.vo.SellVo;
 @WebServlet("/boardlist.do")
 public class BoardController extends HttpServlet{
@@ -27,18 +29,22 @@ public class BoardController extends HttpServlet{
         System.out.println("cmd:"+cmd);
         if(cmd.equals("sell")) {
             sell(req,resp);
-        }else if(cmd.equals("freeboard")) {
-            freeboard(req,resp);
+        }else if(cmd.equals("selldelete")) {
+            selldelete(req,resp);
+        }else if(cmd.equals("sellDetail")) {
+            sellDetail(req,resp);
         }else if(cmd.equals("review")) {
             review(req,resp);
+        }else if(cmd.equals("reviewDetail")){
+            reviewDetail(req,resp);
+        }else if(cmd.equals("reviewdelete")){
+            reviewdelete(req,resp);
         }else if(cmd.equals("buy")) {
             buy(req,resp);
         }else if(cmd.equals("buyDetail")) {
             buyDetail(req,resp);
         }else if(cmd.equals("buydelete")) {
             buydelete(req,resp);
-        }else if(cmd.equals("qna")) {
-            qna(req,resp);
         }else if(cmd.equals("notices")) {
             notices(req,resp);
         }else if(cmd.equals("noticesInsert")) {
@@ -47,11 +53,84 @@ public class BoardController extends HttpServlet{
             noticesOk(req,resp);
         }else if(cmd.equals("noticesUpdate")) {
             noticesUpdate(req,resp);
-        }else if(cmd.equals("selldelete")) {
-            selldelete(req,resp);
-        }else if(cmd.equals("sellDetail")) {
-            sellDetail(req,resp);
+        }else if(cmd.equals("fqboard")) {
+            fqboard(req,resp);
         }
+    }
+    public void reviewdelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String sql=req.getParameter("sql");
+        System.out.println(sql);
+        int n = AdminDao.getInstance().adminDelete(sql);
+        System.out.println("n:"+n);
+        if(n>0) {
+            req.setAttribute("del", "삭제성공");
+            
+        }else {
+            req.setAttribute("page", "/admin/board.jsp");
+            req.setAttribute("page1", "/review");
+        }
+        review(req,resp);
+    }
+    public void reviewDetail(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int rno=Integer.parseInt(req.getParameter("rno"));
+        ReviewVo vo=ReportDao.getInstance().reviewDetail(rno);
+        req.setAttribute("vo", vo);
+        req.setAttribute("page", "/admin/board.jsp");
+        req.setAttribute("page1", "review");
+        req.setAttribute("page2", "detail");
+        RequestDispatcher rd = req.getRequestDispatcher("admin.jsp");
+        rd.forward(req, resp);
+    }
+    public void review(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String text = req.getParameter("text");
+        String spageNum = req.getParameter("pageNum");
+        System.out.println("spageNum:"+spageNum);
+        int pageNum=1;
+        if(spageNum!=null) {
+            if(Integer.parseInt(spageNum)<0) {
+                spageNum="1";
+            }
+            pageNum=Integer.parseInt(spageNum);
+        }
+        System.out.println("pageNum:"+pageNum);
+        int startRow = (pageNum-1)*10+1;
+        System.out.println("startRow:"+startRow);
+        int endRow = startRow+9;
+        System.out.println("endRow:"+endRow);
+        int getMax=0;
+        System.out.println("text:"+text);
+        ArrayList<ReviewVo>list = null;
+        if(text==null) {
+            getMax = ReviewDao.getInstance().getCount();
+            list = ReviewDao.getInstance().reviewList(null,null,startRow, endRow);
+        }else {
+            System.out.println("select:"+req.getParameter("select"));
+            String select = req.getParameter("select");
+            getMax=ReviewDao.getInstance().getCount(select,text);
+            list = ReviewDao.getInstance().reviewList(select, text, startRow, endRow);
+            
+            req.setAttribute("select", select);
+            req.setAttribute("text", text);
+        }
+        System.out.println("getMax:"+getMax);
+        int pageCount = (int)Math.ceil(getMax/10.0);
+        System.out.println("pageCount:"+pageCount);
+        int startPage = ((pageNum-1)/5*5)+1;
+        System.out.println("startPage:"+startPage);
+        int endPage = startPage+4;
+        if(pageCount<endPage) {
+            endPage=pageCount;
+        }
+        System.out.println("endPage:"+endPage);
+        req.setAttribute("list", list);
+        req.setAttribute("pageCount", pageCount);
+        req.setAttribute("startPage", startPage);
+        req.setAttribute("endPage", endPage);
+        req.setAttribute("pageNum", pageNum);
+        req.setAttribute("page", "/admin/board.jsp");
+        req.setAttribute("page1", "review");
+        RequestDispatcher rd = req.getRequestDispatcher("admin.jsp");
+        rd.forward(req, resp);
     }
     public void buydelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String sql=req.getParameter("sql");
@@ -64,7 +143,7 @@ public class BoardController extends HttpServlet{
             req.setAttribute("page", "/admin/board.jsp");
             req.setAttribute("page1", "/buy");
         }
-        sell(req,resp);
+        buy(req,resp);
     }
     public void buyDetail(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int bno=Integer.parseInt(req.getParameter("bno"));
@@ -202,6 +281,7 @@ public class BoardController extends HttpServlet{
             String select = req.getParameter("select");
             getMax=BuyDao.getInstance().getCount(select,text);
             list = BuyDao.getInstance().search(select, text, startRow, endRow);
+            
             req.setAttribute("select", select);
             req.setAttribute("text", text);
         }
@@ -225,21 +305,10 @@ public class BoardController extends HttpServlet{
         RequestDispatcher rd = req.getRequestDispatcher("admin.jsp");
         rd.forward(req, resp);
     }
-    public void qna(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    
+    public void fqboard(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("page", "/admin/board.jsp");
-        req.setAttribute("page1", "qna");
-        RequestDispatcher rd = req.getRequestDispatcher("admin.jsp");
-        rd.forward(req, resp);
-    }
-    public void review(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("page", "/admin/board.jsp");
-        req.setAttribute("page1", "review");
-        RequestDispatcher rd = req.getRequestDispatcher("admin.jsp");
-        rd.forward(req, resp);
-    }
-    public void freeboard(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("page", "/admin/board.jsp");
-        req.setAttribute("page1", "freeboard");
+        req.setAttribute("page1", "fqboard");
         RequestDispatcher rd = req.getRequestDispatcher("admin.jsp");
         rd.forward(req, resp);
     }

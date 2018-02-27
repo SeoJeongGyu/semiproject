@@ -50,12 +50,12 @@ public class ReviewController extends HttpServlet {
 		if (spageNum != null) {
 			pageNum = Integer.parseInt(spageNum);
 		}
-		int startRow = (pageNum - 1) * 10 + 1; // 시작행번호
-		int endRow = startRow + 9; // 끝행번호
+		int startRow = (pageNum - 1) * 10 + 1; // �떆�옉�뻾踰덊샇
+		int endRow = startRow + 9; // �걹�뻾踰덊샇
 		ReviewDao dao = ReviewDao.getInstance();
-		// 전체 페이지 갯수 구하기
+		// �쟾泥� �럹�씠吏� 媛��닔 援ы븯湲�
 		int pageCount = (int) Math.ceil(dao.getCount() / 10.0);
-		// 시작페이지와 끝페이지 구하기
+		// �떆�옉�럹�씠吏��� �걹�럹�씠吏� 援ы븯湲�
 		int startPage = ((pageNum - 1) / 10 * 10) + 1;
 		int endPage = startPage + 9;
 		if (pageCount < endPage) {
@@ -88,7 +88,6 @@ public class ReviewController extends HttpServlet {
 		int company = Integer.parseInt(mr.getParameter("company"));
 		ReviewVo vo = new ReviewVo(0, rtitle, rcontent, null, 0, 0, orgfilename, savefilename, id, company,0,0);
 		ReviewDao dao = ReviewDao.getInstance();
-
 		int n = dao.write(vo);
 		if (n > 0) {
 			resp.sendRedirect("/semiProject/review.do?cmd=list");
@@ -144,12 +143,12 @@ public class ReviewController extends HttpServlet {
 		
 		if(n>0) {
 		
-			req.setAttribute("result", "동일 게시물에는 추천할 수 없습니다");
+			req.setAttribute("result", "동일 게시물에는 추천할 수 없습니다.");
 			content(req, resp);
 		}else {
 		int recommend = dao.recommend(rno, id);
 		if(recommend>0) {
-			req.setAttribute("result", "추천하였습니다");
+			req.setAttribute("result", "추천하였습니다.");
 			content(req, resp);
 		}else {
 
@@ -167,12 +166,12 @@ public class ReviewController extends HttpServlet {
 		
 		if(n>0) {
 		
-			req.setAttribute("result", "이미 신고한 게시물입니다.");
+			req.setAttribute("result", "�씠誘� �떊怨좏븳 寃뚯떆臾쇱엯�땲�떎.");
 			content(req, resp);
 		}else {
 		int police = dao.police(rno, id);
 		if(police>0) {
-			req.setAttribute("result", "게시물을 신고하였습니다.");
+			req.setAttribute("result", "寃뚯떆臾쇱쓣 �떊怨좏븯���뒿�땲�떎.");
 			content(req, resp);
 		}else {
 
