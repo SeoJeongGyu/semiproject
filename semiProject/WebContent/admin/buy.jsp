@@ -54,9 +54,11 @@ function getDetail(bno){
 	              <p><input type="checkbox" id="checkAll" onclick="checkAll()"/>
 			      <label for="checkAll"></label></p>
 			  </th>
+              <th>삽니다번호</th>
               <th>거래상태</th>
               <th>제목</th>
               <th>작성자</th>
+              <th>작성날짜</th>
               <th>조회수</th>
           </tr>
         </thead>
@@ -77,10 +79,9 @@ function getDetail(bno){
 				</c:otherwise>
 			</c:choose>
               <td onclick="getDetail(${vo.bno })">${vo.btitle }</td>
-              <td onclick="getDetail(${vo.bno })">${vo.bdate }</td>
-              <td onclick="getDetail(${vo.bno })">${vo.bgrade }</td>
-              <td onclick="getDetail(${vo.bno })">${vo.breport }</td>
               <td onclick="getDetail(${vo.bno })">${vo.id }</td>
+              <td onclick="getDetail(${vo.bno })">${vo.bdate }</td>
+              <td onclick="getDetail(${vo.bno })">${vo.bhit }</td>
 	          </tr>
 	        </c:forEach>  
         </tbody>

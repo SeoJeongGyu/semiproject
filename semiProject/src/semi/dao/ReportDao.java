@@ -91,7 +91,7 @@ public class ReportDao {
         try {
             con=DbcpBean.getConn();
             //System.out.println("con:"+con);
-            String sql="select * from (select aa.*,rownum rnum from(select * from buy where breport>4 order by bno desc)aa ) where rnum>=? and rnum<=?";
+            String sql="select * from (select aa.*,rownum rnum from(select * from buy where breport>4 order by breport desc , bno desc)aa ) where rnum>=? and rnum<=?";
             pstmt=con.prepareStatement(sql);
             pstmt.setInt(1, startRow);
             pstmt.setInt(2, endRow);
@@ -189,7 +189,7 @@ public class ReportDao {
         try {
             con=DbcpBean.getConn();
             //System.out.println("con:"+con);
-            String sql="select * from (select aa.*,rownum rnum from(select * from sell where sreport>4 order by sno desc)aa ) where rnum>=? and rnum<=?";
+            String sql="select * from (select aa.*,rownum rnum from(select * from sell where sreport>4 order by sreport desc , sno desc)aa ) where rnum>=? and rnum<=?";
             pstmt=con.prepareStatement(sql);
             pstmt.setInt(1, startRow);
             pstmt.setInt(2, endRow);
@@ -216,14 +216,14 @@ public class ReportDao {
         ResultSet rs= null;
         try {
             conn=DbcpBean.getConn();
-            String sql="select * from (select aa.*,rownum rnum from(select * from review where rreport > 4 order by rno desc)aa) where rnum>=? and rnum<=?";
+            String sql="select * from (select aa.*,rownum rnum from(select * from review where rreport > 4 order by rreport desc , rno desc)aa) where rnum>=? and rnum<=?";
             pstmt=conn.prepareStatement(sql);
             pstmt.setInt(1, startRow);
             pstmt.setInt(2, endRow);
             rs=pstmt.executeQuery();
             ArrayList<ReviewVo> list=new ArrayList<>();
             while(rs.next()) {
-                ReviewVo vo=new ReviewVo(rs.getInt("rno"),rs.getString("rtitle"),rs.getString("rcontent"),rs.getDate("rdate"),rs.getInt("rhit"),rs.getInt("rgrade"),rs.getString("orgfilename"),rs.getString("savefilename"),rs.getString("id"),rs.getInt("company"));
+                ReviewVo vo=new ReviewVo(rs.getInt("rno"),rs.getString("rtitle"),rs.getString("rcontent"),rs.getDate("rdate"),rs.getInt("rhit"),rs.getInt("rgrade"),rs.getString("orgfilename"),rs.getString("savefilename"),rs.getString("id"),rs.getInt("company"),rs.getInt("rreport"),rs.getInt("recommend"));
                 list.add(vo);
             }
             return list;
@@ -266,7 +266,7 @@ public class ReportDao {
             String sql= "select * from(" + 
                     "  select aa.*,rownum rnum from (" + 
                     "   select * from sell where sreport>4"+
-                    "        order by regdate desc" + 
+                    "        order by sreport desc , sno desc" + 
                     "   )aa" + 
                     ") where rnum>=? and rnum<=?";
             pstmt = con.prepareStatement(sql);
@@ -312,7 +312,7 @@ public class ReportDao {
                 String id=rs.getString("id");
                 int company=rs.getInt("company");
                 int recommend=rs.getInt("recommend");
-                ReviewVo vo=new ReviewVo(rnum, rtitle, rcontent, rdate, rhit, rgrade, rreport, orgfilename, savefilename, id, company,recommend);
+                ReviewVo vo=new ReviewVo(rnum, rtitle, rcontent, rdate, rhit, rgrade, orgfilename, savefilename, id, company,0,0);
                 return vo;
             }else {
                 return null;
