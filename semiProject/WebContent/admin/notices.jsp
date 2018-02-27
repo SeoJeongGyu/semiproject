@@ -55,15 +55,15 @@
         </thead>
         <tbody>
         	<c:forEach var="vo" items="${requestScope.list }">
-	          <tr onclick="getDetail(${vo.num })">
+	          <tr>
 	            <td>
 		            <p><input type="checkbox" name="check" id="${vo.num }" value="${vo.num }" />
 				    <label for="${vo.num }"></label></p>
 			    </td>
-	            <td>${vo.num }</td>
-	            <td>${vo.title }</td>
-	            <td>${vo.ndate }</td>
-	            <td>${vo.hit }</td>
+	            <td onclick="getDetail(${vo.num })">${vo.num }</td>
+	            <td onclick="getDetail(${vo.num })">${vo.title }</td>
+	            <td onclick="getDetail(${vo.num })">${vo.ndate }</td>
+	            <td onclick="getDetail(${vo.num })">${vo.hit }</td>
 	          </tr>
 	        </c:forEach>  
         </tbody>

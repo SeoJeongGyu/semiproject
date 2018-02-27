@@ -42,7 +42,21 @@ public class BoardController extends HttpServlet{
             noticesOk(req,resp);
         }else if(cmd.equals("noticesUpdate")) {
             noticesUpdate(req,resp);
+        }else if(cmd.equals("selldelete")) {
+            selldelete(req,resp);
         }
+    }
+    public void selldelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String sql=req.getParameter("sql");
+        System.out.println(sql);
+        int n = SellDao.getInstance().adminDelete(sql);
+        System.out.println("n:"+n);
+        if(n>0) {
+            req.setAttribute("del", "삭제성공");
+        }else {
+            req.setAttribute("page", "/admin/member.jsp");
+        }
+        sell(req,resp);
     }
     public void noticesUpdate(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int num=Integer.parseInt(req.getParameter("num"));

@@ -254,4 +254,19 @@ public class SellDao {
             DbcpBean.closeConn(con, pstmt, rs);
         }
     }
+	public int adminDelete(String sql) {
+	    Connection con=null;
+        PreparedStatement pstmt=null;
+        try {
+            con=DbcpBean.getConn();
+            pstmt=con.prepareStatement(sql);
+            int n = pstmt.executeUpdate();
+            return n;
+        } catch (SQLException se) {
+            System.out.println(se.getMessage());
+            return -1;
+        }finally {
+            DbcpBean.closeConn(con, pstmt, null);
+        }
+	}
 }
