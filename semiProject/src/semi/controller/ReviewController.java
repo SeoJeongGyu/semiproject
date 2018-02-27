@@ -81,11 +81,12 @@ public class ReviewController extends HttpServlet {
 
 		String rtitle = mr.getParameter("title");
 		String rcontent = mr.getParameter("scontent");
+		System.out.println(rcontent);
 		String orgfilename = mr.getOriginalFileName("file");
 		String savefilename = mr.getFilesystemName("file");
 		String id = (String) req.getSession().getAttribute("id");
 		int company = Integer.parseInt(mr.getParameter("company"));
-		ReviewVo vo = new ReviewVo(0, rtitle, rcontent, null, 0, 0, orgfilename, savefilename, id, company);
+		ReviewVo vo = new ReviewVo(0, rtitle, rcontent, null, 0, 0, orgfilename, savefilename, id, company,0,0);
 		ReviewDao dao = ReviewDao.getInstance();
 
 		int n = dao.write(vo);
