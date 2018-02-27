@@ -209,11 +209,11 @@ public class SellDao {
         ResultSet rs=null;
         String sqlplus="";
         if(select.equals("0")) {
-            sqlplus="where stitle like'%"+text+"%'";
+            sqlplus=" where stitle like '%"+text+"%'";
         }else if(select.equals("1")) {
-            sqlplus="where scontent like'%"+text+"%'";
+            sqlplus=" where scontent like '%"+text+"%'";
         }else if(select.equals("2")) {
-            sqlplus="where id like'%"+text+"%'";
+            sqlplus=" where id like '%"+text+"%'";
         }
         try {
             con=DbcpBean.getConn();
@@ -268,11 +268,11 @@ public class SellDao {
         //System.out.println("select : "+select);
         if(text!=null) {
 	        if(select.equals("0")) {
-	            sqlplus="where stitle like'%"+text+"%'";
+	            sqlplus=" where stitle like '%"+text+"%'";
 	        }else if(select.equals("1")) {
-	            sqlplus="where scontent like'%"+text+"%'";
+	            sqlplus=" where scontent like '%"+text+"%'";
 	        }else if(select.equals("2")) {
-	            sqlplus="where id like'%"+text+"%'";
+	            sqlplus=" where id like '%"+text+"%'";
 	        }
         }
        // System.out.println("text : "+text);
@@ -286,7 +286,7 @@ public class SellDao {
             con=DbcpBean.getConn();
             //System.out.println("con:"+con);
             String sql="select * from (select aa.*,rownum rnum from(select * from sell"+sqlplus+" order by sno desc)aa ) where rnum>=? and rnum<=?";
-            //System.out.println("select * from (select aa.*,rownum rnum from(select * from sell"+sqlplus+" order by sno desc)aa ) where rnum>=? and rnum<=?");
+            System.out.println(sql);
             pstmt=con.prepareStatement(sql);
             pstmt.setInt(1, startRow);
             pstmt.setInt(2, endRow);
@@ -307,19 +307,4 @@ public class SellDao {
             DbcpBean.closeConn(con, pstmt, rs);
         }
     }
-	public int adminDelete(String sql) {
-	    Connection con=null;
-        PreparedStatement pstmt=null;
-        try {
-            con=DbcpBean.getConn();
-            pstmt=con.prepareStatement(sql);
-            int n = pstmt.executeUpdate();
-            return n;
-        } catch (SQLException se) {
-            System.out.println(se.getMessage());
-            return -1;
-        }finally {
-            DbcpBean.closeConn(con, pstmt, null);
-        }
-	}
 }

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import semi.dao.ReportDao;
 import semi.dao.SellDao;
+import semi.vo.BuyVo;
 import semi.vo.ReviewVo;
 import semi.vo.SellVo;
 @WebServlet("/report.do")
@@ -23,6 +24,10 @@ public class reportController extends HttpServlet{
             fqboardReport(req,resp);
         }else if(cmd.equals("buyReport")) {
             buyReport(req,resp);
+        }else if(cmd.equals("buyReportDel")) {
+            buyReportDel(req,resp);
+        }else if(cmd.equals("buyReportDetail")) {
+            buyReportDetail(req,resp);
         }else if(cmd.equals("sellReport")) {
             sellReport(req,resp);
         }else if(cmd.equals("sellReportDel")) {
@@ -151,9 +156,57 @@ public class reportController extends HttpServlet{
         rd.forward(req, resp);
     }
     public void buyReport(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String spageNum = req.getParameter("pageNum");
+        System.out.println("spageNum:"+spageNum);
+        int pageNum=1;
+        if(spageNum!=null) {
+            if(Integer.parseInt(spageNum)<0) {
+                spageNum="1";
+            }
+            pageNum=Integer.parseInt(spageNum);
+        }
+        System.out.println("pageNum:"+pageNum);
+        int startRow = (pageNum-1)*10+1;
+        System.out.println("startRow:"+startRow);
+        int endRow = startRow+9;
+        System.out.println("endRow:"+endRow);
+        int getMax=0;
+        ArrayList<BuyVo>list = ReportDao.getInstance().buyReport(startRow, endRow);
+        getMax=ReportDao.getInstance().buyGetMax();
+        System.out.println("getMax:"+getMax);
+        int pageCount = (int)Math.ceil(getMax/10.0);
+        System.out.println("pageCount:"+pageCount);
+        int startPage = ((pageNum-1)/5*5)+1;
+        System.out.println("startPage:"+startPage);
+        int endPage = startPage+4;
+        if(pageCount<endPage) {
+            endPage=pageCount;
+        }
+        System.out.println("endPage:"+endPage);
+        req.setAttribute("list", list);
+        req.setAttribute("pageCount", pageCount);
+        req.setAttribute("startPage", startPage);
+        req.setAttribute("endPage", endPage);
+        req.setAttribute("pageNum", pageNum);
         req.setAttribute("page", "/admin/buyReport.jsp");
         RequestDispatcher rd = req.getRequestDispatcher("admin.jsp");
         rd.forward(req, resp);
+    }
+    public void buyReportDetail(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int bno=Integer.parseInt(req.getParameter("bno"));
+        BuyVo vo=ReportDao.getInstance().buyDetail(bno);
+            req.setAttribute("vo", vo);
+            req.setAttribute("page", "/admin/buyReportDetail.jsp");
+            RequestDispatcher rd = req.getRequestDispatcher("admin.jsp");
+            rd.forward(req, resp);
+    }
+    public void buyReportDel(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String sql=req.getParameter("sql");
+        System.out.println(sql);
+        int n = ReportDao.getInstance().buyDelete(sql);
+        System.out.println("n:"+n);
+        reportController rc = new reportController();
+        rc.buyReport(req, resp);
     }
 }
 

@@ -7,8 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import semi.vo.MemberVo;
-import semi.vo.NoticesVo;
+import semi.vo.BuyVo;
 import semi.vo.ReviewVo;
 import semi.vo.SellVo;
 import test.dbcp.DbcpBean;
@@ -18,8 +17,137 @@ public class ReportDao {
     private ReportDao() {}
     public static ReportDao getInstance() {
         return instance;
+    } 
+    public BuyVo buyDetail(int bno) {
+        Connection con=null;
+        PreparedStatement pstmt=null;
+        ResultSet rs=null;
+        try {
+            con=DbcpBean.getConn();
+            String sql="select * from buy where bno=?";
+            pstmt=con.prepareStatement(sql);
+            pstmt.setInt(1, bno);
+            rs=pstmt.executeQuery();
+            if(rs.next()) {
+                String btitle=rs.getString("btitle");
+                String bcontent=rs.getString("bcontent");
+                Date bdate=rs.getDate("bdate");
+                int bhit=rs.getInt("bhit");
+                int success=rs.getInt("success");
+                String id=rs.getString("id");
+                BuyVo vo=new BuyVo(bno, btitle, bcontent, bdate, 0, bhit, success, 0, id);
+                return vo;
+            }else {
+                return null;
+            }
+        }catch(SQLException se) {
+            System.out.println(se.getMessage());
+            return null;
+        }finally {
+            DbcpBean.closeConn(con, pstmt, rs);
+        }   
     }
-    public SellVo sellDetail(int sno) {
+   
+    public int buyDelete(String sql) {
+        Connection con=null;
+        PreparedStatement pstmt=null;
+        try {
+            con=DbcpBean.getConn();
+            pstmt=con.prepareStatement(sql);
+            int n = pstmt.executeUpdate();
+            return n;
+        } catch (SQLException se) {
+            System.out.println(se.getMessage());
+            return -1;
+        }finally {
+            DbcpBean.closeConn(con, pstmt, null);
+        }
+    }
+    
+    public int buyGetMax() {
+        Connection con=null;
+        PreparedStatement pstmt=null;
+        ResultSet rs=null;
+        try {
+            con=DbcpBean.getConn();
+            String sql="select NVL(count(bno),0) cnt from buy where breport > 4";
+            pstmt=con.prepareStatement(sql);
+            rs=pstmt.executeQuery();
+            rs.next();
+            int cnt=rs.getInt("cnt");
+            return cnt;
+            
+        }catch(SQLException se) {
+            System.out.println(se.getMessage());
+            return -1;
+        }finally {
+            DbcpBean.closeConn(con, pstmt, rs);
+        }
+    }
+    public ArrayList<BuyVo> buyReport(int startRow,int endRow){
+        Connection con=null;
+        PreparedStatement pstmt=null;
+        ResultSet rs=null;
+        try {
+            con=DbcpBean.getConn();
+            //System.out.println("con:"+con);
+            String sql="select * from (select aa.*,rownum rnum from(select * from buy where breport>4 order by bno desc)aa ) where rnum>=? and rnum<=?";
+            pstmt=con.prepareStatement(sql);
+            pstmt.setInt(1, startRow);
+            pstmt.setInt(2, endRow);
+            rs=pstmt.executeQuery();
+            ArrayList<BuyVo> list =new  ArrayList<BuyVo>();
+            while(rs.next()) {
+                list.add(new BuyVo(rs.getInt("bno"), rs.getString("btitle"), 
+                        rs.getString("bcontent"), rs.getDate("bdate"), rs.getInt("bgrade"), 
+                        rs.getInt("bhit"), rs.getInt("success"), rs.getInt("breport"), 
+                        rs.getString("id")));
+            }
+            return list;
+        }catch(SQLException se) {
+            System.out.println(se.getMessage());
+            return null;
+        }finally {
+            DbcpBean.closeConn(con, pstmt, rs);
+        }
+    }
+   
+    public int sellDelete(String sql) {
+        Connection con=null;
+        PreparedStatement pstmt=null;
+        try {
+            con=DbcpBean.getConn();
+            pstmt=con.prepareStatement(sql);
+            int n = pstmt.executeUpdate();
+            return n;
+        } catch (SQLException se) {
+            System.out.println(se.getMessage());
+            return -1;
+        }finally {
+            DbcpBean.closeConn(con, pstmt, null);
+        }
+    }
+    
+    public int sellGetMax() {
+        Connection con=null;
+        PreparedStatement pstmt=null;
+        ResultSet rs=null;
+        try {
+            con=DbcpBean.getConn();
+            String sql="select NVL(count(sno),0) cnt from sell where sreport > 4";
+            pstmt=con.prepareStatement(sql);
+            rs=pstmt.executeQuery();
+            rs.next();
+            int cnt=rs.getInt("cnt");
+            return cnt;
+            
+        }catch(SQLException se) {
+            System.out.println(se.getMessage());
+            return -1;
+        }finally {
+            DbcpBean.closeConn(con, pstmt, rs);
+        }
+    } public SellVo sellDetail(int sno) {
         Connection con=null;
         PreparedStatement pstmt=null;
         ResultSet rs=null;
@@ -53,45 +181,6 @@ public class ReportDao {
         }finally {
             DbcpBean.closeConn(con, pstmt, rs);
         }   
-    }
-    public int sellDelete(String sql) {
-        Connection con=null;
-        PreparedStatement pstmt=null;
-        try {
-            con=DbcpBean.getConn();
-            System.out.println("1");
-            pstmt=con.prepareStatement(sql);
-            System.out.println("2");
-            int n = pstmt.executeUpdate();
-            System.out.println("3");
-            return n;
-        } catch (SQLException se) {
-            System.out.println(se.getMessage());
-            return -1;
-        }finally {
-            DbcpBean.closeConn(con, pstmt, null);
-        }
-    }
-    
-    public int sellGetMax() {
-        Connection con=null;
-        PreparedStatement pstmt=null;
-        ResultSet rs=null;
-        try {
-            con=DbcpBean.getConn();
-            String sql="select NVL(count(sno),0) cnt from sell where sreport > 4";
-            pstmt=con.prepareStatement(sql);
-            rs=pstmt.executeQuery();
-            rs.next();
-            int cnt=rs.getInt("cnt");
-            return cnt;
-            
-        }catch(SQLException se) {
-            System.out.println(se.getMessage());
-            return -1;
-        }finally {
-            DbcpBean.closeConn(con, pstmt, rs);
-        }
     }
     public ArrayList<SellVo> sellReport(int startRow,int endRow){
         Connection con=null;
@@ -240,11 +329,8 @@ public class ReportDao {
         PreparedStatement pstmt=null;
         try {
             con=DbcpBean.getConn();
-            System.out.println("1");
             pstmt=con.prepareStatement(sql);
-            System.out.println("2");
             int n = pstmt.executeUpdate();
-            System.out.println("3");
             return n;
         } catch (SQLException se) {
             System.out.println(se.getMessage());
