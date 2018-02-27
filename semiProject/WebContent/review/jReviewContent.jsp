@@ -2,11 +2,13 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script>
+if('${result}' !=""){
+	alert('${result}');
+}
 
-<!-- 글작성자와 접속자가 같은지 확인 -->
 function rupdate(){
 	if('${sessionScope.id}' == '${vo.id}'){
-	location.href="review.do?cmd=update&rno={vo.rno}";
+	location.href="review.do?cmd=update&rno=${vo.rno}";
 		
 	}else{
 		alert("본인의 글만 수정할 수 있습니다.");
@@ -22,6 +24,22 @@ location.href="review.do?cmd=delete&rno=${vo.rno}&id=${vo.id}";
 }
 
 }
+
+function recommend(){
+if('${sessionScope.id}' != ""){
+	location.href="review.do?cmd=recommend&rno=${vo.rno}&id=${sessionScope.id}";
+	}else{
+		alert("추천기능은 로그인 된 상태에서만 가능합니다");
+	}
+}
+
+function police(){
+	if('${sessionScope.id}' != ""){
+		location.href="review.do?cmd=police&rno=${vo.rno}&id=${sessionScope.id}";
+		}else{
+			alert("신고기능은 로그인 된 상태에서만 가능합니다");
+		}
+	}
 </script>
 
 <div id="wrap">
@@ -33,15 +51,17 @@ location.href="review.do?cmd=delete&rno=${vo.rno}&id=${vo.id}";
 			<br>
 		</div>
 		<div style="overflow: hidden; padding: 10px 0px 10px 0px;">
-			<div
-				style="margin-left: 15px; width: 12%; float: left; overflow: hidden; padding: 5px;">
+			<div style="margin-left: 15px; width: 12%; float: left; overflow: hidden; padding: 5px;">
 				<img src="image/ico_point.gif"><span>작성자&nbsp; <span>${vo.id }</span></span>
 			</div>
-			<div style="width: 30%; float: left; overflow: hidden; padding: 5px">
-				<span><img src="image/ico_point.gif">등록&nbsp;
-					<span>${vo.rdate }</span><span>&nbsp;&nbsp;</span><img
-					src="image/ico_point.gif">&nbsp;조회수 &nbsp;<span>${vo.rhit }</span></span>
+			<div style="width: 33%; float: left; overflow: hidden; padding: 5px">
+				<span><img src="image/ico_point.gif">등록일&nbsp;
+					<span>${vo.rdate }</span><span>&nbsp;&nbsp;</span><img src="image/ico_point.gif">&nbsp;조회수 &nbsp;<span>${vo.rhit }</span>
+					<span>&nbsp;&nbsp;</span><img src="image/ico_point.gif">&nbsp;추천수 &nbsp;<span>${recommend }</span>
+					<span>&nbsp;&nbsp;</span><img src="image/ico_point.gif">&nbsp;신고누적:<span>${police}</span>
+					</span>
 			</div>
+			
 		</div>
 		<div
 			style="overflow: hidden; padding-bottom: 5px; border-bottom: 2px solid #4B4C51"></div>
@@ -63,8 +83,9 @@ location.href="review.do?cmd=delete&rno=${vo.rno}&id=${vo.id}";
     <ul>
       <li><a class="btn-floating blue" onclick="rupdate()"><i class="material-icons">border_color</i></a></li>
       <li><a class="btn-floating red"  onclick="rdelete()" ><i class="material-icons">delete</i></a></li>
-      <li><a class="btn-floating green"><i class="material-icons">thumb_up</i></a></li>
-      <li><a class="btn-floating black"><i class="material-icons">sentiment_very_dissatisfied</i></a></li>
+      <li><a class="btn-floating green" onclick="recommend()"><i class="material-icons">thumb_up</i></a></li>
+      <li><a class="btn-floating purple" onclick="police()"><i class="material-icons">thumb_down</i></a></li>
+       <li><a class="btn-floating yellow"><i class="material-icons">star</i></a></li>
     </ul>
   </div>
 		<!-- 댓글기능  -->

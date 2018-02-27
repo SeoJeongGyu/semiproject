@@ -11,4 +11,8 @@ $(document).ready(function() {
     $('#materialnote').materialnote();
   });
 </script>
+
+	<textarea name="scontent" id="materialnote" ></textarea>
+
 	<textarea name="scontent" id="materialnote" value="" ></textarea>
+

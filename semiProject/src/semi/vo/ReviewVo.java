@@ -9,24 +9,16 @@ public class ReviewVo {
 	private Date rdate;
 	private int rhit;
 	private int rgrade;
-	private int rreport;
 	private String orgfilename;
 	private String savefilename;
 	private String id;
-	private int recommend;
 
-	public int getRecommend() {
-		return recommend;
-	}
 
-	public void setRecommend(int recommend) {
-		this.recommend = recommend;
-	}
 
 	private int company;
 
-	public ReviewVo(int rno, String rtitle, String rcontent, Date rdate, int rhit, int rgrade, int rreport,
-			String orgfilename, String savefilename, String id, int company, int recommend) {
+	public ReviewVo(int rno, String rtitle, String rcontent, Date rdate, int rhit, int rgrade,
+			String orgfilename, String savefilename, String id, int company) {
 		super();
 		this.rno = rno;
 		this.rtitle = rtitle;
@@ -34,12 +26,11 @@ public class ReviewVo {
 		this.rdate = rdate;
 		this.rhit = rhit;
 		this.rgrade = rgrade;
-		this.rreport = rreport;
 		this.orgfilename = orgfilename;
 		this.savefilename = savefilename;
 		this.id = id;
 		this.company = company;
-		this.recommend = recommend;
+	
 	}
 
 	public int getRno() {
@@ -90,13 +81,6 @@ public class ReviewVo {
 		this.rgrade = rgrade;
 	}
 
-	public int getRreport() {
-		return rreport;
-	}
-
-	public void setRreport(int rreport) {
-		this.rreport = rreport;
-	}
 
 	public String getOrgfilename() {
 		return orgfilename;
