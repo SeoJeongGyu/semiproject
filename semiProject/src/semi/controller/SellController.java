@@ -4,20 +4,16 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.websocket.Session;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import semi.dao.ScommentDao;
 import semi.dao.SellDao;
-import semi.vo.ScommentVo;
 import semi.vo.SellVo;
 
 @WebServlet("/sell.do")
@@ -39,16 +35,22 @@ public class SellController extends HttpServlet{
         }else if(cmd.equals("sdetail")) {
         	detail(req,resp);
         }else if(cmd.equals("delete")){
-        	req.setAttribute("page", "/sell/delete.jsp");
-        	req.getRequestDispatcher("/main.jsp").forward(req, resp);
-        }else if(cmd.equals("deleteOk")) {
         	delete(req,resp);
         }
 	}
 	
 	private void delete(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException{
-		 
+		int sno = Integer.parseInt(req.getParameter("sno"));
+		String id= req.getParameter("id");
+		SellDao dao = SellDao.getInstance();
+		int n = dao.delete(sno, id);
+		
+		if(n>0) {
+			resp.sendRedirect(req.getContextPath()+"/sell.do?cmd=sellList");
+		}else {
+			req.setAttribute("result", "cancel");
+		}
 		
 	}
 	

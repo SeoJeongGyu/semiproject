@@ -20,7 +20,6 @@
 		<jsp:include page="/home/header.jsp"></jsp:include>
 	</div>
 	<div id="content" style="width: 1350px;">
-	`
 		<c:choose>
 			<c:when test="${requestScope.page==null}">
 				<%-- <jsp:include page="aaa.jsp"></jsp:include>
@@ -31,9 +30,9 @@
 			</c:otherwise>
 		</c:choose>
 	</div>
-	<%-- <div id="footer">
-		<jsp:include page="footer.jsp"></jsp:include>
-	</div> --%>
+	<div id="footer">
+		<jsp:include page="/home/footer.jsp"></jsp:include>
+	</div>
 </div>
 </body>
 </html>
