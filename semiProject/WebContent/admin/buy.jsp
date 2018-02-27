@@ -3,8 +3,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript">
 function getDetail(bno){
-    location.href="<%=request.getContextPath()%>/report.do?cmd=buyReportDetail&bno="+bno;
+    location.href="<%=request.getContextPath()%>/boardlist.do?cmd=buyDetail&bno="+bno;
 }
+	$(document).ready(function() {
+	  $('select').material_select();
+	});
 	function checkAll(){
 		var check=document.getElementsByName("check");
 		var checkAll=document.getElementById("checkAll");
@@ -21,7 +24,7 @@ function getDetail(bno){
 	function del(){
 	    var chk = document.getElementsByName("check");
 	    var len =0;
-	    var sql ="delete from sell where bno in('";
+	    var sql ="delete from buy where bno in('";
 	    for(var i=0;i<chk.length;i++){
 	        if(chk[i].checked==true){
 	            len++;
@@ -33,10 +36,17 @@ function getDetail(bno){
 	        }
 	    }
 	    sql+=")";
-	    location.href="report.do?cmd=buyReportDel&sql="+sql;
+	    location.href="boardlist.do?cmd=buydelete&sql="+sql;
 	}
-</script>  
-<h4 class="truncate">팝니다신고게시판</h4>  
+	window.onload=function(){
+	    var select = document.getElementsByName("select")[0];
+	    console.log('${requestScope.select}');
+	    select.selectedIndex='${requestScope.select}';
+	    if('${requestScope.del}'!=""){
+	        alert('${requestScope.del}');
+	    }
+	}
+</script>    
  <table class="highlight">
         <thead>
           <tr>
@@ -44,16 +54,12 @@ function getDetail(bno){
 	              <p><input type="checkbox" id="checkAll" onclick="checkAll()"/>
 			      <label for="checkAll"></label></p>
 			  </th>
-              <th>게시물번호</th>
-              <th>OS</th>
-              <th>통신사</th>
-              <th>회사</th>
-              <th>가격</th>
+              <th>삽니다번호</th>
+              <th>거래상태</th>
               <th>제목</th>
-              <th>작성일</th>
-              <th>글등급</th>
-              <th>신고수</th>
-              <th>작성아이디</th>
+              <th>작성자</th>
+              <th>작성날짜</th>
+              <th>조회수</th>
           </tr>
         </thead>
         <tbody>
@@ -64,25 +70,28 @@ function getDetail(bno){
 				    <label for="${vo.bno }"></label></p>
 			    </td>
 			    <td onclick="getDetail(${vo.bno })">${vo.bno }</td>
-              <td onclick="getDetail(${vo.bno })">${vo.os }</td>
-              <td onclick="getDetail(${vo.bno })">${vo.telecom }</td>
-              <td onclick="getDetail(${vo.bno })">${vo.company }</td>
-              <td onclick="getDetail(${vo.bno })">${vo.price }</td>
-              <td onclick="getDetail(${vo.bno })">${vo.stitle }</td>
-              <td onclick="getDetail(${vo.bno })">${vo.sdate }</td>
-              <td onclick="getDetail(${vo.bno })">${vo.sgrade }</td>
-              <td onclick="getDetail(${vo.bno })">${vo.sreport }</td>
+			    <c:choose>
+				<c:when test="${vo.success==1 }">			
+					<td>거래중</td>
+				</c:when>
+				<c:otherwise>
+					<td>거래완료</td>
+				</c:otherwise>
+			</c:choose>
+              <td onclick="getDetail(${vo.bno })">${vo.btitle }</td>
               <td onclick="getDetail(${vo.bno })">${vo.id }</td>
+              <td onclick="getDetail(${vo.bno })">${vo.bdate }</td>
+              <td onclick="getDetail(${vo.bno })">${vo.bhit }</td>
 	          </tr>
 	        </c:forEach>  
         </tbody>
       </table>
-     <div class="row">
+   <div class="row">
       <div class="center">
    	<ul class="pagination">
    	<c:choose>
    		<c:when test="${pageNum>5}">
-   			<li class="waves-effect"><a href="report.do?cmd=sellReport&pageNum=${startPage-1}"><i class="material-icons">chevron_left</i></a></li>
+   			<li class="waves-effect"><a href="boardlist.do?cmd=buy&pageNum=${startPage-1}&text=${requestScope.text}&select=${requestScope.select}"><i class="material-icons">chevron_left</i></a></li>
 		</c:when>
 		<c:otherwise>
 			<li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
@@ -91,16 +100,16 @@ function getDetail(bno){
 	    <c:forEach var="i" begin="${requestScope.startPage }" end="${requestScope.endPage }">
 		    <c:choose>
 			    <c:when test="${pageNum==i }">
-			    	<li class="active"><a href="report.do?cmd=sellReport&pageNum=${i }">${i }</a></li>
+			    	<li class="active"><a href="boardlist.do?cmd=buy&pageNum=${i }&text=${requestScope.text}&select=${requestScope.select}">${i }</a></li>
 			    </c:when>
 			    <c:otherwise>
-			    	<li class="waves-effect"><a href="report.do?cmd=sellReport&pageNum=${i }">${i }</a></li>
+			    	<li class="waves-effect"><a href="boardlist.do?cmd=buy&pageNum=${i }&text=${requestScope.text}&select=${requestScope.select}">${i }</a></li>
 			    </c:otherwise>
 		    </c:choose>
 	    </c:forEach>
 	    <c:choose>
 	    	<c:when test="${pageCount>endPage }">
-	    		<li class="waves-effect"><a href="report.do?cmd=sellReport&pageNum=${endPage+1 }"><i class="material-icons">chevron_right</i></a></li>
+	    		<li class="waves-effect"><a href="boardlist.do?cmd=buy&pageNum=${endPage+1 }&text=${requestScope.text}&select=${requestScope.select}"><i class="material-icons">chevron_right</i></a></li>
 	    	</c:when>
 	    	<c:otherwise>
 	    		<li class="disabled"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
@@ -109,5 +118,20 @@ function getDetail(bno){
 	    <!-- <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li> -->
   	</ul>
   	</div>
-  	<div style="margin-left: 1100px;">&nbsp;&nbsp;&nbsp;<a class="waves-effect waves-light btn" style="background-color: #ee6e73;" onclick="del()">글삭제</a></div>
-  	</div>
+	  	<div style="margin-left: 1200px;"><a class="waves-effect waves-light btn" style="background-color: #ee6e73;" onclick="del()">게시물삭제</a></div>
+	    <form class="col s12" method="post" action="<%=request.getContextPath()%>/boardlist.do?cmd=buy">
+	    <div class="row" style="margin-left: 400px;">
+	    <div class="input-field col s2" >
+		    <select name="select" >
+			      <option value="0">제목</option>
+			      <option value="1">내용</option>
+			      <option value="2">아이디</option>
+		    </select>
+	  	</div>
+	        <div class="input-field col s3" >
+	          <input id="text" name="text" type="text" class="validate" value="${requestScope.text}">
+	        </div>
+	      <button class="btn waves-effect waves-light" type="submit" name="action" style="margin-top: 25px; background-color: #ee6e73;">검색</button>
+	      </div>
+	    </form>
+	  </div>

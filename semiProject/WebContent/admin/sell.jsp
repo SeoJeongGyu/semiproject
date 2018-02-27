@@ -2,6 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript">
+function getDetail(sno){
+    location.href="<%=request.getContextPath()%>/boardlist.do?cmd=sellDetail&sno="+sno;
+}
 	$(document).ready(function() {
 	  $('select').material_select();
 	});
@@ -57,7 +60,6 @@
               <th>회사</th>
               <th>가격</th>
               <th>제목</th>
-              <th>내용</th>
               <th>작성일</th>
               <th>글등급</th>
               <th>신고수</th>
@@ -71,17 +73,16 @@
 		            <p><input type="checkbox" name="check" id="${vo.sno }" value="${vo.sno }" />
 				    <label for="${vo.sno }"></label></p>
 			    </td>
-			    <td>${vo.sno }</td>
-              <td>${vo.os }</td>
-              <td>${vo.telecom }</td>
-              <td>${vo.company }</td>
-              <td>${vo.price }</td>
-              <td>${vo.stitle }</td>
-              <td>${vo.scontent }</td>
-              <td>${vo.sdate }</td>
-              <td>${vo.sgrade }</td>
-              <td>${vo.sreport }</td>
-              <td>${vo.id }</td>
+			    <td onclick="getDetail(${vo.sno })">${vo.sno }</td>
+              <td onclick="getDetail(${vo.sno })">${vo.os }</td>
+              <td onclick="getDetail(${vo.sno })">${vo.telecom }</td>
+              <td onclick="getDetail(${vo.sno })">${vo.company }</td>
+              <td onclick="getDetail(${vo.sno })">${vo.price }</td>
+              <td onclick="getDetail(${vo.sno })">${vo.stitle }</td>
+              <td onclick="getDetail(${vo.sno })">${vo.sdate }</td>
+              <td onclick="getDetail(${vo.sno })">${vo.sgrade }</td>
+              <td onclick="getDetail(${vo.sno })">${vo.sreport }</td>
+              <td onclick="getDetail(${vo.sno })">${vo.id }</td>
 	          </tr>
 	        </c:forEach>  
         </tbody>
@@ -119,7 +120,7 @@
   	</ul>
   	</div>
 	  	<div style="margin-left: 1200px;"><a class="waves-effect waves-light btn" style="background-color: #ee6e73;" onclick="del()">게시물삭제</a></div>
-	    <form class="col s12" method="post" action="<%=request.getContextPath()%>/boardlist.do?cmd=board">
+	    <form class="col s12" method="post" action="<%=request.getContextPath()%>/boardlist.do?cmd=sell">
 	    <div class="row" style="margin-left: 400px;">
 	    <div class="input-field col s2" >
 		    <select name="select" >

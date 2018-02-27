@@ -36,6 +36,10 @@ public class MemberController  extends HttpServlet{
             loginOk(req,resp);
         }else if(cmd.equals("chat")) {
             chat(req,resp);
+        }else if(cmd.equals("update")) {
+        	update(req,resp);
+        }else if(cmd.equals("mypage")) {
+        	mypage(req,resp);
         }
     }
     
@@ -44,6 +48,11 @@ public class MemberController  extends HttpServlet{
         RequestDispatcher rd = req.getRequestDispatcher("main.jsp");
         rd.forward(req, resp);
     }
+    public void mypage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute("page", "/mypage/myPageMain.jsp");
+        req.getRequestDispatcher("main.jsp").forward(req, resp);
+    }
+    
     public void loginOk(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id=req.getParameter("id");
         String pwd=req.getParameter("pwd");
@@ -53,7 +62,7 @@ public class MemberController  extends HttpServlet{
             resp.sendRedirect(req.getContextPath()+"/main.jsp");
         }else {
             req.setAttribute("page", "/member/login.jsp");
-            req.setAttribute("result", "¾ÆÀÌµğ¿Í ºñ¹Ğ¹øÈ£¸¦ È®ÀÎÇÏ¼¼¿ä.");
+            req.setAttribute("result", "ï¿½ï¿½ï¿½Ìµï¿½ï¿½ ï¿½ï¿½Ğ¹ï¿½È£ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.");
             RequestDispatcher rd = req.getRequestDispatcher("main.jsp");
             rd.forward(req, resp);
         }
@@ -65,9 +74,9 @@ public class MemberController  extends HttpServlet{
         int n = MemberDao.getInstance().checkId(id);
         pw.println("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
         if(n>0) {
-            pw.println("<result>»ç¿ëÇÒ¼ö ÀÖ´Â ¾ÆÀÌµğ ÀÔ´Ï´Ù.</result>");
+            pw.println("<result>ï¿½ï¿½ï¿½ï¿½Ò¼ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ ï¿½Ô´Ï´ï¿½.</result>");
         }else {
-            pw.println("<result>»ç¿ëÇÒ¼ö ¾ø´Â ¾ÆÀÌµğ ÀÔ´Ï´Ù.</result>");
+            pw.println("<result>ï¿½ï¿½ï¿½ï¿½Ò¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ ï¿½Ô´Ï´ï¿½.</result>");
         }
         pw.close();
     }
@@ -82,12 +91,12 @@ public class MemberController  extends HttpServlet{
         int n = MemberDao.getInstance().insert(vo);
         if(n>0) {
             req.setAttribute("page", "/member/login.jsp");
-            req.setAttribute("result", "È¸¿ø°¡ÀÔ¼º°ø");
+            req.setAttribute("result", "È¸ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½");
             RequestDispatcher rd = req.getRequestDispatcher("main.jsp");
             rd.forward(req, resp);
         }else {
             req.setAttribute("page", "/member/join.jsp");
-            req.setAttribute("result", "È¸¿ø°¡ÀÔ½ÇÆĞ");
+            req.setAttribute("result", "È¸ï¿½ï¿½ï¿½ï¿½ï¿½Ô½ï¿½ï¿½ï¿½");
             RequestDispatcher rd = req.getRequestDispatcher("main.jsp");
             rd.forward(req, resp);
         }
@@ -95,5 +104,27 @@ public class MemberController  extends HttpServlet{
     public void join(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id=req.getParameter("id");
     }
+    
+    public void update(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String id = req.getParameter("id");
+    	String pwd=req.getParameter("pwd");
+        String nickname = req.getParameter("nickname"); 
+        String name = req.getParameter("name"); 
+        String phone = req.getParameter("phone"); 
+        String email = req.getParameter("email"); 
+        MemberVo vo = new MemberVo(id, pwd, nickname, name, phone, email, null);
+        int n = MemberDao.getInstance().update(vo);
+        if(n>0) {
+            req.setAttribute("result", "ìˆ˜ì • ì„±ê³µ");
+            RequestDispatcher rd = req.getRequestDispatcher("/mypage/myPageUpdate.jsp");
+            rd.forward(req, resp);
+        }else {
+            req.setAttribute("result", "íšŒì›ì •ë³´ ìˆ˜ì • ì‹¤íŒ¨");
+            RequestDispatcher rd = req.getRequestDispatcher("/mypage/myPageUpdate.jsp");
+            rd.forward(req, resp);
+        }
+    }
+    
+    
     
 }

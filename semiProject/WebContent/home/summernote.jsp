@@ -12,7 +12,7 @@ $(document).ready(function() {
   });
 </script>
 
-	<textarea name="scontent" id="materialnote" ></textarea>
+
 
 	<textarea name="scontent" id="materialnote" value="" ></textarea>
 
