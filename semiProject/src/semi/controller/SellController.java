@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,7 +14,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import semi.dao.NoticesDao;
+import semi.dao.ReviewDao;
 import semi.dao.SellDao;
+import semi.vo.NoticesVo;
+import semi.vo.ReviewVo;
 import semi.vo.SellVo;
 
 @WebServlet("/sell.do")
@@ -36,7 +41,19 @@ public class SellController extends HttpServlet{
         	detail(req,resp);
         }else if(cmd.equals("delete")){
         	delete(req,resp);
+        }else if(cmd.equals("update")) {
+        	update(req,resp);
         }
+	}
+	
+	private void update(HttpServletRequest req, HttpServletResponse resp) 
+			throws ServletException, IOException{
+		int sno = Integer.parseInt(req.getParameter("sno"));
+		SellDao dao=SellDao.getInstance();
+		SellVo vo=dao.update(sno);
+		req.setAttribute("vo", vo);
+		req.setAttribute("page", "/sell/update.jsp");
+		req.getRequestDispatcher("main.jsp").forward(req, resp);
 	}
 	
 	private void delete(HttpServletRequest req, HttpServletResponse resp) 

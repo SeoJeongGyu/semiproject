@@ -20,6 +20,35 @@ public class BuyDao {
 		return instance;
 	}
 	
+	public BuyVo update(int bno) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con=DbcpBean.getConn();
+			String sql= "select * from buy where bno=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, bno);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				String btitle=rs.getString("btitle");
+				String bcontent=rs.getString("bcontent");
+				Date bdate=rs.getDate("bdate");
+				int bhit=rs.getInt("bhit");
+				int success=rs.getInt("success");
+				String id=rs.getString("id");
+				BuyVo vo=new BuyVo(bno, btitle, bcontent, bdate, 0, bhit, success, 0, id);
+				return vo;
+			}
+		return null;
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return null;
+		}finally {
+			DbcpBean.closeConn(con, pstmt, rs);
+		}
+	}
+	
 	public int updateHit(BuyVo vo) {
 		Connection con=null;
 		PreparedStatement pstmt=null;

@@ -19,7 +19,7 @@
 		<input type="checkbox" id="buy" name="chk" value="buy" />
 		<label for="buy">삽니다게시판&nbsp;&nbsp;&nbsp;&nbsp;</label>
         </div>
-        <input type="hidden" name="num" value="${requestScope.vo.num }"">
+        <input type="hidden" name="num" value="${requestScope.vo.num }">
       <div class="row">
         <div class="input-field col s6" style="margin-left: 15px">
           <input name="title" type="text" class="validate" value="${requestScope.vo.title }">

@@ -40,7 +40,20 @@ public class BuyController extends HttpServlet {
 			delete(req,resp);
 		}else if(cmd.equals("search")) {
 			search(req,resp);
+		}else if(cmd.equals("update")) {
+			update(req,resp);
 		}
+	}
+	
+	private void update(HttpServletRequest req, HttpServletResponse resp) 
+			throws ServletException, IOException{
+		int bno = Integer.parseInt(req.getParameter("bno"));
+		BuyDao dao=BuyDao.getInstance();
+		BuyVo vo=dao.update(bno);
+		req.setAttribute("vo", vo);
+		req.setAttribute("page", "/buy/update.jsp");
+		req.getRequestDispatcher("main.jsp").forward(req, resp);
+		
 	}
 	
 	private void search(HttpServletRequest req, HttpServletResponse resp) 
