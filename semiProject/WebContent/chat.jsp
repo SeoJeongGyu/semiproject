@@ -17,7 +17,7 @@
      </fieldset> 
      <script type="text/javascript"> 
          var div= document.getElementById("messageWindow"); 
-         var webSocket = new WebSocket('ws://192.168.0.2:8081/semiProject/broadcasting'); 
+         var webSocket = new WebSocket('ws://localhost:8081/semiProject/broadcasting'); 
          var inputMessage = document.getElementById('inputMessage'); 
      webSocket.onerror = function(event) { 
        onError(event) 
@@ -32,10 +32,14 @@
      }; 
   
      function onMessage(event) { 
+        // var data=event.data;
+         
          div.innerHTML += "상대 : " + event.data + "<br>"; 
+         //alert(data.id);
      } 
   
      function onOpen(event) { 
+    	 webSocket.send("ㅇㅇㅇ");
          div.innerHTML += "연결 성공<br>"; 
      } 
   
@@ -45,7 +49,7 @@
   
      function send() { 
          div.innerHTML += '${sessionScope.id}'+" : " + inputMessage.value + "<br>"; 
-         webSocket.send(inputMessage.value+","+'${sessionScope.id}'); 
+         webSocket.send(inputMessage.value +"id:"+'${sessionScope.id}'); 
          inputMessage.value = ""; 
      } 
    </script> 

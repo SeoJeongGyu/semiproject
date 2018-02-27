@@ -15,6 +15,7 @@ function btn(){
       draggable: true // Choose whether you can drag to open on touch screens
     }
   );
+  $(".dropdown-button").dropdown();
   // START OPEN
   $('.button-collapse').sideNav('show');
 }
@@ -22,13 +23,23 @@ function btn(){
 <title>Insert title here</title>
 </head>
 <body>
+<ul id="dropdown1" class="dropdown-content" >
+	  <li><a href="<%=request.getContextPath()%>/report.do?cmd=reviewReport">리뷰신고게시판</a></li>
+	  <li class="divider"></li>
+	  <li><a href="<%=request.getContextPath()%>/report.do?cmd=fqboardReport">자유신고게시판</a></li>
+	  <li class="divider"></li>
+	  <li><a href="<%=request.getContextPath()%>/report.do?cmd=sellReport">팝니다신고게시판</a></li>
+	  <li class="divider"></li>
+	  <li><a href="<%=request.getContextPath()%>/report.do?cmd=buyReport">삽니다신고게시판</a></li>
+	</ul>
    <ul id="slide-out" class="side-nav">
     <li><a href="<%=request.getContextPath()%>/memberAdmin.do?cmd=list">회원관리</a></li>
     <li><div class="divider"></div></li>
-    <li><a href="<%=request.getContextPath()%>/admin.do?cmd=board">게시물관리</a></li>
+    <li><a href="<%=request.getContextPath()%>/boardlist.do?cmd=notices">게시물관리</a></li>
     <li><div class="divider"></div></li>
     <li><a href="<%=request.getContextPath()%>/admin.do?cmd=report">신고물관리</a></li>
     <li><div class="divider"></div></li>
+    <li><a class="dropdown-button" href="#!" data-activates="dropdown1">신고게시판<i class="material-icons right">arrow_drop_down</i></a></li>
   </ul>
   <a href="javascript:btn()" data-activates="slide-out" class="button-collapse" ><i class="material-icons" style="font-size: 70px; color: #ee6e73;" >menu</i></a>
 </body>
