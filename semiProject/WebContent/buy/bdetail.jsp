@@ -7,6 +7,18 @@
 </style>
 <script>
 
+if('${result}' !=""){
+	alert('${result}');
+}
+
+function police(){
+	if('${sessionScope.id}' != ""){
+		location.href="buy.do?cmd=police&bno=${vo.bno}&id=${sessionScope.id}";
+	}else{
+		alert("신고기능은 로그인 된 상태에서만 가능합니다");
+	}
+}
+
 function bdelete(){
 	if('${sessionScope.id}' == '${vo.id}'){
 	location.href="buy.do?cmd=delete&bno=${vo.bno}&id=${vo.id}";
@@ -145,6 +157,11 @@ function recomm(event){
 				<td>거래완료</td>
 			</c:otherwise>
 		</c:choose>
+	</tr>
+	<tr>
+		<td>신고누적</td>
+		<td>${police }</td>	
+	</tr>
 	<tr>
 		<td>작성날짜</td>
 		<td>${vo.bdate }</td>
@@ -170,8 +187,7 @@ function recomm(event){
     <ul>
       <li><a class="btn-floating blue" onclick="bupdate()"><i class="material-icons">border_color</i></a></li>
       <li><a class="btn-floating red"  onclick="bdelete()" ><i class="material-icons">delete</i></a></li>
-      <li><a class="btn-floating green"><i class="material-icons">thumb_up</i></a></li>
-      <li><a class="btn-floating black"><i class="material-icons">sentiment_very_dissatisfied</i></a></li>
+      <li><a class="btn-floating purple" onclick="police()"><i class="material-icons">thumb_down</i></a></li>
     </ul>
   </div>
 <div >

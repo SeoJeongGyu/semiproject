@@ -43,7 +43,31 @@ public class SellController extends HttpServlet{
         	delete(req,resp);
         }else if(cmd.equals("update")) {
         	update(req,resp);
-        }
+        }else if(cmd.equals("police")) {
+			police(req,resp);
+		}
+	}
+	
+	private void police(HttpServletRequest req, HttpServletResponse resp) 
+			throws ServletException, IOException{
+		int sno = Integer.parseInt(req.getParameter("sno"));
+		String id = req.getParameter("id");
+		//System.out.println("sno:"+sno+"id:"+id);
+		SellDao dao=SellDao.getInstance();
+		int n=dao.oxpolice(sno, id);
+		if(n>0) {
+			req.setAttribute("result", "이미 신고한 게시물입니다");
+			detail(req, resp);
+		}else {
+			int police = dao.police(sno, id);
+			if(police>0) {
+				req.setAttribute("result", "신고하였습니다.");
+				dao.updateReport(sno);
+				detail(req, resp);
+			}else {
+				detail(req, resp);
+			}
+		}	
 	}
 	
 	private void update(HttpServletRequest req, HttpServletResponse resp) 
@@ -74,20 +98,19 @@ public class SellController extends HttpServlet{
 	private void detail(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException{
 		int sno=Integer.parseInt(req.getParameter("sno"));
-		
 		SellDao dao=SellDao.getInstance();
 		SellVo vo=dao.detail(sno);
+		int police = dao.getPolice(sno);
 		dao.updateHit(vo);
 		req.setAttribute("vo", vo);
+		req.setAttribute("police", police);
 		req.setAttribute("page", "sell/sdetail.jsp");
 		req.getRequestDispatcher("/main.jsp").forward(req, resp);
 		
 	}
 	private void insertOk(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException{
-		
-		
-		
+	
 		String id=(String)req.getSession().getAttribute("id");
 		int os = Integer.parseInt(req.getParameter("os"));
 		int telecom = Integer.parseInt(req.getParameter("telecom"));

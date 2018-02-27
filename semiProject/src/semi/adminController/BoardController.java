@@ -43,10 +43,10 @@ public class BoardController extends HttpServlet{
         }else if(cmd.equals("noticesUpdate")) {
             noticesUpdate(req,resp);
         }else if(cmd.equals("selldelete")) {
-            selldelete(req,resp);
+            //selldelete(req,resp);
         }
     }
-    public void selldelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+   /* public void selldelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String sql=req.getParameter("sql");
         System.out.println(sql);
         int n = SellDao.getInstance().adminDelete(sql);
@@ -57,7 +57,7 @@ public class BoardController extends HttpServlet{
             req.setAttribute("page", "/admin/member.jsp");
         }
         sell(req,resp);
-    }
+    }*/
     public void noticesUpdate(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int num=Integer.parseInt(req.getParameter("num"));
         NoticesVo vo=NoticesDao.getInstance().detail(num);

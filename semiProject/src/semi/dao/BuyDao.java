@@ -67,6 +67,23 @@ public class BuyDao {
 		}
 	}
 	
+	public int updateReport(int bno) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		try {
+			con=DbcpBean.getConn();
+			String sql="update buy set breport=breport+1 where bno=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, bno);
+			return pstmt.executeUpdate();
+			
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return -1;
+		}finally {
+			DbcpBean.closeConn(con, pstmt, null);
+		}
+	}
 	
 	public int delete(int bno, String id) {
 		Connection con = null;
@@ -262,6 +279,73 @@ public class BuyDao {
 		}catch(SQLException se) {
 			System.out.println(se.getMessage());
 			return null;
+		}finally {
+			DbcpBean.closeConn(con, pstmt, rs);
+		}
+	}
+	
+	public int getPolice(int bno) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con=DbcpBean.getConn();
+			String sql= "select count(*) from report where type='buy' and bonum=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, bno);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				int count=rs.getInt("count(*)");
+				return count;
+			}
+			return -1;
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return -1;
+		}finally {
+			DbcpBean.closeConn(con, pstmt, rs);
+		}
+	}
+	
+	public int police(int bno,String id) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			con = DbcpBean.getConn();
+			String sql="insert into report values(report_seq.nextval,'buy',?,?)";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, bno);
+			pstmt.setString(2, id);
+			return pstmt.executeUpdate();
+		
+		}catch (SQLException se) {
+			System.out.println(se.getMessage());
+			return -1;
+		}finally {
+			DbcpBean.closeConn(con, pstmt, null);
+		}
+	}
+	
+	public int oxpolice(int bno,String id) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con=DbcpBean.getConn();
+			String sql="select count(*) cnt from report where id=? and type='buy' and bonum=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setInt(2, bno);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				int count=rs.getInt("cnt");
+				return count;
+			}
+		return -1;
+		}catch (SQLException se) {
+			System.out.println(se.getMessage());
+			return -1;
 		}finally {
 			DbcpBean.closeConn(con, pstmt, rs);
 		}

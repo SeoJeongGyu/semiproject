@@ -134,6 +134,24 @@ public class SellDao {
 		}
 	}
 	
+	public int updateReport(int sno) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		try {
+			con=DbcpBean.getConn();
+			String sql="update sell set sreport=sreport+1 where sno=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, sno);
+			return pstmt.executeUpdate();
+			
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return -1;
+		}finally {
+			DbcpBean.closeConn(con, pstmt, null);
+		}
+	}
+	
 	public int delete(int sno, String id) {
 		Connection con = null;
 		PreparedStatement pstmt1 = null;
@@ -342,19 +360,73 @@ public class SellDao {
             DbcpBean.closeConn(con, pstmt, rs);
         }
     }
-	public int adminDelete(String sql) {
-	    Connection con=null;
-        PreparedStatement pstmt=null;
-        try {
-            con=DbcpBean.getConn();
-            pstmt=con.prepareStatement(sql);
-            int n = pstmt.executeUpdate();
-            return n;
-        } catch (SQLException se) {
-            System.out.println(se.getMessage());
-            return -1;
-        }finally {
-            DbcpBean.closeConn(con, pstmt, null);
-        }
+
+	public int getPolice(int sno) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn=DbcpBean.getConn();
+			String sql= "select count(*) from report where type='sell' and bonum=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, sno);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				int count=rs.getInt("count(*)");
+				return count;
+			}
+			return -1;
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return -1;
+		}finally {
+			DbcpBean.closeConn(conn, pstmt, rs);
+		}
+	}
+	
+	public int police(int sno,String id) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = DbcpBean.getConn();
+			String sql="insert into report values(report_seq.nextval,'sell',?,?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, sno);
+			pstmt.setString(2, id);
+			return pstmt.executeUpdate();
+		
+		}catch (SQLException se) {
+			System.out.println(se.getMessage());
+			return -1;
+		}finally {
+			DbcpBean.closeConn(conn, pstmt, null);
+		}
+	}
+	
+
+	
+	public int oxpolice(int sno,String id) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn=DbcpBean.getConn();
+			String sql="select count(*) cnt from report where id=? and type='sell' and bonum=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setInt(2, sno);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				int count=rs.getInt("cnt");
+				return count;
+			}
+		return -1;
+		}catch (SQLException se) {
+			System.out.println(se.getMessage());
+			return -1;
+		}finally {
+			DbcpBean.closeConn(conn, pstmt, rs);
+		}
 	}
 }

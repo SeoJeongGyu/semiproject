@@ -50,12 +50,12 @@ public class ReviewController extends HttpServlet {
 		if (spageNum != null) {
 			pageNum = Integer.parseInt(spageNum);
 		}
-		int startRow = (pageNum - 1) * 10 + 1; // 시작행번호
-		int endRow = startRow + 9; // 끝행번호
+		int startRow = (pageNum - 1) * 10 + 1; // �떆�옉�뻾踰덊샇
+		int endRow = startRow + 9; // �걹�뻾踰덊샇
 		ReviewDao dao = ReviewDao.getInstance();
-		// 전체 페이지 갯수 구하기
+		// �쟾泥� �럹�씠吏� 媛��닔 援ы븯湲�
 		int pageCount = (int) Math.ceil(dao.getCount() / 10.0);
-		// 시작페이지와 끝페이지 구하기
+		// �떆�옉�럹�씠吏��� �걹�럹�씠吏� 援ы븯湲�
 		int startPage = ((pageNum - 1) / 10 * 10) + 1;
 		int endPage = startPage + 9;
 		if (pageCount < endPage) {
@@ -143,7 +143,7 @@ public class ReviewController extends HttpServlet {
 		
 		if(n>0) {
 		
-			req.setAttribute("result", "동일 게시물에는 추천할 수 없습니다");
+			req.setAttribute("result", "동일게시물에는추천할수없습니다");
 			content(req, resp);
 		}else {
 		int recommend = dao.recommend(rno, id);
@@ -165,21 +165,20 @@ public class ReviewController extends HttpServlet {
 		int n=dao.oxpolice(rno, id);
 		
 		if(n>0) {
-		
-			req.setAttribute("result", "이미 신고한 게시물입니다.");
+			req.setAttribute("result", "이미 신고한 게시물입니다");
 			content(req, resp);
 		}else {
-		int police = dao.police(rno, id);
-		if(police>0) {
-			req.setAttribute("result", "게시물을 신고하였습니다.");
-			content(req, resp);
-		}else {
-
-			content(req, resp);
-		}
+			int police = dao.police(rno, id);
+			if(police>0) {
+				req.setAttribute("result", "신고하였습니다.");
+				content(req, resp);
+			}else {
+	
+				content(req, resp);
+			}
 		}
 		
-	}
+}
 	
 	
 	}
