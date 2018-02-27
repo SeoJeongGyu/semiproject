@@ -36,6 +36,10 @@ public class ReviewController extends HttpServlet {
 			delete(req,resp);
 		}else if (cmd.equals("update")) {
 			update(req,resp);
+		}else if(cmd.equals("recommend")) {
+			recommend(req,resp);
+		}else if(cmd.equals("police")) {
+			police(req,resp);
 		}
 	}
 
@@ -81,7 +85,7 @@ public class ReviewController extends HttpServlet {
 		String savefilename = mr.getFilesystemName("file");
 		String id = (String) req.getSession().getAttribute("id");
 		int company = Integer.parseInt(mr.getParameter("company"));
-		ReviewVo vo = new ReviewVo(0, rtitle, rcontent, null, 0, 0, 0, orgfilename, savefilename, id, company,0);
+		ReviewVo vo = new ReviewVo(0, rtitle, rcontent, null, 0, 0, orgfilename, savefilename, id, company);
 		ReviewDao dao = ReviewDao.getInstance();
 
 		int n = dao.write(vo);
@@ -97,6 +101,10 @@ public class ReviewController extends HttpServlet {
 		int rno = Integer.parseInt(req.getParameter("rno"));
 		ReviewDao dao = ReviewDao.getInstance();
 		ReviewVo vo = dao.content(rno);
+		int recommend=dao.getRecommend(rno);
+		int police = dao.getPolice(rno);
+		req.setAttribute("recommend", recommend);
+		req.setAttribute("police", police);
 		req.setAttribute("vo", vo);
 		req.setAttribute("page", "/review/jReviewContent.jsp");
 		req.getRequestDispatcher("main.jsp").forward(req, resp);
@@ -126,6 +134,53 @@ public class ReviewController extends HttpServlet {
 		req.getRequestDispatcher("main.jsp").forward(req, resp);
 	
 		}
+	
+	public void recommend(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		int rno = Integer.parseInt(req.getParameter("rno"));
+		String id = req.getParameter("id");
+		ReviewDao dao=ReviewDao.getInstance();
+		int n=dao.oxrecommend(rno, id);
+		
+		if(n>0) {
+		
+			req.setAttribute("result", "동일 게시물에는 추천할 수 없습니다");
+			content(req, resp);
+		}else {
+		int recommend = dao.recommend(rno, id);
+		if(recommend>0) {
+			req.setAttribute("result", "추천하였습니다");
+			content(req, resp);
+		}else {
+
+			content(req, resp);
+		}
+		}
+		
+	}
+	
+	public void police(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		int rno = Integer.parseInt(req.getParameter("rno"));
+		String id = req.getParameter("id");
+		ReviewDao dao=ReviewDao.getInstance();
+		int n=dao.oxpolice(rno, id);
+		
+		if(n>0) {
+		
+			req.setAttribute("result", "이미 신고한 게시물입니다.");
+			content(req, resp);
+		}else {
+		int police = dao.police(rno, id);
+		if(police>0) {
+			req.setAttribute("result", "게시물을 신고하였습니다.");
+			content(req, resp);
+		}else {
+
+			content(req, resp);
+		}
+		}
+		
+	}
+	
 	
 	}
 

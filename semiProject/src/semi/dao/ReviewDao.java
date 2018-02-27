@@ -65,18 +65,16 @@ public class ReviewDao {
 		try {
 			conn = DbcpBean.getConn();
 			int reviewNum = getMaxNum() + 1;
-			String sql="insert into review values(?,?,?,sysdate,0,?,?,?,?,?,?,?)";
+			String sql="insert into review values(?,?,?,sysdate,0,?,?,?,?,?)";
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setInt(1, reviewNum);
 			pstmt.setString(2,vo.getRtitle());
 			pstmt.setString(3, vo.getRcontent());
 			pstmt.setInt(4, vo.getRgrade());
-			pstmt.setInt(5, vo.getRreport());
-			pstmt.setString(6, vo.getOrgfilename());
-			pstmt.setString(7,vo.getSavefilename());
-			pstmt.setString(8, vo.getId());
-			pstmt.setInt(9, vo.getCompany());
-			pstmt.setInt(10, vo.getRecommend());
+			pstmt.setString(5, vo.getOrgfilename());
+			pstmt.setString(6,vo.getSavefilename());
+			pstmt.setString(7, vo.getId());
+			pstmt.setInt(8, vo.getCompany());
 			return pstmt.executeUpdate();
 		}catch(SQLException se) {
 			System.out.println(se.getMessage());
@@ -99,7 +97,7 @@ public class ReviewDao {
 			rs=pstmt.executeQuery();
 			ArrayList<ReviewVo> list=new ArrayList<>();
 			while(rs.next()) {
-				ReviewVo vo=new ReviewVo(rs.getInt("rno"),rs.getString("rtitle"),rs.getString("rcontent"),rs.getDate("rdate"),rs.getInt("rhit"),rs.getInt("rgrade"),rs.getInt("rreport"),rs.getString("orgfilename"),rs.getString("savefilename"),rs.getString("id"),rs.getInt("company"),rs.getInt("recommend"));
+				ReviewVo vo=new ReviewVo(rs.getInt("rno"),rs.getString("rtitle"),rs.getString("rcontent"),rs.getDate("rdate"),rs.getInt("rhit"),rs.getInt("rgrade"),rs.getString("orgfilename"),rs.getString("savefilename"),rs.getString("id"),rs.getInt("company"));
 				list.add(vo);
 			}
 			return list;
@@ -132,13 +130,11 @@ public class ReviewDao {
 				Date rdate=rs.getDate("rdate");
 				int rhit = rs.getInt("rhit");
 				int rgrade=rs.getInt("rgrade");
-				int rreport = rs.getInt("rreport");
 				String orgfilename = rs.getString("orgfilename");
 				String savefilename = rs.getString("savefilename");
 				String id=rs.getString("id");
 				int company=rs.getInt("company");
-				int recommend=rs.getInt("recommend");
-				ReviewVo vo=new ReviewVo(rnum, rtitle, rcontent, rdate, rhit, rgrade, rreport, orgfilename, savefilename, id, company,recommend);
+				ReviewVo vo=new ReviewVo(rnum, rtitle, rcontent, rdate, rhit, rgrade, orgfilename, savefilename, id, company);
 				return vo;
 			}
 		return null;
@@ -188,13 +184,11 @@ public class ReviewDao {
 				Date rdate=rs.getDate("rdate");
 				int rhit = rs.getInt("rhit");
 				int rgrade=rs.getInt("rgrade");
-				int rreport = rs.getInt("rreport");
 				String orgfilename = rs.getString("orgfilename");
 				String savefilename = rs.getString("savefilename");
 				String id=rs.getString("id");
 				int company=rs.getInt("company");
-				int recommend=rs.getInt("recommend");
-				ReviewVo vo=new ReviewVo(rnum, rtitle, rcontent, rdate, rhit, rgrade, rreport, orgfilename, savefilename, id, company,recommend);
+				ReviewVo vo=new ReviewVo(rnum, rtitle, rcontent, rdate, rhit, rgrade, orgfilename, savefilename, id, company);
 				return vo;
 			}
 		return null;
@@ -205,4 +199,139 @@ public class ReviewDao {
 			DbcpBean.closeConn(conn, pstmt, rs);
 		}
 	}
+	
+	public int getRecommend(int rno) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn=DbcpBean.getConn();
+			String sql= "select count(*) from recommend where type='review' and bonum=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, rno);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				int count=rs.getInt("count(*)");
+				return count;
+			}
+			return -1;
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return -1;
+		}finally {
+			DbcpBean.closeConn(conn, pstmt, rs);
+		}
+	}
+	
+	public int recommend(int rno,String id) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = DbcpBean.getConn();
+			String sql="insert into recommend values(recono_seq.nextval,'review',?,?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, rno);
+			pstmt.setString(2, id);
+			return pstmt.executeUpdate();
+		
+		}catch (SQLException se) {
+			System.out.println(se.getMessage());
+			return -1;
+		}finally {
+			DbcpBean.closeConn(conn, pstmt, null);
+		}
+	}
+	
+	public int oxrecommend(int rno,String id) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn=DbcpBean.getConn();
+			String sql="select count(*) cnt from recommend where id=? and type='review' and bonum=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setInt(2, rno);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				int count=rs.getInt("cnt");
+				return count;
+			}
+		return -1;
+		}catch (SQLException se) {
+			System.out.println(se.getMessage());
+			return -1;
+		}finally {
+			DbcpBean.closeConn(conn, pstmt, rs);
+		}
+	}
+	
+	public int getPolice(int rno) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn=DbcpBean.getConn();
+			String sql= "select count(*) from report where type='review' and bonum=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, rno);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				int count=rs.getInt("count(*)");
+				return count;
+			}
+			return -1;
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return -1;
+		}finally {
+			DbcpBean.closeConn(conn, pstmt, rs);
+		}
+	}
+	
+	public int police(int rno,String id) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = DbcpBean.getConn();
+			String sql="insert into report values(report_seq.nextval,'review',?,?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, rno);
+			pstmt.setString(2, id);
+			return pstmt.executeUpdate();
+		
+		}catch (SQLException se) {
+			System.out.println(se.getMessage());
+			return -1;
+		}finally {
+			DbcpBean.closeConn(conn, pstmt, null);
+		}
+	}
+	
+	public int oxpolice(int rno,String id) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn=DbcpBean.getConn();
+			String sql="select count(*) cnt from report where id=? and type='review' and bonum=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setInt(2, rno);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				int count=rs.getInt("cnt");
+				return count;
+			}
+		return -1;
+		}catch (SQLException se) {
+			System.out.println(se.getMessage());
+			return -1;
+		}finally {
+			DbcpBean.closeConn(conn, pstmt, rs);
+		}
+	}
+	
 }
