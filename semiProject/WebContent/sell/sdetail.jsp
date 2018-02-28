@@ -7,6 +7,10 @@
 </style>
 <script>
 
+if('${result}' !=""){
+	alert('${result}');
+}
+
 function sdelete(){
 	if('${sessionScope.id}' == '${vo.id}'){
 	location.href="sell.do?cmd=delete&sno=${vo.sno}&id=${vo.id}";
@@ -20,6 +24,14 @@ function supdate(){
 	location.href="sell.do?cmd=update&sno=${vo.sno}";	
 	}else{
 		alert("본인의 글만 수정할 수 있습니다.");
+	}
+}
+
+function police(){
+	if('${sessionScope.id}' != ""){
+		location.href="sell.do?cmd=police&sno=${vo.sno}&id=${sessionScope.id}";
+	}else{
+		alert("신고기능은 로그인 된 상태에서만 가능합니다");
 	}
 }
 
@@ -188,7 +200,7 @@ function recomm(event){
 	<tr>
 		<td>거래상황</td>
 		<c:choose>
-			<c:when test="${vo.success==0 }">
+			<c:when test="${vo.success==1 }">
 				<td>판매중</td>
 			</c:when>
 			<c:otherwise>
@@ -206,6 +218,10 @@ function recomm(event){
 	<tr>
 		<td>작성자</td>
 		<td>${vo.id }</td>
+	</tr>
+	<tr>
+		<td>신고누적</td>
+		<td>${police }</td>	
 	</tr>
 	<tr>
 		<td>제목</td>
@@ -231,8 +247,8 @@ function recomm(event){
     <ul>
       <li><a class="btn-floating blue" onclick="supdate()"><i class="material-icons">border_color</i></a></li>
       <li><a class="btn-floating red"  onclick="sdelete()" ><i class="material-icons">delete</i></a></li>
-      <li><a class="btn-floating green"><i class="material-icons">thumb_up</i></a></li>
-      <li><a class="btn-floating black"><i class="material-icons">sentiment_very_dissatisfied</i></a></li>
+      <li><a class="btn-floating purple" onclick="police()"><i class="material-icons">thumb_down</i></a></li>
+     
     </ul>
   </div>
 <div >

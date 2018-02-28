@@ -42,8 +42,34 @@ public class BuyController extends HttpServlet {
 			search(req,resp);
 		}else if(cmd.equals("update")) {
 			update(req,resp);
+		}else if(cmd.equals("police")) {
+			police(req,resp);
 		}
 	}
+	
+	private void police(HttpServletRequest req, HttpServletResponse resp) 
+			throws ServletException, IOException{
+		int bno = Integer.parseInt(req.getParameter("bno"));
+		String id = req.getParameter("id");
+		//System.out.println("sno:"+sno+"id:"+id);
+		BuyDao dao=BuyDao.getInstance();
+		int n=dao.oxpolice(bno, id);
+		if(n>0) {
+			req.setAttribute("result", "이미 신고한 게시물입니다");
+			detail(req, resp);
+		}else {
+			int police = dao.police(bno, id);
+			if(police>0) {
+				req.setAttribute("result", "신고하였습니다.");
+				dao.updateReport(bno);
+				detail(req, resp);
+			}else {
+				detail(req, resp);
+			}
+		}	
+		
+	}
+	
 	
 	private void update(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException{
@@ -176,8 +202,10 @@ public class BuyController extends HttpServlet {
 		
 		BuyDao dao=BuyDao.getInstance();
 		BuyVo vo=dao.detail(bno);
+		int police = dao.getPolice(bno);
 		dao.updateHit(vo);
 		req.setAttribute("vo", vo);
+		req.setAttribute("police", police);
 		req.setAttribute("page", "buy/bdetail.jsp");
 		req.getRequestDispatcher("/main.jsp").forward(req, resp);
 		

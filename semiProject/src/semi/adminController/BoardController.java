@@ -53,11 +53,17 @@ public class BoardController extends HttpServlet{
             noticesOk(req,resp);
         }else if(cmd.equals("noticesUpdate")) {
             noticesUpdate(req,resp);
+        }else if(cmd.equals("selldelete")) {
+            selldelete(req,resp);
+
         }else if(cmd.equals("fqboard")) {
             fqboard(req,resp);
+
         }
     }
+
     public void reviewdelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         String sql=req.getParameter("sql");
         System.out.println(sql);
         int n = AdminDao.getInstance().adminDelete(sql);
