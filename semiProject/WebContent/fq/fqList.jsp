@@ -6,35 +6,38 @@ $(document).ready(function() {
 	  $('select').material_select();
 	});
 
-function getDetail(bno){
+function getDetail(fqno){
 	  //console.log(sno);
-	  location.href="buy.do?cmd=bdetail&bno="+bno;
+	  location.href="fq.do?cmd=fqdetail&fqno="+fqno;
 }
 </script>
 <div class="main" id="sellList">
  <table class="highlight">
         <thead>
           <tr>
-              <th>거래상태</th>
+              <th>종류</th>
               <th>제목</th>
               <th>작성자</th>
               <th>작성날짜</th>
           </tr>
         </thead>
         <tbody>
-          <c:forEach var="buy" items="${requestScope.list }">
-			<tr onclick="getDetail(${buy.bno })">
+          <c:forEach var="fq" items="${requestScope.list }">
+			<tr onclick="getDetail(${fq.fqno })">
 			<c:choose>
-				<c:when test="${buy.success==1 }">			
-					<td>거래중</td>
+				<c:when test="${fq.fqtype==1 }">			
+					<td>일반</td>
+				</c:when>
+				<c:when test="${fq.fqtype==2 }">
+					<td>정보</td>
 				</c:when>
 				<c:otherwise>
-					<td>거래완료</td>
+					<td>질문</td>
 				</c:otherwise>
 			</c:choose>
-				<td><a href="buy.do?cmd=bdetail&bno=${buy.bno }">${buy.btitle }</a></td>
-				<td>${buy.id }</td>
-				<td>${buy.bdate }</td>
+				<td><a href="fq.do?cmd=fqdetail&fqno=${fq.fqno }">${fq.fqtitle }</a></td>
+				<td>${fq.id }</td>
+				<td>${fq.fqdate }</td>
 			</tr>
 		</c:forEach>
        </tbody>
@@ -44,33 +47,33 @@ function getDetail(bno){
   <br>  
 <ul class="pagination">
 <c:if test="${startPage>5 }">
-	<li class="disabled"><a href="buy.do?cmd=buyList&pageNum=${startPage-1 }"><i class="material-icons">chevron_left</i></a></li>
+	<li class="disabled"><a href="fq.do?cmd=fqList&pageNum=${startPage-1 }"><i class="material-icons">chevron_left</i></a></li>
     
 </c:if>
 	<c:forEach var="i" begin="${startPage }" end="${endPage }">
 		<c:choose>
 			<c:when test="${pageNum==i }">
-				<li class="active"><a href="buy.do?cmd=buyList&pageNum=${i}" >${i}</a></li>
+				<li class="active"><a href="fq.do?cmd=fqList&pageNum=${i}" >${i}</a></li>
 				
 			</c:when>
 			<c:otherwise>
-			<li class="waves-effect"><a href="buy.do?cmd=buyList&pageNum=${i}">${i}</a></li>
+			<li class="waves-effect"><a href="fq.do?cmd=fqList&pageNum=${i}">${i}</a></li>
 			</c:otherwise>
 		</c:choose>
 	</c:forEach>
 <c:if test="${pageCount>endPage }">
-<li class="waves-effect"><a href="buy.do?cmd=buyList&pageNum=${endPage+1 }"><i class="material-icons">chevron_right</i></a></li>
+<li class="waves-effect"><a href="fq.do?cmd=fqList&pageNum=${endPage+1 }"><i class="material-icons">chevron_right</i></a></li>
 </c:if>
 </ul>
 </div>
 </div>
 
 
-    <a class="waves-effect waves-light btn" href="/semiProject/buy.do?cmd=insert" style="background-color:#993333;margin-left: 1200px;">
+    <a class="waves-effect waves-light btn" href="/semiProject/fq.do?cmd=insert" style="background-color:#993333;margin-left: 1200px;">
     <i class="material-icons" >create</i></a>
     
  
-<form class="col s12" method="post" action="/semiProject/buy.do?cmd=search">
+<form class="col s12" method="post" action="/semiProject/fq.do?cmd=search">
     <div class="row" style="margin-left: 400px;">
     <div class="input-field col s2" >
 	    <select name="select" >

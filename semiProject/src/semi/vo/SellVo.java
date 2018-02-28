@@ -18,6 +18,14 @@ public class SellVo {
 	private int sreport;
 	private String id;
 	
+	@Override
+	public String toString() {
+		return "SellVo [sno=" + sno + ", os=" + os + ", telecom=" + telecom + ", company=" + company + ", loc=" + loc
+				+ ", price=" + price + ", stitle=" + stitle + ", sdate=" + sdate
+				+ ", sgrade=" + sgrade + ", shit=" + shit + ", success=" + success + ", sreport=" + sreport + ", id="
+				+ id + "]";
+	}
+
 	public SellVo() {}
 	
 	public SellVo(int sno, int os, int telecom, int company, String loc, int price, String stitle, String scontent,

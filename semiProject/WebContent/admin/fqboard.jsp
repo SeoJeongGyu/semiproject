@@ -2,8 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript">
-function getDetail(rno){
-    location.href="<%=request.getContextPath()%>/boardlist.do?cmd=reviewDetail&rno="+rno;
+function getDetail(fqno){
+    location.href="<%=request.getContextPath()%>/boardlist.do?cmd=fqboardDetail&fqno="+fqno;
 }
 	$(document).ready(function() {
 	  $('select').material_select();
@@ -21,27 +21,10 @@ function getDetail(rno){
 			}
 		}
 	}
-	function popular(){
-	    var chk = document.getElementsByName("check");
-	    var len =0;
-	    var sql ="update review set rgrade=1 where rno in('";
-	    for(var i=0;i<chk.length;i++){
-	        if(chk[i].checked==true){
-	            len++;
-	            if(len>1){
-	                sql+=",'"+chk[i].value+"'";
-	            }else{
-	                sql+=chk[i].value+"'";
-	            }
-	        }
-	    }
-	    sql+=")";
-	    location.href="boardlist.do?cmd=reviewdelete&sql="+sql;
-	}
 	function del(){
 	    var chk = document.getElementsByName("check");
 	    var len =0;
-	    var sql ="delete from review where rno in('";
+	    var sql ="delete from fqboard where fqno in('";
 	    for(var i=0;i<chk.length;i++){
 	        if(chk[i].checked==true){
 	            len++;
@@ -53,7 +36,7 @@ function getDetail(rno){
 	        }
 	    }
 	    sql+=")";
-	    location.href="boardlist.do?cmd=reviewdelete&sql="+sql;
+	    location.href="boardlist.do?cmd=fqboarddelete&sql="+sql;
 	}
 	window.onload=function(){
 	    var select = document.getElementsByName("select")[0];
@@ -71,29 +54,43 @@ function getDetail(rno){
 	              <p><input type="checkbox" id="checkAll" onclick="checkAll()"/>
 			      <label for="checkAll"></label></p>
 			  </th>
-             <th>리뷰번호</th>
+              <th>번호</th>
+              <th>타입</th>
               <th>제목</th>
               <th>작성자</th>
-              <th>작성일</th>
+              <th>작성날짜</th>
               <th>조회수</th>
               <th>추천수</th>
-              <th>등급</th>
           </tr>
         </thead>
         <tbody>
         	<c:forEach var="vo" items="${requestScope.list }">
 	          <tr>
 	            <td>
-		            <p><input type="checkbox" name="check" id="${vo.rno }" value="${vo.rno }" />
-				    <label for="${vo.rno }"></label></p>
+		            <p><input type="checkbox" name="check" id="${vo.fqno }" value="${vo.fqno }" />
+				    <label for="${vo.fqno }"></label></p>
 			    </td>
-	            <td onclick="getDetail(${vo.rno })">${vo.rno }</td>
-	            <td onclick="getDetail(${vo.rno })">${vo.rtitle }</td>
-	            <td onclick="getDetail(${vo.rno })">${vo.id }</td>
-	            <td onclick="getDetail(${vo.rno })">${vo.rdate }</td>
-	            <td onclick="getDetail(${vo.rno })">${vo.rhit }</td>
-	            <td onclick="getDetail(${vo.rno })">${vo.rreport }</td>
-	            <td onclick="getDetail(${vo.rno })">${vo.rgrade }</td>
+			    <td onclick="getDetail(${vo.fqno })">${vo.fqno }</td>
+			    <c:choose>
+				<c:when test="${vo.type==1 }">
+				<td onclick="getDetail(${vo.fqno })">일반</td>			
+				</c:when>
+				<c:when test="${vo.type==2 }">
+				<td onclick="getDetail(${vo.fqno })">정보</td>			
+				</c:when>
+				<c:when test="${vo.type==3 }">	
+				<td onclick="getDetail(${vo.fqno })">질문</td>
+				</c:when>
+				<c:otherwise>
+				<td onclick="getDetail(${vo.fqno })">버그글</td>
+				</c:otherwise>
+			</c:choose>
+              <th>추천수</th>
+              <td onclick="getDetail(${vo.fqno })">${vo.fqtitle }</td>
+              <td onclick="getDetail(${vo.fqno })">${vo.id }</td>
+              <td onclick="getDetail(${vo.fqno })">${vo.fqdate }</td>
+              <td onclick="getDetail(${vo.fqno })">${vo.fqhit }</td>
+              <td onclick="getDetail(${vo.fqno })">${vo.recommend}</td>
 	          </tr>
 	        </c:forEach>  
         </tbody>
@@ -103,7 +100,7 @@ function getDetail(rno){
    	<ul class="pagination">
    	<c:choose>
    		<c:when test="${pageNum>5}">
-   			<li class="waves-effect"><a href="boardlist.do?cmd=review&pageNum=${startPage-1}&text=${requestScope.text}&select=${requestScope.select}"><i class="material-icons">chevron_left</i></a></li>
+   			<li class="waves-effect"><a href="boardlist.do?cmd=fqboard&pageNum=${startPage-1}&text=${requestScope.text}&select=${requestScope.select}"><i class="material-icons">chevron_left</i></a></li>
 		</c:when>
 		<c:otherwise>
 			<li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
@@ -112,16 +109,16 @@ function getDetail(rno){
 	    <c:forEach var="i" begin="${requestScope.startPage }" end="${requestScope.endPage }">
 		    <c:choose>
 			    <c:when test="${pageNum==i }">
-			    	<li class="active"><a href="boardlist.do?cmd=review&pageNum=${i }&text=${requestScope.text}&select=${requestScope.select}">${i }</a></li>
+			    	<li class="active"><a href="boardlist.do?cmd=fqboard&pageNum=${i }&text=${requestScope.text}&select=${requestScope.select}">${i }</a></li>
 			    </c:when>
 			    <c:otherwise>
-			    	<li class="waves-effect"><a href="boardlist.do?cmd=review&pageNum=${i }&text=${requestScope.text}&select=${requestScope.select}">${i }</a></li>
+			    	<li class="waves-effect"><a href="boardlist.do?cmd=fqboard&pageNum=${i }&text=${requestScope.text}&select=${requestScope.select}">${i }</a></li>
 			    </c:otherwise>
 		    </c:choose>
 	    </c:forEach>
 	    <c:choose>
 	    	<c:when test="${pageCount>endPage }">
-	    		<li class="waves-effect"><a href="boardlist.do?cmd=review&pageNum=${endPage+1 }&text=${requestScope.text}&select=${requestScope.select}"><i class="material-icons">chevron_right</i></a></li>
+	    		<li class="waves-effect"><a href="boardlist.do?cmd=fqboard&pageNum=${endPage+1 }&text=${requestScope.text}&select=${requestScope.select}"><i class="material-icons">chevron_right</i></a></li>
 	    	</c:when>
 	    	<c:otherwise>
 	    		<li class="disabled"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
@@ -130,9 +127,8 @@ function getDetail(rno){
 	    <!-- <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li> -->
   	</ul>
   	</div>
-	  	<div style="margin-left: 1000px;"><a class="waves-effect waves-light btn" style="background-color: #ee6e73;" onclick="popular()">인기글등록</a>
-	  	<a class="waves-effect waves-light btn" style="background-color: #ee6e73;" onclick="del()">게시물삭제</a></div>
-	    <form class="col s12" method="post" action="<%=request.getContextPath()%>/boardlist.do?cmd=review">
+	  	<div style="margin-left: 1200px;"><a class="waves-effect waves-light btn" style="background-color: #ee6e73;" onclick="del()">게시물삭제</a></div>
+	    <form class="col s12" method="post" action="<%=request.getContextPath()%>/boardlist.do?cmd=fqboard">
 	    <div class="row" style="margin-left: 400px;">
 	    <div class="input-field col s2" >
 		    <select name="select" >

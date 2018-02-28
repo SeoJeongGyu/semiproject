@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,11 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import semi.dao.NoticesDao;
-import semi.dao.ReviewDao;
 import semi.dao.SellDao;
-import semi.vo.NoticesVo;
-import semi.vo.ReviewVo;
+
 import semi.vo.SellVo;
 
 @WebServlet("/sell.do")
@@ -58,12 +54,12 @@ public class SellController extends HttpServlet{
 		SellDao dao=SellDao.getInstance();
 		int n=dao.oxpolice(sno, id);
 		if(n>0) {
-			req.setAttribute("result", "ÀÌ¹Ì ½Å°íÇÑ °Ô½Ã¹°ÀÔ´Ï´Ù");
+			req.setAttribute("result", "ï¿½Ì¹ï¿½ ï¿½Å°ï¿½ï¿½ï¿½ ï¿½Ô½Ã¹ï¿½ï¿½Ô´Ï´ï¿½");
 			detail(req, resp);
 		}else {
 			int police = dao.police(sno, id);
 			if(police>0) {
-				req.setAttribute("result", "½Å°íÇÏ¿´½À´Ï´Ù.");
+				req.setAttribute("result", "ï¿½Å°ï¿½ï¿½Ï¿ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
 				dao.updateReport(sno);
 				detail(req, resp);
 			}else {
@@ -89,7 +85,8 @@ public class SellController extends HttpServlet{
 		if(n>0) {
 			resp.sendRedirect(req.getContextPath()+"/sell.do?cmd=sellList");
 		}else {
-			
+			req.setAttribute("result", "fail");
+			resp.sendRedirect(req.getContextPath()+"/sell.do?cmd=sellList");
 		}
 		
 	}
@@ -138,7 +135,7 @@ public class SellController extends HttpServlet{
 		String id=(String)req.getSession().getAttribute("id");
 		int os = Integer.parseInt(req.getParameter("os"));
 		int telecom = Integer.parseInt(req.getParameter("telecom"));
-		//System.out.println("¿Ô´Ù"+ telecom);
+		//System.out.println("ï¿½Ô´ï¿½"+ telecom);
 		int company = Integer.parseInt(req.getParameter("company"));
 		String loc = req.getParameter("loc");
 		int price = Integer.parseInt(req.getParameter("price"));
@@ -151,10 +148,9 @@ public class SellController extends HttpServlet{
 		int n=dao.insert(vo);
 		//System.out.println("n:"+ n);
 		if(n>0) {
-			//req.setAttribute("page", "/sell.do?cmd=sellList");
 			resp.sendRedirect(req.getContextPath()+"/sell.do?cmd=sellList");
 		}else {
-			
+			req.setAttribute("result", "fail");
 		}
 	}
 	
