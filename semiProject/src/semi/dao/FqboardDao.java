@@ -305,7 +305,7 @@ public class FqboardDao {
 		ResultSet rs = null;
 		try {
 			con=DbcpBean.getConn();
-			String sql= "select count(*) from fqboard where type='fq' and fqno=?";
+			String sql= "select count(*) from report where type='fq' and bonum=?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, fqno);
 			rs=pstmt.executeQuery();
@@ -328,7 +328,7 @@ public class FqboardDao {
 		
 		try {
 			con = DbcpBean.getConn();
-			String sql="insert into fqboard values(fq_seq.nextval,'fq',?,?)";
+			String sql="insert into report values(fq_seq.nextval,'fq',?,?)";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, fqno);
 			pstmt.setString(2, id);
@@ -348,7 +348,7 @@ public class FqboardDao {
 		ResultSet rs = null;
 		try {
 			con=DbcpBean.getConn();
-			String sql="select count(*) cnt from fqboard where id=? and type='fq' and fqno=?";
+			String sql="select count(*) cnt from report where id=? and type='fq' and bonum=?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, id);
 			pstmt.setInt(2, fqno);
@@ -363,6 +363,79 @@ public class FqboardDao {
 			return -1;
 		}finally {
 			DbcpBean.closeConn(con, pstmt, rs);
+		}
+	}
+	
+	public int getRecommend(int fqno) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con=DbcpBean.getConn();
+			String sql= "select count(*) from recommend where type='fq' and bonum=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, fqno);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				int count=rs.getInt("count(*)");
+				return count;
+			}
+			return -1;
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return -1;
+		}finally {
+			DbcpBean.closeConn(con, pstmt, rs);
+		}
+	}
+	
+	public int recommend(int fqno,String id) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
+		
+		try {
+			con = DbcpBean.getConn();
+			String sql="insert into recommend values(fqre_seq.nextval,'fq',?,?)";
+			String sql2="update review set recommend=recommend+1 where fqno=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt2=con.prepareStatement(sql2);
+			pstmt.setInt(1, fqno);
+			pstmt.setString(2, id);
+			pstmt2.setInt(1, fqno);
+			pstmt2.executeQuery();
+			return pstmt.executeUpdate();
+		
+		}catch (SQLException se) {
+			System.out.println(se.getMessage());
+			return -1;
+		}finally {
+			DbcpBean.closeConn(con, pstmt, null);
+		}
+	}
+	
+	public int oxrecommend(int fqno,String id) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		System.out.println("fqno:"+fqno+"id:"+id);
+		try {
+			conn=DbcpBean.getConn();
+			String sql="select count(*) cnt from recommend where id=? and type='fq' and bonum=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setInt(2, fqno);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				int count=rs.getInt("cnt");
+				return count;
+			}
+		return -1;
+		}catch (SQLException se) {
+			System.out.println(se.getMessage());
+			return -1;
+		}finally {
+			DbcpBean.closeConn(conn, pstmt, rs);
 		}
 	}
 	
