@@ -16,6 +16,7 @@ import java.io.IOException;
   private static Set<Session> clients = Collections 
     .synchronizedSet(new HashSet<Session>()); 
  
+  
   @OnMessage 
   public void onMessage(String message, Session session) throws IOException { 
    System.out.println("¸Þ¼¼Áö"+message); 
@@ -35,6 +36,7 @@ import java.io.IOException;
    // Add session to the connected sessions set 
    System.out.println(session); 
    clients.add(session); 
+   
   } 
  
   @OnClose 

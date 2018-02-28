@@ -34,8 +34,8 @@
     <form  method="post" action="<%=request.getContextPath()%>/member.do?cmd=loginOk" class="col s12 ">
       <div class="row">
         <div class="input-field col s6">  
+          <input type="hidden" name="addr" id="addr" value="${param.addr }" >
           <input id="id" name="id" type="text" class="validate" style="width: 460px; height: 60px;">
-
           <label for="id" style="color: #993333; font-size: 20px;">아이디</label>
         </div>
       </div>

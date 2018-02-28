@@ -8,16 +8,19 @@
 <title>Insert title here</title>
 <style type="text/css">
 	*{margin: 0px; padding: 0px; margin: auto;}
+	#samsung{position: relative; float: left;}
+	#content{margin-left:50px; height:100%; position: relative; float: left;}
+	#footer{width:100%; position: relative; float: left;}
 </style>
 <script type="text/javascript">
-
 </script>
-</head>
-
 <body>
 <div id="wrap">
 	<div id="header">
 		<jsp:include page="/home/header.jsp"></jsp:include>
+	</div>
+	<div id="samsung">
+		<img alt="" src="image\samsung.jpg" style="width: 250px;">
 	</div>
 	<div id="content" style="width: 1350px;">
 		<c:choose>

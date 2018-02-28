@@ -63,7 +63,7 @@ public class BoardController extends HttpServlet{
         int n = AdminDao.getInstance().adminDelete(sql);
         System.out.println("n:"+n);
         if(n>0) {
-            req.setAttribute("del", "삭제성공");
+            req.setAttribute("del", "명령성공");
             
         }else {
             req.setAttribute("page", "/admin/board.jsp");
@@ -138,7 +138,7 @@ public class BoardController extends HttpServlet{
         int n = AdminDao.getInstance().adminDelete(sql);
         System.out.println("n:"+n);
         if(n>0) {
-            req.setAttribute("del", "삭제성공");
+            req.setAttribute("del", "명령성공");
         }else {
             req.setAttribute("page", "/admin/board.jsp");
             req.setAttribute("page1", "/buy");
@@ -171,7 +171,7 @@ public class BoardController extends HttpServlet{
         int n = AdminDao.getInstance().adminDelete(sql);
         System.out.println("n:"+n);
         if(n>0) {
-            req.setAttribute("del", "삭제성공");
+            req.setAttribute("del", "명령성공");
         }else {
             req.setAttribute("page", "/admin/board.jsp");
             req.setAttribute("page1", "sell");

@@ -59,10 +59,19 @@ public class MemberController  extends HttpServlet{
         int n = MemberDao.getInstance().loginOk(id, pwd);
         if(n>0) {
             req.getSession().setAttribute("id",id);
-            resp.sendRedirect(req.getContextPath()+"/main.jsp");
+            String addr = req.getParameter("addr");
+            System.out.println("id:"+id);
+            if(id.equals("admin")) {
+                System.out.println("여기옴");
+                resp.sendRedirect(req.getContextPath()+"/admin.jsp");
+            }else if(addr.equals("")) {
+                resp.sendRedirect(req.getContextPath()+"/main.jsp");
+            }else {
+                resp.sendRedirect(addr);
+            }
         }else {
             req.setAttribute("page", "/member/login.jsp");
-            req.setAttribute("result", "���̵�� ��й�ȣ�� Ȯ���ϼ���.");
+            req.setAttribute("result", "로그인에 실패하였습니다.");
             RequestDispatcher rd = req.getRequestDispatcher("main.jsp");
             rd.forward(req, resp);
         }
@@ -74,9 +83,9 @@ public class MemberController  extends HttpServlet{
         int n = MemberDao.getInstance().checkId(id);
         pw.println("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
         if(n>0) {
-            pw.println("<result>����Ҽ� �ִ� ���̵� �Դϴ�.</result>");
+            pw.println("<result>사용할 수 있는 아이디 입니다.</result>");
         }else {
-            pw.println("<result>����Ҽ� ���� ���̵� �Դϴ�.</result>");
+            pw.println("<result>사용할 수 없는 아이디 입니다.</result>");
         }
         pw.close();
     }
@@ -91,12 +100,12 @@ public class MemberController  extends HttpServlet{
         int n = MemberDao.getInstance().insert(vo);
         if(n>0) {
             req.setAttribute("page", "/member/login.jsp");
-            req.setAttribute("result", "ȸ�����Լ���");
+            req.setAttribute("result", "회원가입에 성공하였습니다 로그인 하세요");
             RequestDispatcher rd = req.getRequestDispatcher("main.jsp");
             rd.forward(req, resp);
         }else {
             req.setAttribute("page", "/member/join.jsp");
-            req.setAttribute("result", "ȸ�����Խ���");
+            req.setAttribute("result", "가입할 수 없습니다.");
             RequestDispatcher rd = req.getRequestDispatcher("main.jsp");
             rd.forward(req, resp);
         }
@@ -115,11 +124,11 @@ public class MemberController  extends HttpServlet{
         MemberVo vo = new MemberVo(id, pwd, nickname, name, phone, email, null);
         int n = MemberDao.getInstance().update(vo);
         if(n>0) {
-            req.setAttribute("result", "수정 성공");
+            req.setAttribute("result", "회원수정에 성공하였습니다.");
             RequestDispatcher rd = req.getRequestDispatcher("/mypage/myPageUpdate.jsp");
             rd.forward(req, resp);
         }else {
-            req.setAttribute("result", "회원정보 수정 실패");
+            req.setAttribute("result", "회원수정에 실패하였습니다.");
             RequestDispatcher rd = req.getRequestDispatcher("/mypage/myPageUpdate.jsp");
             rd.forward(req, resp);
         }

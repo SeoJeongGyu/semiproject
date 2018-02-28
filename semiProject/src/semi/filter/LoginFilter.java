@@ -37,8 +37,17 @@ public class LoginFilter implements Filter{
                 chain.doFilter(req, resp);//사용자가 요청한 페이지로 이동
             }else {//로그인 안된 상태라면
                 //login.jsp로 이동하기(redirect방식으로)
-                response.sendRedirect(request.getContextPath()+"/member.do?cmd=login");
-            }
+                String addr = request.getHeader("REFERER");
+                System.out.println("addr : "+addr);
+                if(addr.equals("http://localhost:8081/semiProject/sell.do?cmd=sellList")) {
+                    addr="/semiProject/sell.do?cmd=insert";
+                }else if(addr.equals("http://localhost:8081/semiProject/review.do?cmd=list")) {
+                    addr="/semiProject/review.do?cmd=write";
+                }else if(addr.equals("http://localhost:8081/semiProject/buy.do?cmd=buyList")) {
+                    addr="/semiProject/buy.do?cmd=insert";
+                }
+                response.sendRedirect(request.getContextPath()+"/member.do?cmd=login&addr="+addr);
+           }
         }else {
             chain.doFilter(req, resp);
         }
