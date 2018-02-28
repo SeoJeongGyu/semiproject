@@ -12,6 +12,8 @@
 		<res-auth>Container</res-auth>
 	</resource-ref>
 	  
-	 
+	 <listener>
+	 	<listener-class>semi.batch.sellBatch</listener-class>
+	 </listener>
   
 </web-app>

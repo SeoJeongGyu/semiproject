@@ -15,7 +15,7 @@
 </style>
 <br>
 <div class="row">
-   <form class="col s12" method="post" action="/semiProject/sell.do?cmd=update">
+   <form class="col s12" method="post" action="/semiProject/sell.do?cmd=updateOk&sno=${vo.sno }">
 	<div class="input-field col s12">
 	    <select name="os" class="select" id="aa">
 	    <option value="os" disabled selected>선택하세요</option>
@@ -47,8 +47,8 @@
 	<div class="input-field col s12">
 	    <select name="success" class="select" >
 	      <option value="success" disabled selected>선택하세요</option>
-	      <option value="1">거래중</option>
-	      <option value="2">거래완료</option>
+	      <option value="1">판매중</option>
+	      <option value="2">판매완료</option>
 	    </select>
 	    <label>거래상태</label>
 	</div>
@@ -77,11 +77,17 @@
         </div>
     </div>
       
-      <button class="btn waves-effect waves-light" type="submit" style="background-color:#993333; margin-left:340px; width: 200px">
+      <button class="btn waves-effect waves-light" type="submit" onclick="supdate()" style="background-color:#993333; margin-left:340px; width: 200px">
       	<i class="large material-icons">done</i></button>
    </form>
   </div>
 <script type="text/javascript">
+
+function supdate(){
+	if('${result}' == 'fail'){
+		alert("수정사항이 올바르지 않습니다");
+	}
+}
 
     //var os = document.getElementsByName("os")[0];
     var os = document.getElementsByName("os")[0];

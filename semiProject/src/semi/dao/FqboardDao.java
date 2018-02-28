@@ -8,55 +8,29 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import semi.vo.BuyVo;
-import semi.vo.MemberVo;
+import semi.vo.FqboardVo;
 import semi.vo.SellVo;
 import test.dbcp.DbcpBean;
 
-public class BuyDao {
+public class FqboardDao {
 	
-	private static BuyDao instance=new BuyDao();
-	private BuyDao() {}
-	public static BuyDao getInstance() {
+	private static FqboardDao instance=new FqboardDao();
+	private FqboardDao () {}
+	public static FqboardDao getInstance() {
 		return instance;
 	}
 	
-	public BuyVo update(int bno) {
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		try {
-			con=DbcpBean.getConn();
-			String sql= "select * from buy where bno=?";
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, bno);
-			rs=pstmt.executeQuery();
-			if(rs.next()) {
-				String btitle=rs.getString("btitle");
-				String bcontent=rs.getString("bcontent");
-				Date bdate=rs.getDate("bdate");
-				int bhit=rs.getInt("bhit");
-				int success=rs.getInt("success");
-				String id=rs.getString("id");
-				BuyVo vo=new BuyVo(bno, btitle, bcontent, bdate, 0, bhit, success, 0, id);
-				return vo;
-			}
-		return null;
-		}catch(SQLException se) {
-			System.out.println(se.getMessage());
-			return null;
-		}finally {
-			DbcpBean.closeConn(con, pstmt, rs);
-		}
-	}
-	
-	public int updateHit(BuyVo vo) {
+	public int insert(FqboardVo vo) {
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		try {
 			con=DbcpBean.getConn();
-			String sql="update buy set bhit=bhit+1 where bno=?";
+			String sql="insert into fqboard values(fq_seq.nextval,?,?,?,sysdate,0,0,0,?,0)";
 			pstmt=con.prepareStatement(sql);
-			pstmt.setInt(1, vo.getBno());
+			pstmt.setInt(1, vo.getFqtype());
+			pstmt.setString(2, vo.getFqtitle());
+			pstmt.setString(3, vo.getFqcontent());
+			pstmt.setString(4, vo.getId());
 			return pstmt.executeUpdate();
 			
 		}catch(SQLException se) {
@@ -67,38 +41,20 @@ public class BuyDao {
 		}
 	}
 	
-	public int updateReport(int bno) {
-		Connection con=null;
-		PreparedStatement pstmt=null;
-		try {
-			con=DbcpBean.getConn();
-			String sql="update buy set breport=breport+1 where bno=?";
-			pstmt=con.prepareStatement(sql);
-			pstmt.setInt(1, bno);
-			return pstmt.executeUpdate();
-			
-		}catch(SQLException se) {
-			System.out.println(se.getMessage());
-			return -1;
-		}finally {
-			DbcpBean.closeConn(con, pstmt, null);
-		}
-	}
-	
-	public int delete(int bno, String id) {
+	public int delete(int fqno, String id) {
 		Connection con = null;
 		PreparedStatement pstmt1 = null;
 		PreparedStatement pstmt2= null;
 		ResultSet rs = null;
 		try {
 			con=DbcpBean.getConn();
-			String sql1 = "delete from bcomment where bno=?";
+			String sql1 = "delete from fqcomment where fqno=?";
 			pstmt1 = con.prepareStatement(sql1);
-			pstmt1.setInt(1, bno);
+			pstmt1.setInt(1, fqno);
 			int n1 = pstmt1.executeUpdate();
-			String sql2 = "delete from buy where bno=? and id=?";
+			String sql2 = "delete from fqboard where fqno=? and id=?";
 			pstmt2 = con.prepareStatement(sql2);
-			pstmt2.setInt(1, bno);
+			pstmt2.setInt(1, fqno);
 			pstmt2.setString(2, id);
 			int n2 = pstmt2.executeUpdate();
 			return n2; 
@@ -110,53 +66,14 @@ public class BuyDao {
 		DbcpBean.closeConn(null, pstmt2, null);
 	}	
 }
-	
-	public BuyVo detail(int bno) {
-		Connection con=null;
-		PreparedStatement pstmt=null;
-		ResultSet rs=null;
-		try {
-			con=DbcpBean.getConn();
-			String sql="select * from buy where bno=?";
-			pstmt=con.prepareStatement(sql);
-			pstmt.setInt(1, bno);
-			rs=pstmt.executeQuery();
-			if(rs.next()) {
-				String btitle=rs.getString("btitle");
-				String bcontent=rs.getString("bcontent");
-				Date bdate=rs.getDate("bdate");
-				int bhit=rs.getInt("bhit");
-				int success=rs.getInt("success");
-				String id=rs.getString("id");
-				
-				BuyVo vo=new BuyVo(bno, btitle, bcontent, bdate, 0, bhit, success, 0, id);
-				return vo;
-			}else {
-				return null;
-			}
-			
-		}catch(SQLException se) {
-			System.out.println(se.getMessage());
-			return null;
-		}finally {
-			DbcpBean.closeConn(con, pstmt, rs);
-		}	
-	}
-	
-	public int insert(BuyVo vo) {
+	public int updateHit(FqboardVo vo) {
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		try {
 			con=DbcpBean.getConn();
-			String sql="insert into buy values(buy_seq.nextval,?,?,sysdate,?,?,?,?,?)";
+			String sql="update fqboard set fqhit=fqhit+1 where fqno=?";
 			pstmt=con.prepareStatement(sql);
-			pstmt.setString(1, vo.getBtitle());
-			pstmt.setString(2, vo.getBcontent());
-			pstmt.setInt(3, vo.getBgrade());
-			pstmt.setInt(4, vo.getBhit());
-			pstmt.setInt(5, vo.getSuccess());
-			pstmt.setInt(6, vo.getBreport());
-			pstmt.setString(7, vo.getId());
+			pstmt.setInt(1, vo.getFqno());
 			return pstmt.executeUpdate();
 			
 		}catch(SQLException se) {
@@ -166,22 +83,91 @@ public class BuyDao {
 			DbcpBean.closeConn(con, pstmt, null);
 		}
 	}
-	
+	public int updateReport(int fqno) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		try {
+			con=DbcpBean.getConn();
+			String sql="update fqboard set fqreport=fqreport+1 where fqno=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, fqno);
+			return pstmt.executeUpdate();
+			
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return -1;
+		}finally {
+			DbcpBean.closeConn(con, pstmt, null);
+		}
+	}
+	public FqboardVo update(int fqno) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con=DbcpBean.getConn();
+			String sql= "select * from fqboard where fqno=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, fqno);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				int fqtype=rs.getInt("fqtype");
+				String fqtitle=rs.getString("fqtitle");
+				String fqcontent=rs.getString("fqcontent");
+				int fqhit=rs.getInt("fqhit");
+				int fqreport=rs.getInt("fqreport");
+				String id=rs.getString("id");
+				int recommend=rs.getInt("recommend");
+				FqboardVo vo=new FqboardVo(0, fqtype, fqtitle, fqcontent, null, fqhit, 0, fqreport, id, recommend);
+				return vo;
+			}
+		return null;
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return null;
+		}finally {
+			DbcpBean.closeConn(con, pstmt, rs);
+		}
+	}
+	public int updateOk(FqboardVo vo) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con=DbcpBean.getConn();
+			String sql="update fqboard set fqtype=?,fqtitle=?,fqcontent=?,fqhit=?,fqreport=?,id=?,recommend=? where fqno=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, vo.getFqtype());
+			pstmt.setString(2, vo.getFqtitle());
+			pstmt.setString(3, vo.getFqcontent());
+			pstmt.setInt(4, vo.getFqhit());
+			pstmt.setInt(5, vo.getFqreport());
+			pstmt.setString(6, vo.getId());
+			pstmt.setInt(7, vo.getRecommend());
+			pstmt.setInt(8, vo.getFqno());
+			return pstmt.executeUpdate();
+			
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return -1;
+		}finally {
+			DbcpBean.closeConn(con, pstmt, null);
+		}
+	}
 	public int getCount(String select ,String text){
         Connection con=null;
         PreparedStatement pstmt=null;
         ResultSet rs=null;
         String sqlplus="";
         if(select.equals("0")) {
-            sqlplus="where btitle like'%"+text+"%'";
+            sqlplus="where fqtitle like'%"+text+"%'";
         }else if(select.equals("1")) {
-            sqlplus="where bcontent like'%"+text+"%'";
+            sqlplus="where fqcontent like'%"+text+"%'";
         }else if(select.equals("2")) {
             sqlplus="where id like'%"+text+"%'";
         }
         try {
             con=DbcpBean.getConn();
-            String sql= "select count(bno) cnt from buy "+sqlplus;
+            String sql= "select count(fqno) cnt from fqboard "+sqlplus;
             pstmt = con.prepareStatement(sql);
             rs=pstmt.executeQuery();
             rs.next();
@@ -193,14 +179,13 @@ public class BuyDao {
             DbcpBean.closeConn(con, pstmt, rs);
         }
     }
-	
 	public int getCount() {
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		try {
 			con=DbcpBean.getConn();
-			String sql="select NVL(count(bno),0) cnt from buy";
+			String sql="select NVL(count(fqno),0) cnt from fqboard";
 			pstmt=con.prepareStatement(sql);
 			rs=pstmt.executeQuery();
 			rs.next();
@@ -214,16 +199,15 @@ public class BuyDao {
 			DbcpBean.closeConn(con, pstmt, rs);
 		}
 	}
-	
-	public ArrayList<BuyVo> search(String select ,String text,int startRow,int endRow){
+	public ArrayList<FqboardVo> search(String select ,String text,int startRow,int endRow){
         Connection con=null;
         PreparedStatement pstmt=null;
         ResultSet rs=null;
         String sqlplus="";
         if(select.equals("0")) {
-            sqlplus=" where btitle like '%"+text+"%' ";
+            sqlplus=" where fqtitle like '%"+text+"%' ";
         }else if(select.equals("1")) {
-            sqlplus=" where bcontent like '%"+text+"%' ";
+            sqlplus=" where fqcontent like '%"+text+"%' ";
         }else if(select.equals("2")) {
             sqlplus=" where id like '%"+text+"%' ";
         }
@@ -231,21 +215,19 @@ public class BuyDao {
             con=DbcpBean.getConn();
             String sql= "select * from(" + 
                     "  select aa.*,rownum rnum from (" + 
-                    "   select * from buy "+sqlplus+
-                    "        order by bgrade desc, bno desc" + 
+                    "   select * from fqboard "+sqlplus+
+                    "        order by fqgrade desc, fqno desc" + 
                     "   )aa" + 
                     ") where rnum>=? and rnum<=?";
             pstmt = con.prepareStatement(sql);
             pstmt.setInt(1, startRow);
             pstmt.setInt(2, endRow);
             rs=pstmt.executeQuery();
-            ArrayList<BuyVo> list =new  ArrayList<BuyVo>();
+            ArrayList<FqboardVo> list =new  ArrayList<>();
             while(rs.next()) {
-                
-                list.add(new BuyVo(rs.getInt("bno"), rs.getString("btitle"), 
-                		rs.getString("bcontent"), rs.getDate("bdate"), rs.getInt("bgrade"), 
-                		rs.getInt("bhit"), rs.getInt("success"), rs.getInt("breport"), 
-                		rs.getString("id")));
+                list.add(new FqboardVo(rs.getInt("fqno"), rs.getInt("fqtype"), rs.getString("fqtitle"),
+                		rs.getString("fqcontent"), rs.getDate("fqdate"), rs.getInt("fqhit"), rs.getInt("fqgrade"),
+                		rs.getInt("fqreport"), rs.getString("id"), rs.getInt("recommend")));
             }
             return list;
         } catch (SQLException se) {
@@ -256,25 +238,24 @@ public class BuyDao {
         }
     }
 	
-	public ArrayList<BuyVo> list(int startRow,int endRow){
+	public ArrayList<FqboardVo> list(int startRow,int endRow){
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		try {
 			con=DbcpBean.getConn();
 			//System.out.println("con:"+con);
-			String sql="select * from (select aa.*,rownum rnum from(select * from buy order by bgrade desc ,bno desc)aa ) where rnum>=? and rnum<=?";
+			String sql="select * from (select aa.*,rownum rnum from(select * from fqboard order by fqgrade desc ,fqno desc)aa ) where rnum>=? and rnum<=?";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
 			rs=pstmt.executeQuery();
-			ArrayList<BuyVo> list=new ArrayList<>();
+			ArrayList<FqboardVo> list=new ArrayList<>();
 			while(rs.next()) {
-				BuyVo vo=new BuyVo(rs.getInt("bno"), rs.getString("btitle"), rs.getString("bcontent"), 
-						rs.getDate("bdate"), rs.getInt("bgrade"), rs.getInt("bhit"), rs.getInt("success"), 
-						rs.getInt("breport"), rs.getString("id"));
-				list.add(vo);
-			}
+				list.add(new FqboardVo(rs.getInt("fqno"), rs.getInt("fqtype"), rs.getString("fqtitle"),
+                		rs.getString("fqcontent"), rs.getDate("fqdate"), rs.getInt("fqhit"), rs.getInt("fqgrade"),
+                		rs.getInt("fqreport"), rs.getString("id"), rs.getInt("recommend")));
+            }
 			//System.out.println("list:" + list);
 			return list;
 		}catch(SQLException se) {
@@ -285,15 +266,48 @@ public class BuyDao {
 		}
 	}
 	
-	public int getPolice(int bno) {
+	public FqboardVo detail(int fqno) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try {
+			con=DbcpBean.getConn();
+			String sql="select * from fqboard where fqno=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, fqno);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				int fqtype=rs.getInt("fqtype");
+				String fqtitle=rs.getString("fqtitle");
+				String fqcontent=rs.getString("fqcontent");
+				Date fqdate=rs.getDate("fqdate");
+				int fqhit=rs.getInt("fqhit");
+				int fqreport=rs.getInt("fqreport");
+				int recommend=rs.getInt("recommend");
+				String id=rs.getString("id");
+				FqboardVo vo=new FqboardVo(fqno, fqtype, fqtitle, fqcontent, fqdate, fqhit, 0, fqreport, id, recommend);
+				return vo;
+			}else {
+				return null;
+			}
+			
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return null;
+		}finally {
+			DbcpBean.closeConn(con, pstmt, rs);
+		}	
+	}
+	
+	public int getPolice(int fqno) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			con=DbcpBean.getConn();
-			String sql= "select count(*) from report where type='buy' and bonum=?";
+			String sql= "select count(*) from fqboard where type='fq' and fqno=?";
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, bno);
+			pstmt.setInt(1, fqno);
 			rs=pstmt.executeQuery();
 			if(rs.next()) {
 				int count=rs.getInt("count(*)");
@@ -308,15 +322,15 @@ public class BuyDao {
 		}
 	}
 	
-	public int police(int bno,String id) {
+	public int police(int fqno,String id) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
 		try {
 			con = DbcpBean.getConn();
-			String sql="insert into report values(report_seq.nextval,'buy',?,?)";
+			String sql="insert into fqboard values(fq_seq.nextval,'fq',?,?)";
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, bno);
+			pstmt.setInt(1, fqno);
 			pstmt.setString(2, id);
 			return pstmt.executeUpdate();
 		
@@ -328,16 +342,16 @@ public class BuyDao {
 		}
 	}
 	
-	public int oxpolice(int bno,String id) {
+	public int oxpolice(int fqno,String id) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			con=DbcpBean.getConn();
-			String sql="select count(*) cnt from report where id=? and type='buy' and bonum=?";
+			String sql="select count(*) cnt from fqboard where id=? and type='fq' and fqno=?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, id);
-			pstmt.setInt(2, bno);
+			pstmt.setInt(2, fqno);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				int count=rs.getInt("cnt");
@@ -351,5 +365,5 @@ public class BuyDao {
 			DbcpBean.closeConn(con, pstmt, rs);
 		}
 	}
-
+	
 }

@@ -31,7 +31,7 @@ $(".dropdown-button").dropdown();
     <ul class="left hide-on-med-and-down" style="margin-left: 300px;">
       <li><a href="<%=request.getContextPath()%>/notices.do?cmd=notices">공지사항</a></li>
       <li><a href="/semiProject/review.do?cmd=list" >리뷰게시판</a></li>
-      <li><a href="#">자유게시판</a></li>
+      <li><a href="/semiProject/fq.do?cmd=fqList">자유게시판</a></li>
       <!-- Dropdown Trigger -->
       <li><a class="dropdown-button" href="#!" data-activates="dropdown1">장터게시판<i class="material-icons right">arrow_drop_down</i></a></li>
     </ul>
