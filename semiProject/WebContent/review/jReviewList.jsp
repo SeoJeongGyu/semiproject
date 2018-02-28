@@ -5,79 +5,40 @@
 	$(document).ready(function() {
 	  $('select').material_select();
 	});
+	
+	window.onload=function(){
+	    var select = document.getElementsByName("select")[0];
+	    console.log('${requestScope.select}');
+	    select.selectedIndex='${requestScope.select}';
+	}
 </script>
 
-
+<div id="wrap" >
 <div>
-	<table border="1" >
-	<tr><td><ul style="overflow:hidden;">
-		<li id="tap_skt" style="float:left; overflow: hidden; width: 89px; border-right: 1px solid rgb(212, 212, 212); text-align: center; padding:15px; background-color: rgb(255, 255, 255);"><input type="checkbox" name="w[1]" id="w1" value="1" style="display:none"><img src="http://image3.cetizen.com/2007_cetizen/market/2015/icon/skt.png" id="market_tap1">
-			<span id="tap_title_skt" style="display: block; margin-top: 5px; color: rgb(75, 76, 81);" class="p11 ">SKT</span>
+	<table>
+	<tr><td><ul style="overflow:hidden;border:1px solid #D4D4D4; width:362px;">
+	<li style="float: left; overflow: hidden; width: 89px; border-right: 1px solid rgb(212, 212, 212);">	</li>
+	<li id="apple" style="float: left; overflow: hidden; width: 89px; border-right: 1px solid rgb(212, 212, 212); text-align: center; padding: 15px 0px; cursor: pointer; background-color: rgb(255, 255, 255);"><input type="checkbox" name="m[12]" id="m12" value="12" style="display:none"><img src="http://image3.cetizen.com/2007_cetizen/market/2015/icon/apple.png" id="market_tap4">
+			<span style="display: block; margin-top: 5px; color: rgb(75, 76, 81);">애플</span>
 		</li>
-		<li id="tap_kt" style="float: left; overflow: hidden; width: 89px; border-right: 1px solid rgb(212, 212, 212); text-align: center; padding: 15px 0px; background-color: rgb(255, 255, 255);" ><input type="checkbox" name="w[2]" id="w2" value="2" style="display:none"><img src="http://image3.cetizen.com/2007_cetizen/market/2015/icon/kt.png" id="market_tap2">
-			<span id="tap_title_kt" style="display: block; margin-top: 5px; color: rgb(75, 76, 81);" class="p11  ">KT</span>
-		</li> 
-		<li id="tap_lgu" style="float: left; overflow: hidden; width: 89px; border-right: 1px solid rgb(212, 212, 212); text-align: center; padding: 15px 0px; cursor: pointer; background-color: rgb(255, 255, 255);"><input type="checkbox" name="w[3]" id="w3" value="3" style="display:none"><img src="http://image3.cetizen.com/2007_cetizen/market/2015/icon/lgu+.png" id="market_tap3">
-			<span id="tap_title_lgu" style="display: block; margin-top: 5px; color: rgb(75, 76, 81);" class="p11  ">LG U+</span>
+		<li id="samsung" style="float: left; overflow: hidden; width: 93px; border-right: 1px solid rgb(212, 212, 212); text-align: center; padding: 35px 0px 15px; cursor: pointer; background-color: rgb(255, 255, 255);"><input type="checkbox" name="m[1]" id="m1" value="1" style="display:none"><img src="http://image3.cetizen.com/2007_cetizen/market/2015/icon/samsung.png" id="market_tap5">
+			<span style="display: block; margin-top: 17px; color: rgb(75, 76, 81);">삼성</span>
 		</li>
-		<li id="tap_apple" style="float: left; overflow: hidden; width: 89px; border-right: 1px solid rgb(212, 212, 212); text-align: center; padding: 15px 0px; cursor: pointer; background-color: rgb(255, 255, 255);"><input type="checkbox" name="m[12]" id="m12" value="12" style="display:none"><img src="http://image3.cetizen.com/2007_cetizen/market/2015/icon/apple.png" id="market_tap4">
-			<span id="tap_title_m12" style="display: block; margin-top: 5px; color: rgb(75, 76, 81);" class="p11 ">애플</span>
+		<li id="lg" style="float: left; overflow: hidden; width: 89px; border-right: 1px solid rgb(212, 212, 212); text-align: center; padding: 15px 0px; cursor: pointer; background-color: rgb(255, 255, 255);"><input type="checkbox" name="m[2]" id="m2" value="2" style="display:none"><img src="http://image3.cetizen.com/2007_cetizen/market/2015/icon/lg.png" id="market_tap6">
+			<span style="display: block; margin-top: 5px; color: rgb(75, 76, 81);">LG</span>
 		</li>
-		<li id="tap_samsung" style="float: left; overflow: hidden; width: 93px; border-right: 1px solid rgb(212, 212, 212); text-align: center; padding: 35px 0px 15px; cursor: pointer; background-color: rgb(255, 255, 255);"><input type="checkbox" name="m[1]" id="m1" value="1" style="display:none"><img src="http://image3.cetizen.com/2007_cetizen/market/2015/icon/samsung.png" id="market_tap5">
-			<span id="tap_title_m1" style="display: block; margin-top: 17px; color: rgb(75, 76, 81);" class="p11 ">삼성</span>
+		<li id="etc" style="float: left; overflow: hidden; width: 89px; border-right: 1px solid rgb(212, 212, 212); text-align: center; padding: 15px 0px; cursor: pointer; background-color: rgb(255, 255, 255);"><img src="http://image3.cetizen.com/2007_cetizen/market/2015/icon/2g.png" id="market_tap7">
+			<span style="display: block; margin-top: 5px; color: rgb(75, 76, 81);">기타</span>
 		</li>
-		<li id="tap_lg" style="float: left; overflow: hidden; width: 89px; border-right: 1px solid rgb(212, 212, 212); text-align: center; padding: 15px 0px; cursor: pointer; background-color: rgb(255, 255, 255);"><input type="checkbox" name="m[2]" id="m2" value="2" style="display:none"><img src="http://image3.cetizen.com/2007_cetizen/market/2015/icon/lg.png" id="market_tap6">
-			<span id="tap_title_m2" style="display: block; margin-top: 5px; color: rgb(75, 76, 81);" class="p11 ">LG</span>
-		</li>
-		<li id="tap_et" style="float: left; overflow: hidden; width: 89px; border-right: 1px solid rgb(212, 212, 212); text-align: center; padding: 15px 0px; cursor: pointer; background-color: rgb(255, 255, 255);" onmouseover="tap_menu_check('tap_cat2','1','tap_title_cat2');MM_swapImage('market_tap7','','http://image3.cetizen.com/2007_cetizen/market/2015/icon/2g.png',7)" onmouseout="tap_menu_check('tap_cat2','2','tap_title_cat2');MM_swapImgRestore()" onclick="check_r_onoff('cat2')"><input type="checkbox" name="etc" id="etc" style="display:none"><img src="http://image3.cetizen.com/2007_cetizen/market/2015/icon/2g.png" id="market_tap7">
-			<span id="tap_title_cat2" style="display: block; margin-top: 5px; color: rgb(75, 76, 81);" class="p11 ">기타</span>
-		</li>
+		
 	</ul>
 	</td>
 	</tr>
 	</table>
 </div>
-<div>
 
-<c:choose>
-	<c:when test="${startPage>4 }">
-		<a href="<%=request.getContextPath() %>/board/list.do?pageNum=${startPage-1 }">이전</a>
-	</c:when>
-	<c:otherwise>
-		이전
-	</c:otherwise>
-</c:choose>
 
-	<c:forEach var="i" begin="${startPage }"  end="${endPage }">
-		<c:choose>
-			<c:when test="${pageNum==i }">
-				<a href="<%=request.getContextPath()%>/review.do?pageNum=${i}">
-				<span style="color:blue">[${i }]</span>
-				</a>
-			</c:when>
-			<c:otherwise>
-				<a href="<%=request.getContextPath()%>/review.do?pageNum=${i}">
-				<span style="color:gray">[${i }]</span>
-				</a>
-			</c:otherwise>
-		</c:choose>
-	</c:forEach>
-	
-	<c:choose>
-	<c:when test="${endPage<pageCount }">
-		<a href="<%=request.getContextPath() %>/review.do?pageNum=${endPage+1 }">다음</a>
-	</c:when>
-	<c:otherwise>
-		다음
-	</c:otherwise>
-</c:choose>
 
-	
-</div>
-
-<a class="btn-floating btn-large red" href="<%=request.getContextPath() %>/review.do?cmd=write">
-      <i class="large material-icons">mode_edit</i>
-    </a>
 
 
 <!--  리스트 이미지와 내용 보여주는 div-->
@@ -103,34 +64,61 @@
 			</div>
 
 </c:forEach>
+
 </div>
 <br>
 
-<div style="clear:both">
+<div class="center" style="clear:both" style="margin-left: 250px;">
    	<ul class="pagination">
+   	<c:choose>
+	<c:when test="${startPage>5 }">
+	<li class="waves-effect"><a href="<%=request.getContextPath() %>/review.do?cmd=list&pageNum=${startPage-1 }&text=${requestScope.text}&select=${requestScope.select}"><i class="material-icons">chevron_left</i></a></li>
+	</c:when>
+	<c:otherwise>
 	    <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-	    <li class="active"><a href="#!">1</a></li>
-	    <li class="waves-effect"><a href="#!">2</a></li>
-	    <li class="waves-effect"><a href="#!">3</a></li>
-	    <li class="waves-effect"><a href="#!">4</a></li>
-	    <li class="waves-effect"><a href="#!">5</a></li>
-	    <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+	    	</c:otherwise>
+</c:choose>
+
+<c:forEach var="i" begin="${startPage }"  end="${endPage }">
+<c:choose>
+			<c:when test="${pageNum==i }">
+	    <li class="active"><a href="<%=request.getContextPath()%>/review.do?cmd=list&pageNum=${i}&text=${requestScope.text}&select=${requestScope.select}">${i}</a></li>
+	 	</c:when>
+	 <c:otherwise>
+			<li class="waves-effect"><a href="<%=request.getContextPath()%>/review.do?cmd=list&pageNum=${i}&text=${requestScope.text}&select=${requestScope.select}">${i }</a></li>
+			</c:otherwise>
+		</c:choose>
+	</c:forEach>
+	
+	<c:choose>
+	<c:when test="${endPage<pageCount }">
+	    <li class="waves-effect"><a href="<%=request.getContextPath() %>/review.do?cmd=list&pageNum=${endPage+1 }&text=${requestScope.text}&select=${requestScope.select}"><i class="material-icons">chevron_right</i></a></li>
+  	</c:when>
+	<c:otherwise>
+	<li class="disabled"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+  	</c:otherwise>
+</c:choose>
   	</ul>
-  
-
  </div>
-
-      <div class="row">
+ 
+     <a class="btn-floating btn-large red" href="<%=request.getContextPath() %>/review.do?cmd=write" style="margin-left:1200px;" >
+      <i class="large material-icons">mode_edit</i>
+    </a>
+	<form class="cols12" method="post" action="<%=request.getContextPath()%>/review.do?cmd=list">
+      <div class="row" style=" clear:both; margin-left: 500px;">
       <div class="input-field col s12" style="width: 100px; margin-left: 10px;">
-        <select>
-      <option value="1">제목</option>
-      <option value="2">내용</option>
-      <option value="3">아이디</option>
+        <select name="select">
+      <option value="0">제목</option>
+      <option value="1">내용</option>
+      <option value="2">아이디</option>
     </select>
       </div>
-        <div class="input-field col s2">
-          <input id="" type="text" class="validate">
+        <div class="input-field col s3">
+          <input id="text" name="text" type="text" class="validate" value="${requestScope.txt }">
         </div>
       <button class="btn waves-effect waves-light" type="submit" name="action" style="margin-top: 25px;">검색</button>
+     
       </div>
-      
+      </form>
+      </div>
+     

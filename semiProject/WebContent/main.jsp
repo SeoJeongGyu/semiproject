@@ -8,9 +8,12 @@
 <title>Insert title here</title>
 <style type="text/css">
 	*{margin: 0px; padding: 0px; margin: auto;}
+	#notices{position: relative; float: left;}
+	#fqboard{position: relative; float: left;}
+	#review{position: relative; float: left;}
 	#event{position: relative; float: left; width: 250px;}
 	#content{margin-left:50px; height:100%; position: relative; float: left;}
-	#footer{width:100%; position: relative; float: left;}
+	#footer{width:100%; position: relative; float: left; margin-top: 20px;}
 </style>
 <script type="text/javascript">
 </script>
@@ -26,6 +29,9 @@
 	<div id="content" style="width: 1350px;">
 		<c:choose>
 			<c:when test="${requestScope.page==null}">
+			<div id="notices" style="margin-top: 30px; width: 630px; height: 400px; background-color: pink;"></div>
+			<div id="fqboard" style="margin-top: 30px; margin-left : 40px;  width: 630px; height: 400px; background-color: yellow;"></div>
+			<div id="review" style="margin-top: 30px; width: 1300px; height: 400px; background-color: gray;"></div>
 				<%-- <jsp:include page="aaa.jsp"></jsp:include>
 					이곳은 메인 --%>
 			</c:when>

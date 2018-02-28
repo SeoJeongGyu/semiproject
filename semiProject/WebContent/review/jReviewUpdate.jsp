@@ -4,9 +4,10 @@
   <script>
   $(document).ready(function() {
 	    $('select').material_select();
+var note=document.getElementById("materialnote");
+note.value='${vo.rcontent}';
 	 });
   
-
   </script>
   <script type="text/javascript">
 
@@ -31,13 +32,10 @@
 </script>
 <center>
 
-
-
-
-
 <!-- 전체를 감싸는 div -->
 <div id="write" style="width: 1000px; height: 527px; margin-top: 100px;">
-
+  <!-- 전체 form  -->
+    <form class="cols12" action="<%=request.getContextPath() %>/review.do?cmd=updateOk&rno=${vo.rno}" method="post" enctype="multipart/form-data">
 <div class="row">
 <h5>대표사진변경</h5>
     <!-- 사진 등록 AJAX div  -->
@@ -61,8 +59,7 @@
 </div>
     <br>
    
-    <!-- 전체 form  -->
-    <form class="cols12" action="<%=request.getContextPath() %>/review.do?cmd=updateOk" method="post" enctype="multipart/form-data">
+  
     
   
 	      <div class="row">
@@ -79,7 +76,7 @@
       </div>
       <div class="row">
         <div class="input-field col  s6">
-          <input name ="title" type="text" class="validate" style=" width: 460px; font-size:30px; height: 60px;">
+          <input name ="title" type="text" class="validate" value="${vo.rtitle }"style=" width: 460px; font-size:30px; height: 60px;">
           <label for="title" style="font-size: 15px; ">제목</label>
         </div>
       </div>

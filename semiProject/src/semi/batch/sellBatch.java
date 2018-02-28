@@ -18,7 +18,7 @@ public class sellBatch {
 
 			@Override
 			public void run() {
-				System.out.println("task수행됨");
+				System.out.println("task");
 				
 				Calendar cal1=Calendar.getInstance();
 				
