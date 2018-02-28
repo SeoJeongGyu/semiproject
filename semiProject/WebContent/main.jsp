@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 <style type="text/css">
 	*{margin: 0px; padding: 0px; margin: auto;}
-	#samsung{position: relative; float: left;}
+	#event{position: relative; float: left; width: 250px;}
 	#content{margin-left:50px; height:100%; position: relative; float: left;}
 	#footer{width:100%; position: relative; float: left;}
 </style>
@@ -19,9 +19,10 @@
 	<div id="header">
 		<jsp:include page="/home/header.jsp"></jsp:include>
 	</div>
-	<div id="samsung">
-		<img alt="" src="image\samsung.jpg" style="width: 250px;">
-	</div>
+	<table id="event" >
+		<tr><td><img id="samsung" alt="" src="image\samsung.jpg" style="width: 250px;"></td></tr>
+		<tr><td><img id="lg" alt="" src="image\LG.jpg" style="width: 250px;"></td></tr>
+	</table>
 	<div id="content" style="width: 1350px;">
 		<c:choose>
 			<c:when test="${requestScope.page==null}">
