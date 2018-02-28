@@ -39,7 +39,8 @@ public class MemberController  extends HttpServlet{
         }else if(cmd.equals("update")) {
         	update(req,resp);
         }else if(cmd.equals("mypage")) {
-        	mypage(req,resp);
+        	req.setAttribute("page", "/mypage/myPageMain.jsp");
+            req.getRequestDispatcher("main.jsp").forward(req, resp);
         }
     }
     
@@ -48,10 +49,7 @@ public class MemberController  extends HttpServlet{
         RequestDispatcher rd = req.getRequestDispatcher("main.jsp");
         rd.forward(req, resp);
     }
-    public void mypage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("page", "/mypage/myPageMain.jsp");
-        req.getRequestDispatcher("main.jsp").forward(req, resp);
-    }
+ 
     
     public void loginOk(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id=req.getParameter("id");

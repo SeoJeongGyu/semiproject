@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ include file="/home/api.jsp" %>
+<jsp:include page="/home/header.jsp"></jsp:include>
 <style>
 	#id,#pwd,#rpwd,#name,#nickname,#phone,#email{
 		border-bottom:1px solid #993333; 

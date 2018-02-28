@@ -2,7 +2,9 @@ package semi.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import semi.vo.MyPageVo;
 import test.dbcp.DbcpBean;
@@ -13,6 +15,54 @@ public class MyPageDao {
 	public static MyPageDao getInstance() {
 		return instance;
 	}
+	
+	public int getCount() {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = DbcpBean.getConn();
+			String sql="select NVL(count(sno),0) cnt from scrap";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			rs.next();
+			int cnt = rs.getInt("cnt");
+			return cnt;
+		}catch (SQLException se) {
+			System.out.println(se.getMessage());
+			return -1;
+		}finally {
+			DbcpBean.closeConn(conn, pstmt, rs);
+		}
+	}
+	
+	public int getCount(String select ,String text){
+        Connection con=null;
+        PreparedStatement pstmt=null;
+        ResultSet rs=null;
+        String sqlplus="";
+        if(select.equals("0")) {
+            sqlplus="where rtitle like'%"+text+"%'";
+        }else if(select.equals("1")) {
+            sqlplus="where rcontent like'%"+text+"%'";
+        }else if(select.equals("2")) {
+            sqlplus="where id like'%"+text+"%'";
+        }
+        try {
+            con=DbcpBean.getConn();
+            String sql= "select count(sno) cnt from scrap "+sqlplus;
+            pstmt = con.prepareStatement(sql);
+            rs=pstmt.executeQuery();
+            rs.next();
+            return rs.getInt("cnt");
+        } catch (SQLException se) {
+            System.out.println(se.getMessage());
+            return -1;
+        } finally {
+            DbcpBean.closeConn(con, pstmt, rs);
+        }
+    }
+	
 	public int scrapAdd(MyPageVo vo) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -33,4 +83,41 @@ public class MyPageDao {
 			DbcpBean.closeConn(conn,pstmt,null);
 		}
 	}
+	public ArrayList<MyPageVo> reviewList(String select ,String text,int startRow,int endRow){
+        Connection con=null;
+        PreparedStatement pstmt=null;
+        ResultSet rs=null;
+        String sqlplus="";
+        if(text!=null) {
+            if(select.equals("0")) {
+                sqlplus=" where rtitle like '%"+text+"%'";
+            }else if(select.equals("1")) {
+                sqlplus=" where rcontent like '%"+text+"%'";
+            }else if(select.equals("2")) {
+                sqlplus=" where id like '%"+text+"%'";
+            }
+        }
+        try {
+            con=DbcpBean.getConn();
+            //System.out.println("con:"+con);
+            String sql="select * from (select aa.*,rownum rnum from(select * from scrap"+sqlplus+" order by sno desc )aa ) where rnum>=? and rnum<=?";
+            System.out.println(sql);
+            pstmt=con.prepareStatement(sql);
+            pstmt.setInt(1, startRow);
+            pstmt.setInt(2, endRow);
+            rs=pstmt.executeQuery();
+            ArrayList<MyPageVo> list=new ArrayList<>();
+            while(rs.next()) {
+                MyPageVo vo=new MyPageVo(rs.getInt("sno"),rs.getString("title"),rs.getString("id"),rs.getString("url"),rs.getDate("sdate"),rs.getInt("rno"));
+                list.add(vo);
+            }
+            return list;
+        }catch(SQLException se) {
+            System.out.println(se.getMessage());
+            return null;
+        }finally {
+            DbcpBean.closeConn(con, pstmt, rs);
+        }
+    }
+	
 }
