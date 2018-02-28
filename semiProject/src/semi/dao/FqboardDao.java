@@ -397,7 +397,7 @@ public class FqboardDao {
 		try {
 			con = DbcpBean.getConn();
 			String sql="insert into recommend values(fqre_seq.nextval,'fq',?,?)";
-			String sql2="update review set recommend=recommend+1 where fqno=?";
+			String sql2="update fqboard set recommend=recommend+1 where fqno=?";
 			pstmt = con.prepareStatement(sql);
 			pstmt2=con.prepareStatement(sql2);
 			pstmt.setInt(1, fqno);
