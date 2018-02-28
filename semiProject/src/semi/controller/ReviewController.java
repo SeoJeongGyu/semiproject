@@ -53,17 +53,18 @@ public class ReviewController extends HttpServlet {
 		if (spageNum != null) {
 			pageNum = Integer.parseInt(spageNum);
 		}
-		int startRow = (pageNum - 1) * 10 + 1; // �떆�옉�뻾踰덊샇
-		int endRow = startRow + 9; // �걹�뻾踰덊샇
+		int startRow = (pageNum - 1) * 10 + 1; 
+		int endRow = startRow + 9; 
 		ReviewDao dao = ReviewDao.getInstance();
-		// �쟾泥� �럹�씠吏� 媛��닔 援ы븯湲�
+		
 		int pageCount = (int) Math.ceil(dao.getCount() / 10.0);
-		// �떆�옉�럹�씠吏��� �걹�럹�씠吏� 援ы븯湲�
-		int startPage = ((pageNum - 1) / 10 * 10) + 1;
-		int endPage = startPage + 9;
+		
+		int startPage = ((pageNum - 1) / 5 * 5) + 1;
+		int endPage = startPage + 4;
 		if (pageCount < endPage) {
 			endPage = pageCount;
 		}
+		
 		ArrayList<ReviewVo> rlist = dao.listAll(startRow, endRow);
 
 		req.setAttribute("rlist", rlist);
