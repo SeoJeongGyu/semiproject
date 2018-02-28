@@ -46,6 +46,32 @@ public class SellDao {
 		}	
 	}*/
 	
+	public int updateOk(SellVo vo) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con=DbcpBean.getConn();
+			String sql="update sell set os=?,telecom=?,company=?,loc=?,price=?,stitle=?,scontent=?,success=? where sno=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, vo.getOs());
+			pstmt.setInt(2, vo.getTelecom());
+			pstmt.setInt(3, vo.getCompany());
+			pstmt.setString(4, vo.getLoc());
+			pstmt.setInt(5, vo.getPrice());
+			pstmt.setString(6, vo.getStitle());
+			pstmt.setString(7, vo.getScontent());
+			pstmt.setInt(8, vo.getSuccess());
+			pstmt.setInt(9, vo.getSno());
+			return pstmt.executeUpdate();
+			
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return -1;
+		}finally {
+			DbcpBean.closeConn(con, pstmt, null);
+		}
+	}
+	
 	public SellVo update(int sno) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -429,5 +455,24 @@ public class SellDao {
 			DbcpBean.closeConn(conn, pstmt, rs);
 		}
 	}
+	
+	/*public ArrayList<SellVo> sellBatch(){
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try {
+			con=DbcpBean.getConn();
+			String sql="select * from sell where sdate=sysdate-1 and success=1";
+			pstmt=con.prepareStatement(sql);
+			
+			
+			
+		}catch (SQLException se) {
+			System.out.println(se.getMessage());
+			return null;
+		}finally {
+			DbcpBean.closeConn(con, pstmt, rs);
+		}
+	}*/
 
 }

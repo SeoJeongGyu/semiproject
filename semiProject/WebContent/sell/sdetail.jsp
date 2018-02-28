@@ -200,7 +200,7 @@ function recomm(event){
 	<tr>
 		<td>거래상황</td>
 		<c:choose>
-			<c:when test="${vo.success==0 }">
+			<c:when test="${vo.success==1 }">
 				<td>판매중</td>
 			</c:when>
 			<c:otherwise>

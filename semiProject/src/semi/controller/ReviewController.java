@@ -143,11 +143,11 @@ public class ReviewController extends HttpServlet {
 		
 		if(n>0) {
 		
-<<<<<<< HEAD
+
 			req.setAttribute("result", "동일게시물에는추천할수없습니다");
-=======
+
 			req.setAttribute("result", "동일 게시물에는 추천할 수 없습니다.");
->>>>>>> branch 'jg1' of https://github.com/SeoJeongGyu/semiproject.git
+
 			content(req, resp);
 		}else {
 		int recommend = dao.recommend(rno, id);
@@ -169,15 +169,15 @@ public class ReviewController extends HttpServlet {
 		int n=dao.oxpolice(rno, id);
 		
 		if(n>0) {
-<<<<<<< HEAD
+
 			req.setAttribute("result", "이미 신고한 게시물입니다");
-=======
+
 		
 			req.setAttribute("result", "�씠誘� �떊怨좏븳 寃뚯떆臾쇱엯�땲�떎.");
->>>>>>> branch 'jg1' of https://github.com/SeoJeongGyu/semiproject.git
+
 			content(req, resp);
 		}else {
-<<<<<<< HEAD
+
 			int police = dao.police(rno, id);
 			if(police>0) {
 				req.setAttribute("result", "신고하였습니다.");
@@ -186,8 +186,8 @@ public class ReviewController extends HttpServlet {
 	
 				content(req, resp);
 			}
-=======
-		int police = dao.police(rno, id);
+
+		police = dao.police(rno, id);
 		if(police>0) {
 			req.setAttribute("result", "寃뚯떆臾쇱쓣 �떊怨좏븯���뒿�땲�떎.");
 			content(req, resp);
@@ -195,7 +195,7 @@ public class ReviewController extends HttpServlet {
 
 			content(req, resp);
 		}
->>>>>>> branch 'jg1' of https://github.com/SeoJeongGyu/semiproject.git
+
 		}
 		
 }

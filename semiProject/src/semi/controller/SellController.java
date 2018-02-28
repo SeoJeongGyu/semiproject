@@ -45,6 +45,8 @@ public class SellController extends HttpServlet{
         	update(req,resp);
         }else if(cmd.equals("police")) {
 			police(req,resp);
+		}else if(cmd.equals("updateOk")) {
+			updateOk(req,resp);
 		}
 	}
 	
@@ -68,6 +70,28 @@ public class SellController extends HttpServlet{
 				detail(req, resp);
 			}
 		}	
+	}
+	private void updateOk(HttpServletRequest req, HttpServletResponse resp) 
+			throws ServletException, IOException{
+		int sno=Integer.parseInt(req.getParameter("sno"));
+		int os=Integer.parseInt(req.getParameter("os"));
+		int telecom=Integer.parseInt(req.getParameter("telecom"));
+		int company=Integer.parseInt(req.getParameter("company"));
+		String loc=req.getParameter("loc");
+		int price=Integer.parseInt(req.getParameter("price"));
+		String stitle=req.getParameter("stitle");
+		String scontent=req.getParameter("scontent");
+		int success=Integer.parseInt(req.getParameter("success"));
+		SellDao dao=SellDao.getInstance();
+		SellVo vo=new SellVo(sno, os, telecom, company, loc, price, stitle, scontent, null, 0, 0, success, 0, null);
+		int n=dao.updateOk(vo);
+		
+		if(n>0) {
+			resp.sendRedirect(req.getContextPath()+"/sell.do?cmd=sellList");
+		}else {
+			
+		}
+		
 	}
 	
 	private void update(HttpServletRequest req, HttpServletResponse resp) 

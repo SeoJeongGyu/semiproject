@@ -53,20 +53,17 @@ public class BoardController extends HttpServlet{
             noticesOk(req,resp);
         }else if(cmd.equals("noticesUpdate")) {
             noticesUpdate(req,resp);
-<<<<<<< HEAD
         }else if(cmd.equals("selldelete")) {
-            //selldelete(req,resp);
-=======
+            selldelete(req,resp);
+
         }else if(cmd.equals("fqboard")) {
             fqboard(req,resp);
->>>>>>> branch 'jg1' of https://github.com/SeoJeongGyu/semiproject.git
+
         }
     }
-<<<<<<< HEAD
-   /* public void selldelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-=======
+
     public void reviewdelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
->>>>>>> branch 'jg1' of https://github.com/SeoJeongGyu/semiproject.git
+
         String sql=req.getParameter("sql");
         System.out.println(sql);
         int n = AdminDao.getInstance().adminDelete(sql);
@@ -186,7 +183,7 @@ public class BoardController extends HttpServlet{
             req.setAttribute("page1", "sell");
         }
         sell(req,resp);
-    }*/
+    }
     public void noticesUpdate(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int num=Integer.parseInt(req.getParameter("num"));
         NoticesVo vo=NoticesDao.getInstance().detail(num);
