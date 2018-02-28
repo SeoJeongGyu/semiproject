@@ -5,9 +5,15 @@
 	$(document).ready(function() {
 	  $('select').material_select();
 	});
+	
+	window.onload=function(){
+	    var select = document.getElementsByName("select")[0];
+	    console.log('${requestScope.select}');
+	    select.selectedIndex='${requestScope.select}';
+	}
 </script>
 
-
+<div id="wrap" >
 <div>
 	<table>
 	<tr><td><ul style="overflow:hidden;border:1px solid #D4D4D4; width:362px;">
@@ -32,9 +38,7 @@
 </div>
 
 
-<a class="btn-floating btn-large red" href="<%=request.getContextPath() %>/review.do?cmd=write">
-      <i class="large material-icons">mode_edit</i>
-    </a>
+
 
 
 <!--  리스트 이미지와 내용 보여주는 div-->
@@ -60,70 +64,61 @@
 			</div>
 
 </c:forEach>
+
 </div>
 <br>
-<div>
 
-<c:choose>
+<div class="center" style="clear:both" style="margin-left: 250px;">
+   	<ul class="pagination">
+   	<c:choose>
 	<c:when test="${startPage>5 }">
-		<a href="<%=request.getContextPath() %>/board/list.do?pageNum=${startPage-1 }">이전</a>
+	<li class="waves-effect"><a href="<%=request.getContextPath() %>/review.do?cmd=list&pageNum=${startPage-1 }&text=${requestScope.text}&select=${requestScope.select}"><i class="material-icons">chevron_left</i></a></li>
 	</c:when>
 	<c:otherwise>
-		이전
-	</c:otherwise>
+	    <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+	    	</c:otherwise>
 </c:choose>
 
-	<c:forEach var="i" begin="${startPage }"  end="${endPage }">
-		<c:choose>
+<c:forEach var="i" begin="${startPage }"  end="${endPage }">
+<c:choose>
 			<c:when test="${pageNum==i }">
-				<a href="<%=request.getContextPath()%>/review.do?pageNum=${i}">
-				<span style="color:blue">[${i }]</span>
-				</a>
-			</c:when>
-			<c:otherwise>
-				<a href="<%=request.getContextPath()%>/review.do?pageNum=${i}">
-				<span style="color:gray">[${i }]</span>
-				</a>
+	    <li class="active"><a href="<%=request.getContextPath()%>/review.do?cmd=list&pageNum=${i}&text=${requestScope.text}&select=${requestScope.select}">${i}</a></li>
+	 	</c:when>
+	 <c:otherwise>
+			<li class="waves-effect"><a href="<%=request.getContextPath()%>/review.do?cmd=list&pageNum=${i}&text=${requestScope.text}&select=${requestScope.select}">${i }</a></li>
 			</c:otherwise>
 		</c:choose>
 	</c:forEach>
 	
 	<c:choose>
 	<c:when test="${endPage<pageCount }">
-		<a href="<%=request.getContextPath() %>/review.do?pageNum=${endPage+1 }">다음</a>
-	</c:when>
+	    <li class="waves-effect"><a href="<%=request.getContextPath() %>/review.do?cmd=list&pageNum=${endPage+1 }&text=${requestScope.text}&select=${requestScope.select}"><i class="material-icons">chevron_right</i></a></li>
+  	</c:when>
 	<c:otherwise>
-		다음
-	</c:otherwise>
+	<li class="disabled"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+  	</c:otherwise>
 </c:choose>
-
-	
-</div>
-<div style="clear:both">
-   	<ul class="pagination">
-	    <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-	    <li class="active"><a href="#!">1</a></li>
-	    <li class="waves-effect"><a href="#!">2</a></li>
-	    <li class="waves-effect"><a href="#!">3</a></li>
-	    <li class="waves-effect"><a href="#!">4</a></li>
-	    <li class="waves-effect"><a href="#!">5</a></li>
-	    <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
   	</ul>
-  
-
  </div>
-
-      <div class="row">
+ 
+     <a class="btn-floating btn-large red" href="<%=request.getContextPath() %>/review.do?cmd=write" style="margin-left:1200px;" >
+      <i class="large material-icons">mode_edit</i>
+    </a>
+	<form class="cols12" method="post" action="<%=request.getContextPath()%>/review.do?cmd=list">
+      <div class="row" style=" clear:both; margin-left: 500px;">
       <div class="input-field col s12" style="width: 100px; margin-left: 10px;">
-        <select>
-      <option value="1">제목</option>
-      <option value="2">내용</option>
-      <option value="3">아이디</option>
+        <select name="select">
+      <option value="0">제목</option>
+      <option value="1">내용</option>
+      <option value="2">아이디</option>
     </select>
       </div>
-        <div class="input-field col s2">
-          <input id="" type="text" class="validate">
+        <div class="input-field col s3">
+          <input id="text" name="text" type="text" class="validate" value="${requestScope.txt }">
         </div>
       <button class="btn waves-effect waves-light" type="submit" name="action" style="margin-top: 25px;">검색</button>
+     
+      </div>
+      </form>
       </div>
      

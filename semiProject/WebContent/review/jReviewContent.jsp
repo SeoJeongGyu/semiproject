@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script>
+if('${param.result}'!=""){alert('${param.result}');}
 if('${result}' !=""){
 	alert('${result}');
 }
@@ -40,6 +41,15 @@ function police(){
 			alert("신고기능은 로그인 된 상태에서만 가능합니다");
 		}
 	}
+	
+	function scrap(){
+		if('${sessionScope.id}' != ""){
+		location.href="mypage.do?cmd=scrap&rno=${vo.rno}&id=${sessionScope.id}&rtitle=${vo.rtitle}";
+		}else{
+				alert("로그인 후 스크랩기능을 이용해주세요.");
+			}
+		
+	}
 </script>
 
 <div id="wrap">
@@ -73,7 +83,6 @@ function police(){
 		<!-- 내용보여주기  -->
 <div id="content" style="margin-left: 250px;"><span id="rcontent">${vo.rcontent }</span></div>
 
-		
 		<!--  수정, 삭제, 추천-->
 <div class="fixed-action-btn horizontal">
     <a class="btn-floating btn-large red">
@@ -84,7 +93,7 @@ function police(){
       <li><a class="btn-floating red"  onclick="rdelete()" ><i class="material-icons">delete</i></a></li>
       <li><a class="btn-floating green" onclick="recommend()"><i class="material-icons">thumb_up</i></a></li>
       <li><a class="btn-floating purple" onclick="police()"><i class="material-icons">thumb_down</i></a></li>
-       <li><a class="btn-floating yellow"><i class="material-icons">star</i></a></li>
+       <li><a class="btn-floating yellow" onclick="scrap()"><i class="material-icons">star</i></a></li>
     </ul>
   </div>
 		<!-- 댓글기능  -->

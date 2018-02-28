@@ -60,7 +60,44 @@ public class ReviewDao {
         try {
             con=DbcpBean.getConn();
             //System.out.println("con:"+con);
-            String sql="select * from (select aa.*,rownum rnum from(select * from review"+sqlplus+" order by recommend desc , rno desc)aa ) where rnum>=? and rnum<=?";
+            String sql="select * from (select aa.*,rownum rnum from(select * from review"+sqlplus+" order by rgrade desc , recommend desc , rno desc)aa ) where rnum>=? and rnum<=?";
+            System.out.println(sql);
+            pstmt=con.prepareStatement(sql);
+            pstmt.setInt(1, startRow);
+            pstmt.setInt(2, endRow);
+            rs=pstmt.executeQuery();
+            ArrayList<ReviewVo> list=new ArrayList<>();
+            while(rs.next()) {
+                ReviewVo vo=new ReviewVo(rs.getInt("rno"),rs.getString("rtitle"),rs.getString("rcontent"),rs.getDate("rdate"),rs.getInt("rhit"),rs.getInt("rgrade"),rs.getString("orgfilename"),rs.getString("savefilename"),rs.getString("id"),rs.getInt("company"),rs.getInt("rreport"),rs.getInt("recommend"));
+                list.add(vo);
+            }
+            return list;
+        }catch(SQLException se) {
+            System.out.println(se.getMessage());
+            return null;
+        }finally {
+            DbcpBean.closeConn(con, pstmt, rs);
+        }
+    }
+	
+	public ArrayList<ReviewVo> reviewList2(String select ,String text,int startRow,int endRow){
+        Connection con=null;
+        PreparedStatement pstmt=null;
+        ResultSet rs=null;
+        String sqlplus="";
+        if(text!=null) {
+            if(select.equals("0")) {
+                sqlplus=" where rtitle like '%"+text+"%'";
+            }else if(select.equals("1")) {
+                sqlplus=" where rcontent like '%"+text+"%'";
+            }else if(select.equals("2")) {
+                sqlplus=" where id like '%"+text+"%'";
+            }
+        }
+        try {
+            con=DbcpBean.getConn();
+            //System.out.println("con:"+con);
+            String sql="select * from (select aa.*,rownum rnum from(select * from review"+sqlplus+" order by rgrade desc , rno desc)aa ) where rnum>=? and rnum<=?";
             System.out.println(sql);
             pstmt=con.prepareStatement(sql);
             pstmt.setInt(1, startRow);
