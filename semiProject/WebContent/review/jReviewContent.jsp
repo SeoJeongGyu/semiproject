@@ -2,14 +2,15 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script>
+if('${param.result}'!=""){alert('${param.result}');}
 if('${result}' !=""){
 	alert('${result}');
 }
 
 function rupdate(){
 	if('${sessionScope.id}' == '${vo.id}'){
-	location.href="review.do?cmd=update&rno=${vo.rno}";
-		
+	document.frm.submit();
+
 	}else{
 		alert("본인의 글만 수정할 수 있습니다.");
 	}
@@ -40,11 +41,20 @@ function police(){
 			alert("신고기능은 로그인 된 상태에서만 가능합니다");
 		}
 	}
+	
+	function scrap(){
+		if('${sessionScope.id}' != ""){
+		location.href="mypage.do?cmd=scrap&rno=${vo.rno}&id=${sessionScope.id}&rtitle=${vo.rtitle}";
+		}else{
+				alert("로그인 후 스크랩기능을 이용해주세요.");
+			}
+		
+	}
 </script>
 
 <div id="wrap">
 
-	<form action="" method="post">
+	<form id="frm"  name="frm" action="review.do?cmd=update&rno=${vo.rno}" method="post">
 		<!--  상단 작성자, 작성일, 조회수 -->
 		<div
 			style="overflow: hidden; padding-bottom: 5px; border-bottom: 2px solid #4B4C51">
@@ -63,8 +73,7 @@ function police(){
 			</div>
 			
 		</div>
-		<div
-			style="overflow: hidden; padding-bottom: 5px; border-bottom: 2px solid #4B4C51"></div>
+		<div style="overflow: hidden; padding-bottom: 5px; border-bottom: 2px solid #4B4C51"></div>
 
 <!--  제목 보여주기 -->
 <div id="title">
@@ -72,9 +81,8 @@ function police(){
 </div>
 
 		<!-- 내용보여주기  -->
-<div id="content" style="margin-left: 250px;"><span>${vo.rcontent }</span></div>
+<div id="content" style="margin-left: 250px;"><span id="rcontent">${vo.rcontent }</span></div>
 
-		
 		<!--  수정, 삭제, 추천-->
 <div class="fixed-action-btn horizontal">
     <a class="btn-floating btn-large red">
@@ -85,11 +93,13 @@ function police(){
       <li><a class="btn-floating red"  onclick="rdelete()" ><i class="material-icons">delete</i></a></li>
       <li><a class="btn-floating green" onclick="recommend()"><i class="material-icons">thumb_up</i></a></li>
       <li><a class="btn-floating purple" onclick="police()"><i class="material-icons">thumb_down</i></a></li>
-       <li><a class="btn-floating yellow"><i class="material-icons">star</i></a></li>
+       <li><a class="btn-floating yellow" onclick="scrap()"><i class="material-icons">star</i></a></li>
     </ul>
   </div>
 		<!-- 댓글기능  -->
 		<div id="bottom"></div>
-
+	
+	<input type="hidden" value="${vo.rtitle }" name="rtitle">
+	<input type="hidden" value="${vo.rcontent }" name="rcontent">
 	</form>
 </div>
