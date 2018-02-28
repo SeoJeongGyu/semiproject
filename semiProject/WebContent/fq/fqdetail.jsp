@@ -19,6 +19,14 @@ function police(){
 	}
 }
 
+function recommend(){
+if('${sessionScope.id}' != ""){
+	location.href="fq.do?cmd=recommend&fqno=${vo.fqno}&id=${sessionScope.id}";
+	}else{
+		alert("추천기능은 로그인 된 상태에서만 가능합니다");
+	}
+}
+
 function fqdelete(){
 	if('${sessionScope.id}' == '${vo.id}'){
 	location.href="fq.do?cmd=delete&fqno=${vo.fqno}&id=${vo.id}";
@@ -166,6 +174,10 @@ function recomm(event){
 		<td>${police }</td>	
 	</tr>
 	<tr>
+		<td>추천</td>
+		<td>${recommend }</td>	
+	</tr>
+	<tr>
 		<td>작성날짜</td>
 		<td>${vo.fqdate }</td>
 	</tr>
@@ -190,6 +202,7 @@ function recomm(event){
     <ul>
       <li><a class="btn-floating blue" onclick="fqupdate()"><i class="material-icons">border_color</i></a></li>
       <li><a class="btn-floating red"  onclick="fqdelete()" ><i class="material-icons">delete</i></a></li>
+       <li><a class="btn-floating green" onclick="recommend()"><i class="material-icons">thumb_up</i></a></li>
       <li><a class="btn-floating purple" onclick="police()"><i class="material-icons">thumb_down</i></a></li>
     </ul>
   </div>
