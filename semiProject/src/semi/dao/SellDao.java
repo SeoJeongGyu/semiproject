@@ -51,7 +51,7 @@ public class SellDao {
 		PreparedStatement pstmt = null;
 		try {
 			con=DbcpBean.getConn();
-			String sql="update sell set os=?,telecom=?,company=?,loc=?,price=?,stitle=?,scontent=?,success=? where sno=?";
+			String sql="update sell set os=?,telecom=?,company=?,loc=?,price=?,stitle=?,scontent=?,sdate=sysdate,success=? where sno=?";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, vo.getOs());
 			pstmt.setInt(2, vo.getTelecom());
@@ -456,16 +456,24 @@ public class SellDao {
 		}
 	}
 	
-	/*public ArrayList<SellVo> sellBatch(){
+	public ArrayList<SellVo> sellBatch(){
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		try {
 			con=DbcpBean.getConn();
-			String sql="select * from sell where sdate=sysdate-1 and success=1";
+			String sql="select * from sell where TO_DATE(TO_CHAR(SYSDATE-1,'YYYY/MM/DD'))<=sdate and SDATE<TO_DATE(TO_CHAR(SYSDATE,'YYYY/MM/DD')) AND SUCCESS=2";
 			pstmt=con.prepareStatement(sql);
-			
-			
+			rs=pstmt.executeQuery();
+			ArrayList<SellVo> batchList=new ArrayList<>();
+			while(rs.next()) {
+				SellVo vo=new SellVo(rs.getInt("sno"),rs.getInt("os"),rs.getInt("telecom"),
+						rs.getInt("company"),rs.getString("loc"),rs.getInt("price"),
+						rs.getString("stitle"),rs.getString("scontent"),rs.getDate("sdate"),
+						rs.getInt("sgrade"),rs.getInt("shit"),rs.getInt("success"),rs.getInt("sreport"),rs.getString("id"));
+				batchList.add(vo);
+			}
+			return batchList;
 			
 		}catch (SQLException se) {
 			System.out.println(se.getMessage());
@@ -473,6 +481,6 @@ public class SellDao {
 		}finally {
 			DbcpBean.closeConn(con, pstmt, rs);
 		}
-	}*/
+	}
 
 }

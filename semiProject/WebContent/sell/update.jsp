@@ -77,11 +77,17 @@
         </div>
     </div>
       
-      <button class="btn waves-effect waves-light" type="submit" style="background-color:#993333; margin-left:340px; width: 200px">
+      <button class="btn waves-effect waves-light" type="submit" onclick="supdate()" style="background-color:#993333; margin-left:340px; width: 200px">
       	<i class="large material-icons">done</i></button>
    </form>
   </div>
 <script type="text/javascript">
+
+function supdate(){
+	if('${result}' == 'fail'){
+		alert("수정사항이 올바르지 않습니다");
+	}
+}
 
     //var os = document.getElementsByName("os")[0];
     var os = document.getElementsByName("os")[0];

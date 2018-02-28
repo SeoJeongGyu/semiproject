@@ -346,7 +346,7 @@
 </ul>
 </div>
     <a class="waves-effect waves-light btn" href="/semiProject/sell.do?cmd=insert" style="background-color:#993333;margin-left: 1200px;">
-    <i class="material-icons" >create</i></a>
+    <i class="material-icons" >mode_edit</i></a>
     <br>
   </div>
   <br>
