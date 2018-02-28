@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import semi.vo.BuyVo;
+import semi.vo.FqboardVo;
 import semi.vo.ReviewVo;
 import semi.vo.SellVo;
 import test.dbcp.DbcpBean;
@@ -288,6 +289,38 @@ public class ReportDao {
         } finally {
             DbcpBean.closeConn(con, pstmt, rs);
         }
+    }
+    public FqboardVo fqboardDetail(int fqno) {
+        Connection con=null;
+        PreparedStatement pstmt=null;
+        ResultSet rs=null;
+        try {
+            con=DbcpBean.getConn();
+            String sql="select * from fqboard where fqno=?";
+            pstmt=con.prepareStatement(sql);
+            pstmt.setInt(1, fqno);
+            rs=pstmt.executeQuery();
+            if(rs.next()) {
+                int fqtype=rs.getInt("fqtype");
+                String fqtitle=rs.getString("fqtitle");
+                String fqcontent=rs.getString("fqcontent");
+                Date fqdate=rs.getDate("fqdate");
+                int fqhit=rs.getInt("fqhit");
+                int fqreport=rs.getInt("fqreport");
+                int recommend=rs.getInt("recommend");
+                String id=rs.getString("id");
+                FqboardVo vo=new FqboardVo(fqno, fqtype, fqtitle, fqcontent, fqdate, fqhit, 0, fqreport, id, recommend);
+                return vo;
+            }else {
+                return null;
+            }
+            
+        }catch(SQLException se) {
+            System.out.println(se.getMessage());
+            return null;
+        }finally {
+            DbcpBean.closeConn(con, pstmt, rs);
+        }   
     }
     public ReviewVo reviewDetail(int rno) {
         Connection con=null;
