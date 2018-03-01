@@ -38,6 +38,23 @@ function getDetail(fqno){
 	    sql+=")";
 	    location.href="boardlist.do?cmd=fqboarddelete&sql="+sql;
 	}
+	function popular(){
+	    var chk = document.getElementsByName("check");
+	    var len =0;
+	    var sql ="update fqboard set fqgrade=1 where fqno in('";
+	    for(var i=0;i<chk.length;i++){
+	        if(chk[i].checked==true){
+	            len++;
+	            if(len>1){
+	                sql+=",'"+chk[i].value+"'";
+	            }else{
+	                sql+=chk[i].value+"'";
+	            }
+	        }
+	    }
+	    sql+=")";
+	    location.href="boardlist.do?cmd=fqboarddelete&sql="+sql;
+	}
 	window.onload=function(){
 	    var select = document.getElementsByName("select")[0];
 	    console.log('${requestScope.select}');
@@ -61,6 +78,7 @@ function getDetail(fqno){
               <th>작성날짜</th>
               <th>조회수</th>
               <th>추천수</th>
+              <th>글등급</th>
           </tr>
         </thead>
         <tbody>
@@ -72,25 +90,25 @@ function getDetail(fqno){
 			    </td>
 			    <td onclick="getDetail(${vo.fqno })">${vo.fqno }</td>
 			    <c:choose>
-				<c:when test="${vo.type==1 }">
+				<c:when test="${vo.fqtype==1 }">
 				<td onclick="getDetail(${vo.fqno })">일반</td>			
 				</c:when>
-				<c:when test="${vo.type==2 }">
+				<c:when test="${vo.fqtype==2 }">
 				<td onclick="getDetail(${vo.fqno })">정보</td>			
 				</c:when>
-				<c:when test="${vo.type==3 }">	
+				<c:when test="${vo.fqtype==3 }">	
 				<td onclick="getDetail(${vo.fqno })">질문</td>
 				</c:when>
 				<c:otherwise>
 				<td onclick="getDetail(${vo.fqno })">버그글</td>
 				</c:otherwise>
 			</c:choose>
-              <th>추천수</th>
               <td onclick="getDetail(${vo.fqno })">${vo.fqtitle }</td>
               <td onclick="getDetail(${vo.fqno })">${vo.id }</td>
               <td onclick="getDetail(${vo.fqno })">${vo.fqdate }</td>
               <td onclick="getDetail(${vo.fqno })">${vo.fqhit }</td>
               <td onclick="getDetail(${vo.fqno })">${vo.recommend}</td>
+              <td onclick="getDetail(${vo.fqno })">${vo.fqgrade}</td>
 	          </tr>
 	        </c:forEach>  
         </tbody>
@@ -127,7 +145,8 @@ function getDetail(fqno){
 	    <!-- <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li> -->
   	</ul>
   	</div>
-	  	<div style="margin-left: 1200px;"><a class="waves-effect waves-light btn" style="background-color: #ee6e73;" onclick="del()">게시물삭제</a></div>
+	  	<div style="margin-left: 1000px;"><a class="waves-effect waves-light btn" style="background-color: #ee6e73;" onclick="popular()">인기글등록</a>
+	  	<a class="waves-effect waves-light btn" style="background-color: #ee6e73;" onclick="del()">게시물삭제</a></div>
 	    <form class="col s12" method="post" action="<%=request.getContextPath()%>/boardlist.do?cmd=fqboard">
 	    <div class="row" style="margin-left: 400px;">
 	    <div class="input-field col s2" >

@@ -16,7 +16,7 @@ $(".dropdown-button").dropdown();
 <body>
  <nav class="nav-extended" >
     <div class="nav-wrapper" style="background-color:white; height: 100px;">
-      <a href="<%=request.getContextPath()%>/main.jsp" class="brand-logo" style="margin-left: 300px;margin-top: 20px;"><img src="<%=request.getContextPath()%>/image/로고.png"></a>
+      <a href="<%=request.getContextPath()%>/start.jsp" class="brand-logo" style="margin-left: 300px;margin-top: 20px;"><img src="<%=request.getContextPath()%>/image/로고.png"></a>
       <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
     </div>
     <!-- Dropdown Structure 드롭박스 내용 -->

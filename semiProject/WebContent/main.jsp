@@ -16,6 +16,12 @@
 	#footer{width:100%; position: relative; float: left; margin-top: 20px;}
 </style>
 <script type="text/javascript">
+	function samsung(){
+	    location.href="http://www.samsung.com/sec/galaxys9/preorder/";
+	}
+	function lg(){
+	    location.href="http://www.lge.co.kr/lgekor/product/mobile/smart-phone/productDetail.do?cateId=0210&prdId=EPRD.318023";
+	}
 </script>
 <body>
 <div id="wrap">
@@ -23,17 +29,22 @@
 		<jsp:include page="/home/header.jsp"></jsp:include>
 	</div>
 	<table id="event" >
-		<tr><td><img id="samsung" alt="" src="image\samsung.jpg" style="width: 250px;"></td></tr>
-		<tr><td><img id="lg" alt="" src="image\LG.jpg" style="width: 250px;"></td></tr>
+		<tr><td><img id="samsung" alt="" src="image\samsung.jpg" style="width: 250px;" onclick="samsung()"></td></tr>
+		<tr><td><img id="lg" alt="" src="image\LG.jpg" style="width: 250px;" onclick="lg()"></td></tr>
 	</table>
 	<div id="content" style="width: 1350px;">
 		<c:choose>
 			<c:when test="${requestScope.page==null}">
-			<div id="notices" style="margin-top: 30px; width: 630px; height: 400px; background-color: pink;"></div>
-			<div id="fqboard" style="margin-top: 30px; margin-left : 40px;  width: 630px; height: 400px; background-color: yellow;"></div>
+			<div id="notices" style="margin-top: 30px; width: 630px; height: 350px;">
+			        	<div class="collection" style="margin-top: 0px; padding: 0px;">
+						    <a href="http://localhost:8081/semiProject/notices.do?cmd=notices" style="color: #993333;" class="collection-item"><h4>공지사항</h4></a>
+			        	<c:forEach var="notices" items="${requestScope.noticesList }">
+						    <a href="http://localhost:8081/semiProject/notices.do?cmd=detail&num=${notices.num}" style="color: #993333;" class="collection-item">${notices.title}</a>
+				        </c:forEach>  
+						  </div>
+			</div>
+			<div id="fqboard" style="margin-top: 30px; margin-left : 40px;  width: 630px; height: 350px; background-color: yellow;"></div>
 			<div id="review" style="margin-top: 30px; width: 1300px; height: 400px; background-color: gray;"></div>
-				<%-- <jsp:include page="aaa.jsp"></jsp:include>
-					이곳은 메인 --%>
 			</c:when>
 			<c:otherwise>
 				<jsp:include page="${requestScope.page}"></jsp:include>

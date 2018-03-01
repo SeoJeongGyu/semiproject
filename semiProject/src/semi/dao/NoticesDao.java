@@ -160,4 +160,26 @@ public class NoticesDao {
             DbcpBean.closeConn(con, pstmt, rs);
         }
     }
+    public ArrayList<NoticesVo> noticesStart(){
+        Connection con=null;
+        PreparedStatement pstmt=null;
+        ResultSet rs=null;
+        try {
+            con=DbcpBean.getConn();
+            String sql="select * from (select aa.*,rownum rnum from(select * from notices order by num desc)aa ) where rnum>=1 and rnum<=6";
+            pstmt=con.prepareStatement(sql);
+            rs=pstmt.executeQuery();
+            ArrayList<NoticesVo> list=new ArrayList<>();
+            while(rs.next()) {
+                NoticesVo vo=new NoticesVo(rs.getInt("num"),rs.getString("title"),rs.getString("content"),rs.getInt("hit"),rs.getDate("ndate"));
+                list.add(vo);
+            }
+            return list;
+        }catch(SQLException se) {
+            System.out.println(se.getMessage());
+            return null;
+        }finally {
+            DbcpBean.closeConn(con, pstmt, rs);
+        }
+    }
 }
