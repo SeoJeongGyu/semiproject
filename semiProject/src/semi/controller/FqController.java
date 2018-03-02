@@ -169,6 +169,10 @@ public class FqController extends HttpServlet{
 		FqboardVo vo=dao.detail(fqno);
 		int police = dao.getPolice(fqno);
 		int recommend = dao.getRecommend(fqno);
+		
+		ArrayList<FqboardVo> fqmain=dao.fqmain();
+		req.setAttribute("fqmain", fqmain);
+		
 		dao.updateHit(vo);
 		req.setAttribute("vo", vo);
 		req.setAttribute("police", police);

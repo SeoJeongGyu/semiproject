@@ -65,7 +65,6 @@ public class FqcommentDao {
 				pstmt1.executeUpdate();
 				lev=lev+1;
 				step=step+1;
-				System.out.println("dao-step:"+step);
 				String sql1 = "insert into fqcomment values(fqcno_seq.nextval,?,?,?,?,0,sysdate,?,?)";
 				pstmt=con.prepareStatement(sql1);
 				pstmt.setString(1, vo.getFqcontent());

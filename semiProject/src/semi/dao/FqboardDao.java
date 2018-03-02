@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import semi.vo.BuyVo;
 import semi.vo.FqboardVo;
+import semi.vo.NoticesVo;
 import semi.vo.SellVo;
 import test.dbcp.DbcpBean;
 
@@ -19,6 +20,29 @@ public class FqboardDao {
 	public static FqboardDao getInstance() {
 		return instance;
 	}
+	
+	public ArrayList<FqboardVo> fqmain(){
+        Connection con=null;
+        PreparedStatement pstmt=null;
+        ResultSet rs=null;
+        try {
+            con=DbcpBean.getConn();
+            String sql="select * from (select aa.*,rownum rnum from(select * from fqboard order by fqno desc)aa ) where rnum>=1 and rnum<=6";
+            pstmt=con.prepareStatement(sql);
+            rs=pstmt.executeQuery();
+            ArrayList<FqboardVo> list=new ArrayList<>();
+            while(rs.next()) {
+                FqboardVo vo=new FqboardVo(rs.getInt("fqno"), rs.getInt("fqtype"), rs.getString("fqtitle"), rs.getString("fqcontent"), rs.getDate("fqdate"), rs.getInt("fqhit"), rs.getInt("fqgrade"), rs.getInt("fqreport"), rs.getString("id"), rs.getInt("recommend"));
+                list.add(vo);
+            }
+            return list;
+        }catch(SQLException se) {
+            System.out.println(se.getMessage());
+            return null;
+        }finally {
+            DbcpBean.closeConn(con, pstmt, rs);
+        }
+    }
 	
 	public int insert(FqboardVo vo) {
 		Connection con=null;
