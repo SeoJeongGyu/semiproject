@@ -9,9 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import semi.dao.BuyDao;
 import semi.dao.FqboardDao;
-import semi.dao.ReviewDao;
 import semi.vo.FqboardVo;
 
 @WebServlet("/fq.do")
