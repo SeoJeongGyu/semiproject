@@ -61,14 +61,30 @@ public class BoardController extends HttpServlet{
             fqboard(req,resp);
         }else if(cmd.equals("fqboardDetail")) {
             fqboardDetail(req,resp);
+        }else if(cmd.equals("fqboarddelete")) {
+            fqboarddelete(req,resp);
         }
+    }
+    public void fqboarddelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        String sql=req.getParameter("sql");
+        System.out.println(sql);
+        int n = AdminDao.getInstance().adminDelete(sql);
+        System.out.println("n:"+n);
+        if(n>0) {
+            req.setAttribute("del", "명령성공");
+        }else {
+            req.setAttribute("page", "/admin/board.jsp");
+            req.setAttribute("page1", "/fqboard");
+        }
+        fqboard(req,resp);
     }
     public void fqboardDetail(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int fqno=Integer.parseInt(req.getParameter("fqno"));
         FqboardVo vo=ReportDao.getInstance().fqboardDetail(fqno);
         req.setAttribute("vo", vo);
         req.setAttribute("page", "/admin/board.jsp");
-        req.setAttribute("page1", "review");
+        req.setAttribute("page1", "fqboard");
         req.setAttribute("page2", "detail");
         RequestDispatcher rd = req.getRequestDispatcher("admin.jsp");
         rd.forward(req, resp);

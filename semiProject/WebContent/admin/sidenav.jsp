@@ -38,6 +38,8 @@ function btn(){
     <li><a href="<%=request.getContextPath()%>/boardlist.do?cmd=notices">게시물관리</a></li>
     <li><div class="divider"></div></li>
     <li><a class="dropdown-button" href="#!" data-activates="dropdown1">신고게시판<i class="material-icons right">arrow_drop_down</i></a></li>
+    <li><a href="<%=request.getContextPath()%>/member/logout.jsp">로그아웃</a></li>
+    <li><div class="divider"></div></li>
   </ul>
   <a href="javascript:btn()" data-activates="slide-out" class="button-collapse" ><i class="material-icons" style="font-size: 70px; color: #ee6e73;" >menu</i></a>
 </body>

@@ -7,37 +7,75 @@ $(document).ready(function() {
 	});
 
 function getDetail(fqno){
-	  //console.log(sno);
-	  location.href="fq.do?cmd=fqdetail&fqno="+fqno;
+    location.href="<%=request.getContextPath()%>/report.do?cmd=fqboardReportDetail&fqno="+fqno;
 }
+	function checkAll(){
+		var check=document.getElementsByName("check");
+		var checkAll=document.getElementById("checkAll");
+		if(checkAll.checked==true){
+			for(var i=0; i<check.length;i++){
+			    check[i].checked=true;
+			}
+		}else{
+		    for(var i=0; i<check.length;i++){
+			    check[i].checked=false;
+			}
+		}
+	}
+	function del(){
+	    var chk = document.getElementsByName("check");
+	    var len =0;
+	    var sql ="delete from fqboard where fqno in('";
+	    for(var i=0;i<chk.length;i++){
+	        if(chk[i].checked==true){
+	            len++;
+	            if(len>1){
+	                sql+=",'"+chk[i].value+"'";
+	            }else{
+	                sql+=chk[i].value+"'";
+	            }
+	        }
+	    }
+	    sql+=")";
+	    location.href="report.do?cmd=fqboardReportDel&sql="+sql;
+	}
 </script>
 <div class="main" id="sellList">
+<h4 class="truncate">자유신고게시판</h4>
  <table class="highlight">
         <thead>
           <tr>
+              <th><p><input type="checkbox" id="checkAll" onclick="checkAll()"/>
+			  <label for="checkAll"></label></p></th>
               <th>종류</th>
               <th>제목</th>
               <th>작성자</th>
               <th>작성날짜</th>
+              <th>신고수</th>
           </tr>
         </thead>
         <tbody>
-          <c:forEach var="fq" items="${requestScope.list }">
-			<tr onclick="getDetail(${fq.fqno })">
+          <c:forEach var="vo" items="${requestScope.list }">
+			<tr>
+	            <td>
+		            <p><input type="checkbox" name="check" id="${vo.fqno }" value="${vo.fqno }" />
+				    <label for="${vo.fqno }"></label></p>
+			    </td>
 			<c:choose>
-				<c:when test="${fq.fqtype==1 }">			
-					<td>일반</td>
+				<c:when test="${vo.fqtype==1 }">			
+					<td onclick="getDetail(${vo.fqno })">일반</td>
 				</c:when>
-				<c:when test="${fq.fqtype==2 }">
-					<td>정보</td>
+				<c:when test="${vo.fqtype==2 }">
+					<td onclick="getDetail(${vo.fqno })">정보</td>
 				</c:when>
 				<c:otherwise>
-					<td>질문</td>
+					<td onclick="getDetail(${vo.fqno })">질문</td>
 				</c:otherwise>
 			</c:choose>
-				<td><a href="fq.do?cmd=fqdetail&fqno=${fq.fqno }">${fq.fqtitle }</a></td>
-				<td>${fq.id }</td>
-				<td>${fq.fqdate }</td>
+				<td onclick="getDetail(${vo.fqno })">${vo.fqtitle }</td>
+				<td onclick="getDetail(${vo.fqno })">${vo.id }</td>
+				<td onclick="getDetail(${vo.fqno })">${vo.fqdate }</td>
+				<td onclick="getDetail(${vo.fqno })">${vo.fqreport }</td>
 			</tr>
 		</c:forEach>
        </tbody>
@@ -47,44 +85,25 @@ function getDetail(fqno){
   <br>  
 <ul class="pagination">
 <c:if test="${startPage>5 }">
-	<li class="disabled"><a href="fq.do?cmd=fqList&pageNum=${startPage-1 }"><i class="material-icons">chevron_left</i></a></li>
+	<li class="disabled"><a href="report.do?cmd=fqboardDetail&pageNum=${startPage-1 }"><i class="material-icons">chevron_left</i></a></li>
     
 </c:if>
 	<c:forEach var="i" begin="${startPage }" end="${endPage }">
 		<c:choose>
 			<c:when test="${pageNum==i }">
-				<li class="active"><a href="fq.do?cmd=fqList&pageNum=${i}" >${i}</a></li>
+				<li class="active"><a href="report.do?cmd=fqboardDetail&pageNum=${i}" >${i}</a></li>
 				
 			</c:when>
 			<c:otherwise>
-			<li class="waves-effect"><a href="fq.do?cmd=fqList&pageNum=${i}">${i}</a></li>
+			<li class="waves-effect"><a href="report.do?cmd=fqboardDetail&pageNum=${i}">${i}</a></li>
 			</c:otherwise>
 		</c:choose>
 	</c:forEach>
 <c:if test="${pageCount>endPage }">
-<li class="waves-effect"><a href="fq.do?cmd=fqList&pageNum=${endPage+1 }"><i class="material-icons">chevron_right</i></a></li>
+<li class="waves-effect"><a href="report.do?cmd=fqboardDetail&pageNum=${endPage+1 }"><i class="material-icons">chevron_right</i></a></li>
 </c:if>
 </ul>
 </div>
+<div style="margin-left: 1100px;">&nbsp;&nbsp;&nbsp;<a class="waves-effect waves-light btn" style="background-color: #ee6e73;" onclick="del()">글삭제</a></div>
 </div>
 
-
-    <a class="waves-effect waves-light btn" href="/semiProject/fq.do?cmd=insert" style="background-color:#993333;margin-left: 1200px;">
-    <i class="material-icons" >create</i></a>
-    
- 
-<form class="col s12" method="post" action="/semiProject/fq.do?cmd=search">
-    <div class="row" style="margin-left: 400px;">
-    <div class="input-field col s2" >
-	    <select name="select" >
-		      <option value="0">제목</option>
-		      <option value="1">내용</option>
-		      <option value="2">아이디</option>
-	    </select>
-  	</div>
-        <div class="input-field col s3" >
-          <input id="" name="text" type="text" class="validate" value="">
-        </div>
-      <button class="btn waves-effect waves-light" type="submit" name="action" style="margin-top: 25px; background-color: #ee6e73;">검색</button>
-      </div>
-    </form>
