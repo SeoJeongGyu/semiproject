@@ -64,9 +64,14 @@
 				    <li class="tab col s3" onclick="sell()"><a href="#sell">팝니다게시판</a></li>
 				    <li class="tab col s3" onclick="buy()"><a href="#buy">삽니다게시판</a></li>
 				 </ul>
-				<div id="fqboard">
+				 <c:if test="${requestScope.page2=='detail'}">
+				 <jsp:include page="fqboardDetail.jsp"></jsp:include>
+				 </c:if>
+				 <c:if test="${requestScope.page2==null}">
+					<div id="fqboard">
 				<jsp:include page="fqboard.jsp"></jsp:include>
 				</div>
+				</c:if>
 			</c:when>
 			<c:when test="${requestScope.page1=='sell'}">
 				<ul id="tabs-swipe-demo" class="tabs">

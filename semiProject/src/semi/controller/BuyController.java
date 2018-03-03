@@ -47,6 +47,7 @@ public class BuyController extends HttpServlet {
 		}
 	}
 	
+	
 	private void police(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException{
 		int bno = Integer.parseInt(req.getParameter("bno"));
@@ -55,12 +56,12 @@ public class BuyController extends HttpServlet {
 		BuyDao dao=BuyDao.getInstance();
 		int n=dao.oxpolice(bno, id);
 		if(n>0) {
-			req.setAttribute("result", "ÀÌ¹Ì ½Å°íÇÑ °Ô½Ã¹°ÀÔ´Ï´Ù");
+			req.setAttribute("result", "ï¿½Ì¹ï¿½ ï¿½Å°ï¿½ï¿½ï¿½ ï¿½Ô½Ã¹ï¿½ï¿½Ô´Ï´ï¿½");
 			detail(req, resp);
 		}else {
 			int police = dao.police(bno, id);
 			if(police>0) {
-				req.setAttribute("result", "½Å°íÇÏ¿´½À´Ï´Ù.");
+				req.setAttribute("result", "ï¿½Å°ï¿½ï¿½Ï¿ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
 				dao.updateReport(bno);
 				detail(req, resp);
 			}else {

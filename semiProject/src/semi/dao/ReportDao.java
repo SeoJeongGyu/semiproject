@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import semi.vo.BuyVo;
+import semi.vo.FqboardVo;
 import semi.vo.ReviewVo;
 import semi.vo.SellVo;
 import test.dbcp.DbcpBean;
@@ -17,7 +18,37 @@ public class ReportDao {
     private ReportDao() {}
     public static ReportDao getInstance() {
         return instance;
-    } 
+    }
+    public FqboardVo fqboardDetail(int fqno) {
+        Connection con=null;
+        PreparedStatement pstmt=null;
+        ResultSet rs=null;
+        try {
+            con=DbcpBean.getConn();
+            String sql= "select * from fqboard where fqno=?";
+            pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, fqno);
+            rs=pstmt.executeQuery();
+            if(rs.next()) {
+                int fqtype=rs.getInt("fqtype");
+                String fqtitle=rs.getString("fqtitle");
+                String fqcontent=rs.getString("fqcontent");
+                int fqhit=rs.getInt("fqhit");
+                int fqreport=rs.getInt("fqreport");
+                String id=rs.getString("id");
+                int recommend=rs.getInt("recommend");
+                FqboardVo vo=new FqboardVo(rs.getInt("fqno"), fqtype, fqtitle, fqcontent, null, fqhit, 0, fqreport, id, recommend);
+                return vo;
+            }else {
+                return null;
+            }
+        }catch(SQLException se) {
+            System.out.println(se.getMessage());
+            return null;
+        }finally {
+            DbcpBean.closeConn(con, pstmt, rs);
+        }   
+    }
     public BuyVo buyDetail(int bno) {
         Connection con=null;
         PreparedStatement pstmt=null;
@@ -127,7 +158,26 @@ public class ReportDao {
             DbcpBean.closeConn(con, pstmt, null);
         }
     }
-    
+    public int fqboardGetMax() {
+        Connection con=null;
+        PreparedStatement pstmt=null;
+        ResultSet rs=null;
+        try {
+            con=DbcpBean.getConn();
+            String sql="select NVL(count(bqno),0) cnt from fqboard where fqreport > 4";
+            pstmt=con.prepareStatement(sql);
+            rs=pstmt.executeQuery();
+            rs.next();
+            int cnt=rs.getInt("cnt");
+            return cnt;
+            
+        }catch(SQLException se) {
+            System.out.println(se.getMessage());
+            return -1;
+        }finally {
+            DbcpBean.closeConn(con, pstmt, rs);
+        }
+    }
     public int sellGetMax() {
         Connection con=null;
         PreparedStatement pstmt=null;
@@ -201,6 +251,32 @@ public class ReportDao {
                         rs.getString("stitle"),rs.getString("scontent"),rs.getDate("sdate"),
                         rs.getInt("sgrade"),rs.getInt("shit"),rs.getInt("success"),rs.getInt("sreport"),rs.getString("id"));
                 list.add(vo);
+            }
+            return list;
+        }catch(SQLException se) {
+            System.out.println(se.getMessage());
+            return null;
+        }finally {
+            DbcpBean.closeConn(con, pstmt, rs);
+        }
+    }
+    public ArrayList<FqboardVo> fqboardReport(int startRow,int endRow){
+        Connection con=null;
+        PreparedStatement pstmt=null;
+        ResultSet rs=null;
+        try {
+            con=DbcpBean.getConn();
+            //System.out.println("con:"+con);
+            String sql="select * from (select aa.*,rownum rnum from(select * from fqboard where fqreport>4 order by fqreport desc , fqno desc)aa ) where rnum>=? and rnum<=?";
+            pstmt=con.prepareStatement(sql);
+            pstmt.setInt(1, startRow);
+            pstmt.setInt(2, endRow);
+            rs=pstmt.executeQuery();
+            ArrayList<FqboardVo> list=new ArrayList<>();
+            while(rs.next()) {
+                list.add(new FqboardVo(rs.getInt("fqno"), rs.getInt("fqtype"), rs.getString("fqtitle"),
+                        rs.getString("fqcontent"), rs.getDate("fqdate"), rs.getInt("fqhit"), rs.getInt("fqgrade"),
+                        rs.getInt("fqreport"), rs.getString("id"), rs.getInt("recommend")));
             }
             return list;
         }catch(SQLException se) {
