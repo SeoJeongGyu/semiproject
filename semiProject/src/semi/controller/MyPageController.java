@@ -20,7 +20,7 @@ public class MyPageController extends HttpServlet{
 	req.setCharacterEncoding("utf-8");
 	resp.setContentType("text/html; charset=utf-8");
 	String cmd= req.getParameter("cmd");
-	System.out.println(cmd);
+	System.out.println("cmd:"+cmd);
 	if(cmd.equals("scrap")) {
 		scrap(req,resp);
 		}else if(cmd.equals("list")){
@@ -91,7 +91,7 @@ public void list(HttpServletRequest req, HttpServletResponse resp) throws Servle
     req.setAttribute("endPage", endPage);
     req.setAttribute("pageNum", pageNum);
    /* req.setAttribute("page", "/mypage/MyPageScrap.jsp");*/
-    RequestDispatcher rd = req.getRequestDispatcher("/mypage/MyPageScrap.jsp");
+    RequestDispatcher rd = req.getRequestDispatcher("/mypage/myPageScrap.jsp");
     rd.forward(req, resp);
 	}
 }

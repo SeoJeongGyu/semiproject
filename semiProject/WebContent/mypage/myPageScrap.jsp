@@ -69,9 +69,9 @@ function getDetail(rno){
 		            <p><input type="checkbox" name="check" id="${vo.rno }" value="${vo.rno }" />
 				    <label for="${vo.rno }"></label></p>
 			    </td>
-	            <td onclick="getDetail(${vo.rno })">${vo.rno }</td>
-	            <td onclick="getDetail(${vo.rno })">${vo.rtitle }</td>    
-	            <td onclick="getDetail(${vo.rno })">${vo.rdate }</td>
+	            <td onclick="getDetail(${vo.rno })">${vo.sno }</td>
+	            <td onclick="getDetail(${vo.rno })">${vo.title }</td>    
+	            <td onclick="getDetail(${vo.rno })">${vo.sdate }</td>
 	          </tr>
 	        </c:forEach>  
         </tbody>

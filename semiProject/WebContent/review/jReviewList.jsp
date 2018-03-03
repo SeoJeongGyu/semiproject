@@ -11,7 +11,7 @@
 	    console.log('${requestScope.select}');
 	    select.selectedIndex='${requestScope.select}';
 	}
-</script>
+</script> 
 
 <div id="wrap" >
 <div>

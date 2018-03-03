@@ -90,12 +90,8 @@ public class MyPageDao {
         String sqlplus="";
         if(text!=null) {
             if(select.equals("0")) {
-                sqlplus=" where rtitle like '%"+text+"%'";
-            }else if(select.equals("1")) {
-                sqlplus=" where rcontent like '%"+text+"%'";
-            }else if(select.equals("2")) {
-                sqlplus=" where id like '%"+text+"%'";
-            }
+                sqlplus=" where title like '%"+text+"%'";
+                }
         }
         try {
             con=DbcpBean.getConn();
