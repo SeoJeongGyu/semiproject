@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/home/api.jsp"></jsp:include>
 <jsp:include page="/home/header.jsp"></jsp:include>
-
+<jsp:include page="/mypage/myPageMain.jsp"></jsp:include>
 <script type="text/javascript">
 
 	$(document).ready(function() {
@@ -48,6 +48,7 @@
 	    }
 	}
 </script>    
+<div style="margin-left: 300px;">
  <table class="highlight">
         <thead>
           <tr>
@@ -55,7 +56,7 @@
 	              <p><input type="checkbox" id="checkAll" onclick="checkAll()"/>
 			      <label for="checkAll"></label></p>
 			  </th>
-              <th>제목</th>
+              <th align="center">제목</th>
               <th>작성일</th>
            
           </tr>
@@ -67,8 +68,8 @@
 		            <p><input type="checkbox" name="check" id="${vo.sno }" value="${vo.sno }" />
 				    <label for="${vo.sno }"></label></p>
 			    </td>
-	            <td>${vo.title }</td>    
-	            <td>${vo.sdate }</td>
+	            <td  align="center"><a href="${vo.url }">${vo.title }</a></td>    
+	            <td  align="center">${vo.sdate }</td>
 	          </tr>
 	        </c:forEach>  
         </tbody>
@@ -120,4 +121,5 @@
 	      <button class="btn waves-effect waves-light" type="submit" name="action" style="margin-top: 25px; background-color: #ee6e73;">검색</button>
 	      </div>
 	    </form>
+	  </div>
 	  </div>

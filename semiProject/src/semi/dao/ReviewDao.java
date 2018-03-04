@@ -210,6 +210,29 @@ public class ReviewDao {
 			DbcpBean.closeConn(conn, pstmt, rs);
 		}
 	}
+	
+	public ArrayList<ReviewVo> listmain(){
+		Connection conn = null;
+		PreparedStatement pstmt=null;
+		ResultSet rs= null;
+		try {
+			conn=DbcpBean.getConn();
+			String sql="select * from (select aa.*,rownum rnum from(select * from review order by recommend desc)aa) where rnum>=1 and rnum<=3";
+			pstmt=conn.prepareStatement(sql);
+			rs=pstmt.executeQuery();
+			ArrayList<ReviewVo> list=new ArrayList<>();
+			while(rs.next()) {
+				ReviewVo vo=new ReviewVo(rs.getInt("rno"),rs.getString("rtitle"),rs.getString("rcontent"),rs.getDate("rdate"),rs.getInt("rhit"),rs.getInt("rgrade"),rs.getString("orgfilename"),rs.getString("savefilename"),rs.getString("id"),rs.getInt("company"),rs.getInt("rreport"),rs.getInt("recommend"));
+				list.add(vo);
+			}
+			return list;
+		}catch (SQLException se) {
+			System.out.println(se.getMessage());
+			return null;
+		}finally {
+			DbcpBean.closeConn(conn, pstmt, rs);
+		}
+	}
 	public ReviewVo content(int rno) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;

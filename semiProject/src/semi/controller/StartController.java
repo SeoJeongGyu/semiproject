@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import semi.dao.NoticesDao;
+import semi.dao.ReviewDao;
 import semi.vo.NoticesVo;
+import semi.vo.ReviewVo;
 
 @WebServlet("/start.do")
 public class StartController extends HttpServlet{
@@ -25,7 +27,9 @@ public class StartController extends HttpServlet{
     }
     public void start(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ArrayList<NoticesVo>noticesList = NoticesDao.getInstance().noticesStart();
+        ArrayList<ReviewVo> reviewMain = ReviewDao.getInstance().listmain();
         req.setAttribute("noticesList", noticesList);
+        req.setAttribute("reviewMain", reviewMain);
         RequestDispatcher rd = req.getRequestDispatcher("main.jsp");
         rd.forward(req, resp);
     }

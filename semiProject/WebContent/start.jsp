@@ -2,4 +2,5 @@
     pageEncoding="UTF-8"%>
 <script type="text/javascript">
 	location.href="start.do?cmd=start";
+
 </script>
