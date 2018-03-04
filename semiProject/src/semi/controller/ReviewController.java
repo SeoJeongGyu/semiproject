@@ -218,12 +218,16 @@ public class ReviewController extends HttpServlet {
 		MultipartRequest mr = new MultipartRequest(req, uploadPath, 1024 * 1024 * 5, "utf-8",
 		new DefaultFileRenamePolicy());
 		int rno=Integer.parseInt(mr.getParameter("rno"));
+		System.out.println("rno:" + rno);
 		String rtitle = mr.getParameter("title");
+		System.out.println("title:" + rtitle);
 		String rcontent = mr.getParameter("scontent");
+		System.out.println("rcontent:" + rcontent);
 		String orgfilename = mr.getOriginalFileName("up_files");
 		String savefilename = mr.getFilesystemName("up_files");
 		String id = (String) req.getSession().getAttribute("id");
 		int company = Integer.parseInt(mr.getParameter("company"));
+		
 		ReviewVo vo = new ReviewVo(rno, rtitle, rcontent, null, 0, 0, orgfilename, savefilename, id, company,0,0);
 		ReviewDao dao = ReviewDao.getInstance();
 		int n = dao.update(vo);
