@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import semi.dao.AdminDao;
 import semi.dao.MyPageDao;
 import semi.vo.MyPageVo;
 
@@ -25,6 +26,8 @@ public class MyPageController extends HttpServlet{
 		scrap(req,resp);
 		}else if(cmd.equals("list")){
 			list(req,resp);
+		}else if(cmd.equals("delete")) {
+			delete(req,resp);
 		}
 	}
 public void scrap(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -45,6 +48,7 @@ public void scrap(HttpServletRequest req, HttpServletResponse resp) throws Servl
 	
 	}
 public void list(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	String id=req.getParameter("id");
 	String text = req.getParameter("text");
     String spageNum = req.getParameter("pageNum");
     System.out.println("spageNum:"+spageNum);
@@ -65,12 +69,12 @@ public void list(HttpServletRequest req, HttpServletResponse resp) throws Servle
     ArrayList<MyPageVo>list = null;
     if(text==null) {
         getMax = MyPageDao.getInstance().getCount();
-        list = MyPageDao.getInstance().reviewList(null,null,startRow, endRow);
+        list = MyPageDao.getInstance().reviewList(id,null,null,startRow, endRow);
     }else {
         System.out.println("select:"+req.getParameter("select"));
         String select = req.getParameter("select");
         getMax=MyPageDao.getInstance().getCount(select,text);
-        list = MyPageDao.getInstance().reviewList(select, text, startRow, endRow);
+        list = MyPageDao.getInstance().reviewList(id,select, text, startRow, endRow);
         
         req.setAttribute("select", select);
         req.setAttribute("text", text);
@@ -94,4 +98,19 @@ public void list(HttpServletRequest req, HttpServletResponse resp) throws Servle
     RequestDispatcher rd = req.getRequestDispatcher("/mypage/myPageScrap.jsp");
     rd.forward(req, resp);
 	}
+
+public void delete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+    String sql=req.getParameter("sql");
+    System.out.println(sql);
+    int n = MyPageDao.getInstance().delete(sql);
+    System.out.println("n:"+n);
+    if(n>0) {
+        req.setAttribute("del", "삭제되었습니다.");
+    }else {
+        req.setAttribute("page", "/mypage/myPageScrap.jsp");
+        req.setAttribute("page1", "/review");
+    }
+    list(req,resp);
+}
 }

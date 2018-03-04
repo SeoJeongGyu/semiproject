@@ -42,11 +42,7 @@ public class MyPageDao {
         ResultSet rs=null;
         String sqlplus="";
         if(select.equals("0")) {
-            sqlplus="where rtitle like'%"+text+"%'";
-        }else if(select.equals("1")) {
-            sqlplus="where rcontent like'%"+text+"%'";
-        }else if(select.equals("2")) {
-            sqlplus="where id like'%"+text+"%'";
+            sqlplus="where title like'%"+text+"%'";
         }
         try {
             con=DbcpBean.getConn();
@@ -83,24 +79,25 @@ public class MyPageDao {
 			DbcpBean.closeConn(conn,pstmt,null);
 		}
 	}
-	public ArrayList<MyPageVo> reviewList(String select ,String text,int startRow,int endRow){
+	public ArrayList<MyPageVo> reviewList(String id,String select ,String text,int startRow,int endRow){
         Connection con=null;
         PreparedStatement pstmt=null;
         ResultSet rs=null;
         String sqlplus="";
         if(text!=null) {
             if(select.equals("0")) {
-                sqlplus=" where title like '%"+text+"%'";
+                sqlplus="and title like '%"+text+"%'";
                 }
         }
         try {
             con=DbcpBean.getConn();
             //System.out.println("con:"+con);
-            String sql="select * from (select aa.*,rownum rnum from(select * from scrap"+sqlplus+" order by sno desc )aa ) where rnum>=? and rnum<=?";
+            String sql="select * from (select aa.*,rownum rnum from(select * from scrap where id=? "+sqlplus+" order by sno desc )aa ) where rnum>=? and rnum<=?";
             System.out.println(sql);
             pstmt=con.prepareStatement(sql);
-            pstmt.setInt(1, startRow);
-            pstmt.setInt(2, endRow);
+            pstmt.setString(1, id);
+            pstmt.setInt(2, startRow);
+            pstmt.setInt(3, endRow);
             rs=pstmt.executeQuery();
             ArrayList<MyPageVo> list=new ArrayList<>();
             while(rs.next()) {
@@ -115,5 +112,19 @@ public class MyPageDao {
             DbcpBean.closeConn(con, pstmt, rs);
         }
     }
-	
+	 public int delete(String sql) {
+	        Connection con=null;
+	        PreparedStatement pstmt=null;
+	        try {
+	            con=DbcpBean.getConn();
+	            pstmt=con.prepareStatement(sql);
+	            int n = pstmt.executeUpdate();
+	            return n;
+	        } catch (SQLException se) {
+	            System.out.println(se.getMessage());
+	            return -1;
+	        }finally {
+	            DbcpBean.closeConn(con, pstmt, null);
+	        }
+	    }
 }
