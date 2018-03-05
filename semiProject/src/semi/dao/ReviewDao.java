@@ -97,7 +97,7 @@ public class ReviewDao {
         try {
             con=DbcpBean.getConn();
             //System.out.println("con:"+con);
-            String sql="select * from (select aa.*,rownum rnum from(select * from review"+sqlplus+" order by rgrade desc , rno desc)aa ) where rnum>=? and rnum<=?";
+            String sql="select * from (select aa.*,rownum rnum from(select * from review"+sqlplus+" order by rgrade desc , rno desc, recommend desc )aa ) where rnum>=? and rnum<=?";
             System.out.println(sql);
             pstmt=con.prepareStatement(sql);
             pstmt.setInt(1, startRow);
