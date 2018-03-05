@@ -45,6 +45,7 @@ public class ReviewController extends HttpServlet {
 		}else if(cmd.equals("updateOk")) {
 			updateOk(req,resp);
 		}
+		
 	}
 
 	public void list(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
