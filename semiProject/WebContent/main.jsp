@@ -52,9 +52,9 @@
 				        </c:forEach>  
 				</div>
 			</div>
-			<div id="review" style="margin-top: 30px; width: 1300px; height: 400px; background-color: gray;"></div>
+		<!-- 	<div id="review" style="margin-top: 30px; width: 1300px; height: 400px; background-color: gray;"></div>
 			<div id="fqboard" style="margin-top: 30px; margin-left : 40px;  width: 630px; height: 350px; background-color: yellow;"></div>
-			
+			 -->
 			
 			
 			

@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import semi.dao.FqboardDao;
+import semi.dao.SellDao;
 import semi.vo.FqboardVo;
+import semi.vo.SellVo;
 
 @WebServlet("/fq.do")
 public class FqController extends HttpServlet{
@@ -40,7 +42,29 @@ public class FqController extends HttpServlet{
 			recommend(req,resp);
 		}else if(cmd.equals("delete")) {
 			delete(req,resp);
+		}else if(cmd.equals("updateOk")) {
+			updateOk(req,resp);
 		}
+	}
+	
+	private void updateOk(HttpServletRequest req, HttpServletResponse resp) 
+			throws ServletException, IOException{
+		int fqno=Integer.parseInt(req.getParameter("fqno"));
+		int fqtype=Integer.parseInt(req.getParameter("fqtype"));
+		String fqtitle=req.getParameter("fqtitle");
+		String fqcontent=req.getParameter("fqcontent");
+		
+		FqboardDao dao=FqboardDao.getInstance();
+		FqboardVo vo=new FqboardVo(fqno, fqtype, fqtitle, fqcontent, null, 0, 0, 0, null, 0);
+		int n=dao.updateOk(vo);
+		
+		if(n>0) {
+			resp.sendRedirect(req.getContextPath()+"/fq.do?cmd=fqList");
+		}else {
+			req.setAttribute("result", "fail");
+			resp.sendRedirect(req.getContextPath()+"/fq.do?cmd=fqList");
+		}
+		
 	}
 	
 	private void delete(HttpServletRequest req, HttpServletResponse resp) 
@@ -104,6 +128,7 @@ public class FqController extends HttpServlet{
 	private void update(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException{
 		int fqno = Integer.parseInt(req.getParameter("fqno"));
+		System.out.println("fqno:"+fqno);
 		FqboardDao dao=FqboardDao.getInstance();
 		FqboardVo vo=dao.update(fqno);
 		req.setAttribute("vo", vo);
@@ -116,7 +141,6 @@ public class FqController extends HttpServlet{
 			throws ServletException, IOException{
 		String text = req.getParameter("text");
         String spageNum = req.getParameter("pageNum");
-        //System.out.println("spageNum:"+spageNum);
         int pageNum=1;
         if(spageNum!=null) {
             if(Integer.parseInt(spageNum)<0) {
@@ -124,35 +148,26 @@ public class FqController extends HttpServlet{
             }
             pageNum=Integer.parseInt(spageNum);
         }
-        //System.out.println("pageNum:"+pageNum);
         int startRow = (pageNum-1)*10+1;
-        //System.out.println("startRow:"+startRow);
         int endRow = startRow+9;
-        //System.out.println("endRow:"+endRow);
         int getCount=0;
-        //System.out.println("text:"+text);
         ArrayList<FqboardVo> list = null;
         if(text==null) {
             getCount = FqboardDao.getInstance().getCount();
             list = FqboardDao.getInstance().list(startRow,endRow);
         }else {
-            //System.out.println("select:"+req.getParameter("select"));
             String select = req.getParameter("select");
             list = FqboardDao.getInstance().search(select,text,startRow,endRow);
             getCount=FqboardDao.getInstance().getCount(select,text);
             req.setAttribute("select", select);
             req.setAttribute("text", text);
         }
-        //System.out.println("getMax:"+getCount);
         int pageCount = (int)Math.ceil(getCount/10.0);
-        //System.out.println("pageCount:"+pageCount);
         int startPage = ((pageNum-1)/5*5)+1;
-        //System.out.println("startPage:"+startPage);
         int endPage = startPage+4;
         if(pageCount<endPage) {
             endPage=pageCount;
         }
-        //System.out.println("endPage:"+endPage);
         req.setAttribute("list", list);
         req.setAttribute("pageCount", pageCount);
         req.setAttribute("startPage", startPage);
@@ -169,9 +184,6 @@ public class FqController extends HttpServlet{
 		FqboardVo vo=dao.detail(fqno);
 		int police = dao.getPolice(fqno);
 		int recommend = dao.getRecommend(fqno);
-		
-		ArrayList<FqboardVo> fqmain=dao.fqmain();
-		req.setAttribute("fqmain", fqmain);
 		
 		dao.updateHit(vo);
 		req.setAttribute("vo", vo);

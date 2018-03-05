@@ -15,10 +15,10 @@
 </style>
 <br>
 <div class="row">
-   <form class="col s12" method="post" action="/semiProject/buy.do?cmd=update">
+   <form class="col s12" method="post" action="/semiProject/buy.do?cmd=updateOk&bno=${vo.bno }">
     <div class="row">
         <div class="input-field col s12">
-          <input name="stitle" type="text" class="validate" value="${vo.btitle }">
+          <input name="btitle" type="text" class="validate" value="${vo.btitle }">
           <label for="stitle">제목</label>
         </div>
     </div>

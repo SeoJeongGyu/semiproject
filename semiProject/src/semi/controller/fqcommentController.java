@@ -44,18 +44,18 @@ public class fqcommentController extends HttpServlet{
 		int lev=0;
 		int step=0;
 		if(fqboardcno!=null && !(fqboardcno.equals(""))) {
-			System.out.println("왔다");
+			//System.out.println("왔다");
 			fqcno=Integer.parseInt(fqboardcno);
-			System.out.println("fqcno>>>>>>>.<<<<<<"+fqcno);
+			//System.out.println("fqcno>>>>>>>.<<<<<<"+fqcno);
 			ref=Integer.parseInt(req.getParameter("fqcref"));
 			lev=Integer.parseInt(req.getParameter("fqclev"));
 			step=Integer.parseInt(req.getParameter("fqcstep"));
-			System.out.println("ref:"+ref+" lev:"+lev+" step:"+step);
+			//System.out.println("ref:"+ref+" lev:"+lev+" step:"+step);
 		}
 		FqcommentDao dao=FqcommentDao.getInstance();
 		FqcommentVo vo=new FqcommentVo(fqcno, fqcontent, ref, lev, step, 0, null, fqno, id);
 		int n=dao.insert(vo);
-		//System.out.println("n:"+n);
+		System.out.println("n:"+n);
 		JSONObject json=new JSONObject();
 		if(n>0) {
 			json.put("result", "success");

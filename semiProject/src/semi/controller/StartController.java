@@ -10,8 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import semi.dao.FqboardDao;
 import semi.dao.NoticesDao;
 import semi.dao.ReviewDao;
+import semi.vo.FqboardVo;
 import semi.vo.NoticesVo;
 import semi.vo.ReviewVo;
 
@@ -30,6 +32,8 @@ public class StartController extends HttpServlet{
         ArrayList<ReviewVo> reviewMain = ReviewDao.getInstance().listmain();
         req.setAttribute("noticesList", noticesList);
         req.setAttribute("reviewMain", reviewMain);
+        ArrayList<FqboardVo> fqmain = FqboardDao.getInstance().fqmain();
+		req.setAttribute("fqmain", fqmain);
         RequestDispatcher rd = req.getRequestDispatcher("main.jsp");
         rd.forward(req, resp);
     }
