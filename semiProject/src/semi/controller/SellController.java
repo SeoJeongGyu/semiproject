@@ -34,7 +34,85 @@ public class SellController extends HttpServlet{
         	insertOk(req,resp);
         }else if(cmd.equals("sdetail")) {
         	detail(req,resp);
-        }
+        }else if(cmd.equals("delete")){
+        	delete(req,resp);
+        }else if(cmd.equals("update")) {
+        	update(req,resp);
+        }else if(cmd.equals("police")) {
+			police(req,resp);
+		}else if(cmd.equals("updateOk")) {
+			updateOk(req,resp);
+		}
+	}
+	
+	private void police(HttpServletRequest req, HttpServletResponse resp) 
+			throws ServletException, IOException{
+		int sno = Integer.parseInt(req.getParameter("sno"));
+		String id = req.getParameter("id");
+		//System.out.println("sno:"+sno+"id:"+id);
+		SellDao dao=SellDao.getInstance();
+		int n=dao.oxpolice(sno, id);
+		if(n>0) {
+			req.setAttribute("result", "신고성공");
+			detail(req, resp);
+		}else {
+			int police = dao.police(sno, id);
+			if(police>0) {
+				req.setAttribute("result", "신고실패");
+				dao.updateReport(sno);
+				detail(req, resp);
+			}else {
+				detail(req, resp);
+			}
+		}	
+	}
+	private void updateOk(HttpServletRequest req, HttpServletResponse resp) 
+			throws ServletException, IOException{
+		int sno=Integer.parseInt(req.getParameter("sno"));
+		int os=Integer.parseInt(req.getParameter("os"));
+		int telecom=Integer.parseInt(req.getParameter("telecom"));
+		int company=Integer.parseInt(req.getParameter("company"));
+		String loc=req.getParameter("loc");
+		int price=Integer.parseInt(req.getParameter("price"));
+		String stitle=req.getParameter("stitle");
+		String scontent=req.getParameter("scontent");
+		int success=Integer.parseInt(req.getParameter("success"));
+		SellDao dao=SellDao.getInstance();
+		SellVo vo=new SellVo(sno, os, telecom, company, loc, price, stitle, scontent, null, 0, 0, success, 0, null);
+		int n=dao.updateOk(vo);
+		
+		if(n>0) {
+			resp.sendRedirect(req.getContextPath()+"/sell.do?cmd=sellList");
+		}else {
+			req.setAttribute("result", "fail");
+			resp.sendRedirect(req.getContextPath()+"/sell.do?cmd=sellList");
+		}
+		
+	}
+	
+	private void update(HttpServletRequest req, HttpServletResponse resp) 
+			throws ServletException, IOException{
+		int sno = Integer.parseInt(req.getParameter("sno"));
+		SellDao dao=SellDao.getInstance();
+		SellVo vo=dao.update(sno);
+		req.setAttribute("vo", vo);
+		req.setAttribute("page", "/sell/update.jsp");
+		req.getRequestDispatcher("main.jsp").forward(req, resp);
+	}
+	
+	private void delete(HttpServletRequest req, HttpServletResponse resp) 
+			throws ServletException, IOException{
+		int sno = Integer.parseInt(req.getParameter("sno"));
+		String id= req.getParameter("id");
+		SellDao dao = SellDao.getInstance();
+		int n = dao.delete(sno, id);
+		
+		if(n>0) {
+			resp.sendRedirect(req.getContextPath()+"/sell.do?cmd=sellList");
+		}else {
+			req.setAttribute("result", "cancel");
+		}
+		
 	}
 	
 	private void detail(HttpServletRequest req, HttpServletResponse resp) 
@@ -54,7 +132,9 @@ public class SellController extends HttpServlet{
 		String id=(String)req.getSession().getAttribute("id");
 		int os = Integer.parseInt(req.getParameter("os"));
 		int telecom = Integer.parseInt(req.getParameter("telecom"));
-		//System.out.println("왔다"+ telecom);
+
+
+
 		int company = Integer.parseInt(req.getParameter("company"));
 		String loc = req.getParameter("loc");
 		int price = Integer.parseInt(req.getParameter("price"));

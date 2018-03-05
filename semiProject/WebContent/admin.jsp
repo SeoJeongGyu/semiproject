@@ -10,7 +10,10 @@
 	*{margin: 0px; padding: 0px; margin: auto;}
 </style>
 <script type="text/javascript">
-	
+	if('${requestScope.page}'==""){
+	    console.log("맴버");
+	    location.href="<%=request.getContextPath()%>/memberAdmin.do?cmd=list";
+	}
 </script>
 </head>
 <body>
@@ -21,8 +24,7 @@
 	<div id="content" style="width: 1350px;">
 		<c:choose>
 			<c:when test="${requestScope.page==null}">
-				<%-- <jsp:include page="aaa.jsp"></jsp:include>
-					이곳은 메인 --%>
+			
 			</c:when>
 			<c:otherwise>
 				<jsp:include page="${requestScope.page}"></jsp:include>

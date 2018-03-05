@@ -47,11 +47,11 @@
 				    <li class="tab col s3" onclick="buy()"><a href="#buy">삽니다게시판</a></li>
 				 </ul>
 				 <c:if test="${requestScope.page2=='detail'}">
-				 <jsp:include page="reviewDetail.jsp"></jsp:include>
+				 <jsp:include page="/admin/reviewDetail.jsp"></jsp:include>
 				 </c:if>
 				 <c:if test="${requestScope.page2==null}">
 					<div id="review">
-					<jsp:include page="review.jsp"></jsp:include>
+					<jsp:include page="/admin/review.jsp"></jsp:include>
 				 	</div>
 				 </c:if>
 				 

@@ -24,7 +24,7 @@ public class StartController extends HttpServlet{
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String cmd = req.getParameter("cmd");
         if(cmd.equals("start")) {
-            start(req,resp);
+            start(req,resp); 
         }
     }
     public void start(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
