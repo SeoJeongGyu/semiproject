@@ -12,12 +12,12 @@ import semi.vo.SellVo;
 import test.dbcp.DbcpBean;
 
 public class SellDao {
-	
 	private static SellDao instance=new SellDao();
 	private SellDao() {}
 	public static SellDao getInstance() {
 		return instance;
 	}
+
 	
 /*	public ArrayList<SellVo> checkedList(String sql){
 		Connection con=null;

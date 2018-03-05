@@ -26,11 +26,8 @@ $(document).ready(function() {
   
   
   </script>
-
-
-
 <!-- 전체를 감싸는 div -->
-<div id="write" style="width: 1000px; height: 527px; margin-top: 100px;">
+<div id="write" style="width: 1000px; height: 800px; margin-top: 100px;">
 
     <!-- 사진 등록 AJAX div  -->
       <div align="left">

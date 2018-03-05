@@ -45,6 +45,7 @@ function police(){
 	function scrap(){
 		if('${sessionScope.id}' != ""){
 		location.href="mypage.do?cmd=scrap&rno=${vo.rno}&id=${sessionScope.id}&rtitle=${vo.rtitle}";
+		alert("스크랩하였습니다.");
 		}else{
 				alert("로그인 후 스크랩기능을 이용해주세요.");
 			}
@@ -81,7 +82,7 @@ function police(){
 </div>
 
 		<!-- 내용보여주기  -->
-<div id="content" style="margin-left: 250px;"><span id="rcontent">${vo.rcontent }</span></div>
+<div id="content" style="margin-left: 250px; ">${vo.rcontent }</div>
 
 		<!--  수정, 삭제, 추천-->
 <div class="fixed-action-btn horizontal">
@@ -97,9 +98,10 @@ function police(){
     </ul>
   </div>
 		<!-- 댓글기능  -->
-		<div id="bottom"></div>
+		<div id="bottom">
+		
+		</div>
 	
-	<input type="hidden" value="${vo.rtitle }" name="rtitle">
-	<input type="hidden" value="${vo.rcontent }" name="rcontent">
+
 	</form>
 </div>

@@ -48,16 +48,16 @@
 
 <div style="clear:both;float:left;margin-top:15px;height:140px;text-align:center;">
 
-<img src="/semiProject/image/${review.savefilename}" style="width:210px; border:1px solid #F0F0F0" >
+<img src="image/${review.savefilename}" style="width:210px; border:1px solid #F0F0F0" >
 </div>
-<div style="float:left;overflow:hidden;width:585px;margin-top:20px;margin-left:10px;">
+<div style="float:left;overflow:hidden;width:585px; height:200px;margin-top:20px;margin-left:10px;">
 	<div style="width:98%;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;padding-bottom:2px;"><a href="/semiProject/review.do?cmd=content&rno=${review.rno}"><span class="p16 clr100 b"> ${review.rtitle}</span></a></div>
-	<div style="width:98%;margin-top:15px;height:50px;overflow:hidden;" onclick="location.href='/semiProject/review.do?cmd=content&rno=${review.rno}'">
+	<div style="width:98%;margin-top:15px;height:50px; height:110px;overflow:hidden;" onclick="location.href='/semiProject/review.do?cmd=content&rno=${review.rno}'">
 		<span>${review.rcontent}</span>
 		</div>
 		<br>
 	<div style="margin-top:10px;overflow:hidden;padding-bottom:2px;" class="p12 clr02">
-	등록 : ${review.rdate}&nbsp;&nbsp;<span class="clr06">|</span>&nbsp;&nbsp;${review.rhit}	</div>
+	등록 : ${review.rdate}&nbsp;&nbsp;<span class="clr06">| 조회수:</span>&nbsp;&nbsp;${review.rhit}	</div>
 <br>
 
 <div style="margin-top:5px;height:1px;background-color:#E7E7E7;width:999%;"></div> 
@@ -82,7 +82,7 @@
 <c:forEach var="i" begin="${startPage }"  end="${endPage }">
 <c:choose>
 			<c:when test="${pageNum==i }">
-	    <li class="active"><a href="<%=request.getContextPath()%>/review.do?cmd=list&pageNum=${i}&text=${requestScope.text}&select=${requestScope.select}">${i}</a></li>
+	    <li class="active"><a href="<%=request.getContextPath()%>/review.do?cmd=list&pageNum=${i}&text=${requestScope.text}&select=${requestScope.select}" style="background-color: #993333;">${i}</a></li>
 	 	</c:when>
 	 <c:otherwise>
 			<li class="waves-effect"><a href="<%=request.getContextPath()%>/review.do?cmd=list&pageNum=${i}&text=${requestScope.text}&select=${requestScope.select}">${i }</a></li>
@@ -116,7 +116,7 @@
         <div class="input-field col s3">
           <input id="text" name="text" type="text" class="validate" value="${requestScope.txt }">
         </div>
-      <button class="btn waves-effect waves-light" type="submit" name="action" style="margin-top: 25px;">검색</button>
+      <button class="btn waves-effect waves-light" type="submit" name="action" style="margin-top: 25px; background-color: #993333">검색</button>
      
       </div>
       </form>
