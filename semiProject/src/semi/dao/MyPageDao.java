@@ -99,10 +99,15 @@ public class MyPageDao {
             pstmt.setInt(2, startRow);
             pstmt.setInt(3, endRow);
             rs=pstmt.executeQuery();
+            System.out.println(id+","+startRow+"," +endRow);
             ArrayList<MyPageVo> list=new ArrayList<>();
             while(rs.next()) {
                 MyPageVo vo=new MyPageVo(rs.getInt("sno"),rs.getString("title"),rs.getString("id"),rs.getString("url"),rs.getDate("sdate"),rs.getInt("rno"));
                 list.add(vo);
+                System.out.println(rs.getString("url"));
+                System.out.println(rs.getString("id"));
+                System.out.println(rs.getInt("sno"));
+                
             }
             return list;
         }catch(SQLException se) {
