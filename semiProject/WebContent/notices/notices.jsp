@@ -52,7 +52,7 @@
 	    <c:forEach var="i" begin="${requestScope.startPage }" end="${requestScope.endPage }">
 		    <c:choose>
 			    <c:when test="${pageNum==i }">
-			    	<li class="active"><a href="notices.do?cmd=notices&pageNum=${i }&text=${requestScope.text}">${i }</a></li>
+			    	<li class="active" ><a style="background-color: #993333;" href="notices.do?cmd=notices&pageNum=${i }&text=${requestScope.text}">${i }</a></li>
 			    </c:when>
 			    <c:otherwise>
 			    	<li class="waves-effect"><a href="notices.do?cmd=notices&pageNum=${i }&text=${requestScope.text}">${i }</a></li>

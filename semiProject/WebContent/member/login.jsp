@@ -16,15 +16,16 @@
 }
 </style>
 <script type="text/javascript">
-	if('${requestScope.result}'!=""){
 	    window.onload=function(){
-		    var joinSuccess = document.getElementById("joinSuccess");
-		    if('${requestScope.result}'=="아이디와 비밀번호를 확인하세요."){
-		    	joinSuccess.innerHTML='<h4 >${requestScope.result}</h4 >';
-		    }
-		    joinSuccess.style.display = "block"; 
+	    var joinSuccess = document.getElementById("joinSuccess");
+			if('${requestScope.result}'=="fail"){
+			    	joinSuccess.innerHTML='<h5 >아이디와 비밀번호를 확인하세요.</h5 >';
+			    	joinSuccess.style.display = "block"; 
+			}
+			if('${requestScope.msg}'!=""){
+			    joinSuccess.style.display = "block"; 
+			}	  
 	    }
-	}
 </script>
 <title>Insert title here</title>
 </head>
