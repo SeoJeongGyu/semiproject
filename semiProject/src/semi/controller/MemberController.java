@@ -34,8 +34,6 @@ public class MemberController  extends HttpServlet{
             checkId(req,resp);
         }else if(cmd.equals("loginOk")) {
             loginOk(req,resp);
-        }else if(cmd.equals("chat")) {
-            chat(req,resp);
         }else if(cmd.equals("update")) {
         	update(req,resp);
         }else if(cmd.equals("mypage")) {
@@ -43,14 +41,6 @@ public class MemberController  extends HttpServlet{
             req.getRequestDispatcher("main.jsp").forward(req, resp);
         }
     }
-    
-    public void chat(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("page", "/chat.jsp");
-        RequestDispatcher rd = req.getRequestDispatcher("main.jsp");
-        rd.forward(req, resp);
-    }
- 
-    
     public void loginOk(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id=req.getParameter("id");
         String pwd=req.getParameter("pwd");
@@ -63,14 +53,14 @@ public class MemberController  extends HttpServlet{
                 System.out.println("여기옴");
                 resp.sendRedirect(req.getContextPath()+"/admin.jsp");
             }else if(addr.equals("")) {
-                resp.sendRedirect(req.getContextPath()+"/main.jsp");
+                resp.sendRedirect(req.getContextPath()+"/start.jsp");
             }else {
                 resp.sendRedirect(addr);
             }
         }else {
             req.setAttribute("page", "/member/login.jsp");
             req.setAttribute("result", "로그인에 실패하였습니다.");
-            RequestDispatcher rd = req.getRequestDispatcher("main.jsp");
+            RequestDispatcher rd = req.getRequestDispatcher("start.jsp");
             rd.forward(req, resp);
         }
     }

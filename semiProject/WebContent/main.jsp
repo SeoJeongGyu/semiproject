@@ -67,21 +67,11 @@
 							<span>${review.rcontent }</span>
 						</div>
 					</div>
-
 				</div>
-				
 			</div>
-				
 				</div>
 				</c:forEach>
 			</div>
-			
-			
-			
-			
-			
-			
-			
 			</c:when>
 			<c:otherwise>
 				<jsp:include page="${requestScope.page}"></jsp:include>

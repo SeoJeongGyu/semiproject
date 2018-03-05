@@ -45,8 +45,6 @@ $(".dropdown-button").dropdown();
 				<li>${sessionScope.id}님</li>
 				<li><a href="<%=request.getContextPath()%>/member/logout.jsp">로그아웃</a></li>
 				<li><a href="<%=request.getContextPath()%>/member.do?cmd=mypage">마이페이지</a></li>
-				<li><a href="<%=request.getContextPath()%>/member.do?cmd=chat">채팅</a></li>
-				<jsp:include page="/chat/chat.jsp"></jsp:include>
 			</c:otherwise>
 		</c:choose>
       </ul>
