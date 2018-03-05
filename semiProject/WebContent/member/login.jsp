@@ -42,7 +42,7 @@
       </div>
       <div class="row">
         <div class="input-field col s6">
-        <input id="pwd"  name="pwd" type="password" class="validate" style=" width: 460px; height: 60px;" value="qqqqqq">
+        <input id="pwd"  name="pwd" type="password" class="validate" style=" width: 460px; height: 60px;" >
           <label for="pwd" style="color: #993333; font-size: 20px;">비밀번호</label>
         </div>
       </div>
