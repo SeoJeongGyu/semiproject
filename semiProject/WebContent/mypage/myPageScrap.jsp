@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<jsp:include page="/home/api.jsp"></jsp:include>
+<jsp:include page="/home/header.jsp"></jsp:include>
+<jsp:include page="/mypage/myPageMain.jsp"></jsp:include>
 <script type="text/javascript">
 
-function getDetail(rno){
-    location.href="<%=request.getContextPath()%>/boardlist.do?cmd=reviewDetail&rno="+rno;
-}
 	$(document).ready(function() {
 	  $('select').material_select();
 	});
@@ -25,7 +25,7 @@ function getDetail(rno){
 	function del(){
 	    var chk = document.getElementsByName("check");
 	    var len =0;
-	    var sql ="delete from review where rno in('";
+	    var sql ="delete from scrap where sno in('";
 	    for(var i=0;i<chk.length;i++){
 	        if(chk[i].checked==true){
 	            len++;
@@ -37,17 +37,18 @@ function getDetail(rno){
 	        }
 	    }
 	    sql+=")";
-	    location.href="boardlist.do?cmd=reviewdelete&sql="+sql;
+	    location.href="mypage.do?cmd=delete&sql="+sql;
 	}
 	window.onload=function(){
 	    var select = document.getElementsByName("select")[0];
 	    console.log('${requestScope.select}');
 	    select.selectedIndex='${requestScope.select}';
 	    if('${requestScope.del}'!=""){
-	        alert('${requestScope.del}');
+	    
 	    }
 	}
 </script>    
+<div style="margin-left: 300px;">
  <table class="highlight">
         <thead>
           <tr>
@@ -55,8 +56,7 @@ function getDetail(rno){
 	              <p><input type="checkbox" id="checkAll" onclick="checkAll()"/>
 			      <label for="checkAll"></label></p>
 			  </th>
-             <th>북마크 번호</th>
-              <th>제목</th>
+              <th align="center">제목</th>
               <th>작성일</th>
            
           </tr>
@@ -65,12 +65,11 @@ function getDetail(rno){
         	<c:forEach var="vo" items="${requestScope.list }">
 	          <tr>
 	            <td>
-		            <p><input type="checkbox" name="check" id="${vo.rno }" value="${vo.rno }" />
-				    <label for="${vo.rno }"></label></p>
+		            <p><input type="checkbox" name="check" id="${vo.sno }" value="${vo.sno }" />
+				    <label for="${vo.sno }"></label></p>
 			    </td>
-	            <td onclick="getDetail(${vo.rno })">${vo.rno }</td>
-	            <td onclick="getDetail(${vo.rno })">${vo.rtitle }</td>    
-	            <td onclick="getDetail(${vo.rno })">${vo.rdate }</td>
+	            <td  align="center"><a href="${vo.url }">${vo.title }</a></td>    
+	            <td  align="center">${vo.sdate }</td>
 	          </tr>
 	        </c:forEach>  
         </tbody>
@@ -80,7 +79,7 @@ function getDetail(rno){
    	<ul class="pagination">
    	<c:choose>
    		<c:when test="${pageNum>5}">
-   			<li class="waves-effect"><a href="boardlist.do?cmd=review&pageNum=${startPage-1}&text=${requestScope.text}&select=${requestScope.select}"><i class="material-icons">chevron_left</i></a></li>
+   			<li class="waves-effect"><a href="mypage.do?cmd=list&pageNum=${startPage-1}&text=${requestScope.text}&select=${requestScope.select}"><i class="material-icons">chevron_left</i></a></li>
 		</c:when>
 		<c:otherwise>
 			<li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
@@ -89,16 +88,16 @@ function getDetail(rno){
 	    <c:forEach var="i" begin="${requestScope.startPage }" end="${requestScope.endPage }">
 		    <c:choose>
 			    <c:when test="${pageNum==i }">
-			    	<li class="active"><a href="boardlist.do?cmd=review&pageNum=${i }&text=${requestScope.text}&select=${requestScope.select}">${i }</a></li>
+			    	<li class="active"><a href="mypage.do?cmd=list&pageNum=${i }&text=${requestScope.text}&select=${requestScope.select}">${i }</a></li>
 			    </c:when>
 			    <c:otherwise>
-			    	<li class="waves-effect"><a href="boardlist.do?cmd=review&pageNum=${i }&text=${requestScope.text}&select=${requestScope.select}">${i }</a></li>
+			    	<li class="waves-effect"><a href="mypage.do?cmd=list&pageNum=${i }&text=${requestScope.text}&select=${requestScope.select}">${i }</a></li>
 			    </c:otherwise>
 		    </c:choose>
 	    </c:forEach>
 	    <c:choose>
 	    	<c:when test="${pageCount>endPage }">
-	    		<li class="waves-effect"><a href="boardlist.do?cmd=review&pageNum=${endPage+1 }&text=${requestScope.text}&select=${requestScope.select}"><i class="material-icons">chevron_right</i></a></li>
+	    		<li class="waves-effect"><a href="mypage.do?cmd=list&pageNum=${endPage+1 }&text=${requestScope.text}&select=${requestScope.select}"><i class="material-icons">chevron_right</i></a></li>
 	    	</c:when>
 	    	<c:otherwise>
 	    		<li class="disabled"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
@@ -108,13 +107,12 @@ function getDetail(rno){
   	</ul>
   	</div>
 	  	<div style="margin-left: 1200px;"><a class="waves-effect waves-light btn" style="background-color: #ee6e73;" onclick="del()">게시물삭제</a></div>
-	    <form class="col s12" method="post" action="<%=request.getContextPath()%>/boardlist.do?cmd=review">
+	    <form class="col s12" method="post" action="<%=request.getContextPath()%>/mypage.do?cmd=list">
 	    <div class="row" style="margin-left: 400px;">
 	    <div class="input-field col s2" >
 		    <select name="select" >
 			      <option value="0">제목</option>
-			      <option value="1">내용</option>
-			      <option value="2">아이디</option>
+			 
 		    </select>
 	  	</div>
 	        <div class="input-field col s3" >
@@ -123,4 +121,5 @@ function getDetail(rno){
 	      <button class="btn waves-effect waves-light" type="submit" name="action" style="margin-top: 25px; background-color: #ee6e73;">검색</button>
 	      </div>
 	    </form>
+	  </div>
 	  </div>

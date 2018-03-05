@@ -11,10 +11,10 @@
 	    console.log('${requestScope.select}');
 	    select.selectedIndex='${requestScope.select}';
 	}
-</script>
+</script> 
 
 <div id="wrap" >
-<div>
+<div style="display: none;">
 	<table>
 	<tr><td><ul style="overflow:hidden;border:1px solid #D4D4D4; width:362px;">
 	<li style="float: left; overflow: hidden; width: 89px; border-right: 1px solid rgb(212, 212, 212);">	</li>
@@ -37,7 +37,7 @@
 	</table>
 </div>
 
-
+<br><br><br>
 
 
 
