@@ -19,6 +19,7 @@ public class LoginFilter implements Filter{
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
             throws IOException, ServletException {
+        req.setCharacterEncoding("utf-8");
         //세션에 id가 있는지 검사 - 세션에 id가 있으면 login true가 저장되도록 작성해 보세요.
         String cmd = req.getParameter("cmd");
         System.out.println("filter cmd:"+cmd);

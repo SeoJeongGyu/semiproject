@@ -135,12 +135,11 @@ public class SellController extends HttpServlet{
 		String id=(String)req.getSession().getAttribute("id");
 		int os = Integer.parseInt(req.getParameter("os"));
 		int telecom = Integer.parseInt(req.getParameter("telecom"));
-		//System.out.println("�Դ�"+ telecom);
+		//System.out.println("占쌉댐옙"+ telecom);
 		int company = Integer.parseInt(req.getParameter("company"));
 		String loc = req.getParameter("loc");
 		int price = Integer.parseInt(req.getParameter("price"));
 		String stitle = req.getParameter("stitle");
-		System.out.println("stitle:" + stitle);
 		String scontent = req.getParameter("scontent");
 		int success=Integer.parseInt(req.getParameter("success"));
 		
