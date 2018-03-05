@@ -19,7 +19,7 @@ public class LoginFilter implements Filter{
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
             throws IOException, ServletException {
-        //¼¼¼Ç¿¡ id°¡ ÀÖ´ÂÁö °Ë»ç - ¼¼¼Ç¿¡ id°¡ ÀÖÀ¸¸é login true°¡ ÀúÀåµÇµµ·Ï ÀÛ¼ºÇØ º¸¼¼¿ä.
+        //ï¿½ï¿½ï¿½Ç¿ï¿½ idï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½ - ï¿½ï¿½ï¿½Ç¿ï¿½ idï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ login trueï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Çµï¿½ï¿½ï¿½ ï¿½Û¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
         String cmd = req.getParameter("cmd");
         System.out.println("filter cmd:"+cmd);
         if(cmd.equals("insert")||cmd.equals("write")) {
@@ -33,10 +33,10 @@ public class LoginFilter implements Filter{
                     login=true;
                 }
             }
-            if(login) {//·Î±×ÀÎµÈ »óÅÂ¶ó¸é
-                chain.doFilter(req, resp);//»ç¿ëÀÚ°¡ ¿äÃ»ÇÑ ÆäÀÌÁö·Î ÀÌµ¿
-            }else {//·Î±×ÀÎ ¾ÈµÈ »óÅÂ¶ó¸é
-                //login.jsp·Î ÀÌµ¿ÇÏ±â(redirect¹æ½ÄÀ¸·Î)
+            if(login) {//ï¿½Î±ï¿½ï¿½Îµï¿½ ï¿½ï¿½ï¿½Â¶ï¿½ï¿½
+                chain.doFilter(req, resp);//ï¿½ï¿½ï¿½ï¿½Ú°ï¿½ ï¿½ï¿½Ã»ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
+            }else {//ï¿½Î±ï¿½ï¿½ï¿½ ï¿½Èµï¿½ ï¿½ï¿½ï¿½Â¶ï¿½ï¿½
+                //login.jspï¿½ï¿½ ï¿½Ìµï¿½ï¿½Ï±ï¿½(redirectï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
                 String addr = request.getHeader("REFERER");
                 System.out.println("addr : "+addr);
                 if(addr.equals("http://localhost:8081/semiProject/sell.do?cmd=sellList")) {

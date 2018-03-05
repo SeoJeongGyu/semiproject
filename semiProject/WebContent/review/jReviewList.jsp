@@ -48,7 +48,7 @@
 
 <div style="clear:both;float:left;margin-top:15px;height:140px;text-align:center;">
 
-<img src="/semiProject/image/${review.savefilename}" style="width:210px; border:1px solid #F0F0F0" >
+<img src="image/${review.savefilename}" style="width:210px; border:1px solid #F0F0F0" >
 </div>
 <div style="float:left;overflow:hidden;width:585px;margin-top:20px;margin-left:10px;">
 	<div style="width:98%;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;padding-bottom:2px;"><a href="/semiProject/review.do?cmd=content&rno=${review.rno}"><span class="p16 clr100 b"> ${review.rtitle}</span></a></div>
