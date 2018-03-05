@@ -79,12 +79,12 @@ public class BuyController extends HttpServlet {
 		BuyDao dao=BuyDao.getInstance();
 		int n=dao.oxpolice(bno, id);
 		if(n>0) {
-			req.setAttribute("result", "ï¿½Ì¹ï¿½ ï¿½Å°ï¿½ï¿½ï¿½ ï¿½Ô½Ã¹ï¿½ï¿½Ô´Ï´ï¿½");
+			req.setAttribute("result", "µ¿ÀÏ°Ô½Ã¹°Àº ½Å°íÇÒ ¼ö ¾ø½À´Ï´Ù");
 			detail(req, resp);
 		}else {
 			int police = dao.police(bno, id);
 			if(police>0) {
-				req.setAttribute("result", "ï¿½Å°ï¿½ï¿½Ï¿ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
+				req.setAttribute("result", "½Å°í¼º°ø");
 				dao.updateReport(bno);
 				detail(req, resp);
 			}else {

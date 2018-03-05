@@ -25,6 +25,9 @@ function getDetail(fqno){
           <c:forEach var="fq" items="${requestScope.list }">
 			<tr onclick="getDetail(${fq.fqno })">
 			<c:choose>
+				<c:when test="${fq.fqgrade==2 }">
+					<td>공지글</td>
+				</c:when>
 				<c:when test="${fq.fqgrade==1 }">
 					<td>인기글</td>
 				</c:when>

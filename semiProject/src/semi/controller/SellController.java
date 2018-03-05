@@ -55,12 +55,12 @@ public class SellController extends HttpServlet{
 		SellDao dao=SellDao.getInstance();
 		int n=dao.oxpolice(sno, id);
 		if(n>0) {
-			req.setAttribute("result", "신고성공");
+			req.setAttribute("result", "동일게시물은 신고할 수 없습니다 ");
 			detail(req, resp);
 		}else {
 			int police = dao.police(sno, id);
 			if(police>0) {
-				req.setAttribute("result", "신고실패");
+				req.setAttribute("result", "신고성공");
 				dao.updateReport(sno);
 				detail(req, resp);
 			}else {

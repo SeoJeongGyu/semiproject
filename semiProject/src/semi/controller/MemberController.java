@@ -65,7 +65,7 @@ public class MemberController  extends HttpServlet{
             if(id.equals("admin")) {
                 resp.sendRedirect(req.getContextPath()+"/admin.jsp");
             }else if(addr.equals("")) {
-                resp.sendRedirect(req.getContextPath()+"/member/start.jsp");
+                resp.sendRedirect(req.getContextPath()+"/start.jsp");
             }else {
                 resp.sendRedirect(addr);
             }

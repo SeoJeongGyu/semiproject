@@ -88,12 +88,12 @@ public class FqController extends HttpServlet{
 		int n=dao.oxrecommend(fqno, id);
 		
 		if(n>0) {
-			req.setAttribute("result", "ë™ì¼ ê²Œì‹œë¬¼ì—ëŠ” ì¶”ì²œí•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
+			req.setAttribute("result", "µ¿ÀÏ°Ô½Ã¹°Àº ÃßÃµÇÒ ¼ö ¾ø½À´Ï´Ù");
 			detail(req, resp);
 		}else {
 		int recommend = dao.recommend(fqno, id);
 			if(recommend>0) {
-				req.setAttribute("result", "ì¶”ì²œí•˜ì˜€ìŠµë‹ˆë‹¤.");
+				req.setAttribute("result", "ÃßÃµ¼º°ø");
 				detail(req, resp);
 			}else {
 				detail(req, resp);
@@ -110,12 +110,12 @@ public class FqController extends HttpServlet{
 		FqboardDao dao=FqboardDao.getInstance();
 		int n=dao.oxpolice(fqno, id);
 		if(n>0) {
-			req.setAttribute("result", "ï¿½Ì¹ï¿½ ï¿½Å°ï¿½ï¿½ï¿½ ï¿½Ô½Ã¹ï¿½ï¿½Ô´Ï´ï¿½");
+			req.setAttribute("result", "µ¿ÀÏ°Ô½Ã¹°Àº ½Å°íÇÒ ¼ö ¾ø½À´Ï´Ù");
 			detail(req, resp);
 		}else {
 			int police = dao.police(fqno, id);
 			if(police>0) {
-				req.setAttribute("result", "ï¿½Å°ï¿½ï¿½Ï¿ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
+				req.setAttribute("result", "½Å°í¼º°ø");
 				dao.updateReport(fqno);
 				detail(req, resp);
 			}else {

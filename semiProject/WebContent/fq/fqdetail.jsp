@@ -7,9 +7,9 @@
 </style>
 <script>
 
-/* if('${result}' !=""){
+ if('${result}' !=""){
 	alert('${result}');
-} */
+} 
 
 function police(){
 	if('${sessionScope.id}' != ""){
