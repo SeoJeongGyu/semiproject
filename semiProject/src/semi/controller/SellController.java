@@ -54,12 +54,12 @@ public class SellController extends HttpServlet{
 		SellDao dao=SellDao.getInstance();
 		int n=dao.oxpolice(sno, id);
 		if(n>0) {
-			req.setAttribute("result", "�̹� �Ű��� �Խù��Դϴ�");
+			req.setAttribute("result", "신고성공");
 			detail(req, resp);
 		}else {
 			int police = dao.police(sno, id);
 			if(police>0) {
-				req.setAttribute("result", "�Ű��Ͽ����ϴ�.");
+				req.setAttribute("result", "신고실패");
 				dao.updateReport(sno);
 				detail(req, resp);
 			}else {
@@ -140,6 +140,7 @@ public class SellController extends HttpServlet{
 		String loc = req.getParameter("loc");
 		int price = Integer.parseInt(req.getParameter("price"));
 		String stitle = req.getParameter("stitle");
+		System.out.println("stitle:" + stitle);
 		String scontent = req.getParameter("scontent");
 		int success=Integer.parseInt(req.getParameter("success"));
 		
