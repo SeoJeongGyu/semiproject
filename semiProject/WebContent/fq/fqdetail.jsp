@@ -7,9 +7,9 @@
 </style>
 <script>
 
-if('${result}' !=""){
+/* if('${result}' !=""){
 	alert('${result}');
-}
+} */
 
 function police(){
 	if('${sessionScope.id}' != ""){
@@ -70,7 +70,7 @@ function list(){
 				}
 			} 
 			child.innerHTML += "작성자:"+json[i].id+"내용:"+json[i].comments+"<button onclick='recomm(event)'>답글</button>"+
-			"<div style='display:none' ><textarea id='recomm"+i+"'></textarea><input type='button' value='등록' onclick='aaa("+i+",${vo.fqno},\""+ json[i].id +"\","+ json[i].ref+","+json[i].lev+","+json[i].step +","+json[i].scno+ ")'><br></div><br>";
+			"<div style='display:none' ><textarea id='recomm"+i+"'></textarea><input type='button' value='등록' onclick='aaa("+i+",${vo.fqno},\""+ json[i].id +"\","+ json[i].ref+","+json[i].lev+","+json[i].step +","+json[i].fqcno+ ")'><br></div><br>";
 			d.appendChild(child);
 			div.appendChild(d);
 			
@@ -79,13 +79,13 @@ function list(){
 	}
 }
 var xhr2=null;
-function aaa(i,bno,id,ref,lev,step,bcno){
+function aaa(i,fqno,id,ref,lev,step,fqcno){
 	xhr2=new XMLHttpRequest();
 	var aa= document.getElementById("recomm"+i).value;	
 	xhr2.onreadystatechange=callback1;
 	xhr2.open('post','fqcomment.do?cmd=insert',true);
 	xhr2.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-	var params="id="+id+"&fqccontent="+aa+"&fqcref="+ref+"&fqclev="+lev+"&fqstep="+step+"&fqcno="+fqcno+"&fqno="+fqno;
+	var params="id="+id+"&fqcontent="+aa+"&fqcref="+ref+"&fqclev="+lev+"&fqcstep="+step+"&fqcno="+fqcno+"&fqno="+fqno;
 	xhr2.send(params);
 	
 }
@@ -95,7 +95,7 @@ function callback1(){
 		//alert(result);
 		var json=JSON.parse(result);
 		if(json.result=="success"){
-			document.getElementById("fqcontent").value="";
+			document.getElementById("fqccontent").value="";
 			getlist();
 		}else{
 			alert("댓글등록실패!");
@@ -121,10 +121,10 @@ function recomm(event){
 
 	var xhr1=null;
 	function addComm(){
-		var comm=document.getElementById("fqcontent").value;
+		var comm=document.getElementById("fqccontent").value;
 		xhr1=new XMLHttpRequest();
 		xhr1.onreadystatechange=callback;
-		xhr1.open('post','fqcomment.do?cmd=insert&fqcontent='+comm+'&bfqno=${vo.fqno }',true);
+		xhr1.open('post','fqcomment.do?cmd=insert&fqcontent='+comm+'&fqno=${vo.fqno }',true);
 		//post방식은경우 아래와 같이 Content-Type지정해야 함
 		xhr1.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
 		var params="fqcontent=" + comm;
@@ -137,7 +137,7 @@ function recomm(event){
 			//alert(result);
 			var json=JSON.parse(result);
 			if(json.result=="success"){
-				document.getElementById("fqcontent").value="";
+				document.getElementById("fqccontent").value="";
 				getlist();
 			}else{
 				alert("댓글등록실패!");

@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import semi.dao.FqboardDao;
-import semi.dao.ReviewDao;
 import semi.vo.FqboardVo;
 
 @WebServlet("/fq.do")
@@ -39,6 +38,22 @@ public class FqController extends HttpServlet{
 			police(req,resp);
 		}else if(cmd.equals("recommend")) {
 			recommend(req,resp);
+		}else if(cmd.equals("delete")) {
+			delete(req,resp);
+		}
+	}
+	
+	private void delete(HttpServletRequest req, HttpServletResponse resp) 
+			throws ServletException, IOException{
+		int fqno = Integer.parseInt(req.getParameter("fqno"));
+		String id= req.getParameter("id");
+		FqboardDao dao = FqboardDao.getInstance();
+		int n = dao.delete(fqno, id);
+		
+		if(n>0) {
+			resp.sendRedirect(req.getContextPath()+"/fq.do?cmd=fqList");
+		}else {
+			req.setAttribute("result", "cancel");
 		}
 	}
 	
@@ -153,9 +168,15 @@ public class FqController extends HttpServlet{
 		FqboardDao dao=FqboardDao.getInstance();
 		FqboardVo vo=dao.detail(fqno);
 		int police = dao.getPolice(fqno);
+		int recommend = dao.getRecommend(fqno);
+		
+		ArrayList<FqboardVo> fqmain=dao.fqmain();
+		req.setAttribute("fqmain", fqmain);
+		
 		dao.updateHit(vo);
 		req.setAttribute("vo", vo);
 		req.setAttribute("police", police);
+		req.setAttribute("recommend", recommend);
 		req.setAttribute("page", "fq/fqdetail.jsp");
 		req.getRequestDispatcher("/main.jsp").forward(req, resp);
 		

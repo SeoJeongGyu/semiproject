@@ -7,9 +7,9 @@
 </style>
 <script>
 
-if('${result}' !=""){
+/* if('${result}' !=""){
 	alert('${result}');
-}
+} */
 
 function sdelete(){
 	if('${sessionScope.id}' == '${vo.id}'){
