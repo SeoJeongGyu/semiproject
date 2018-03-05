@@ -18,7 +18,7 @@
    <form class="col s12" method="post" action="/semiProject/fq.do?cmd=updateOk&fqno=${vo.fqno }">
 	<div class="input-field col s12">
 	    <select name="fqtype" class="select" id="aa">
-		    <option value="fqtype" disabled selected>선택하세요</option>
+		      <option value="fqtype" disabled selected>선택하세요</option>
 		      <option value="1">일반</option>
 		      <option value="2">정보</option>
 		      <option value="3">질문</option>
@@ -50,9 +50,9 @@ function fqupdate(){
 	}
 }
 
-    //var os = document.getElementsByName("os")[0];
     var fqtype = document.getElementsByName("fqtype")[0];
     fqtype.selectedIndex = '${vo.fqtype }';
+    
     
 	$(document).ready(function() {
 	    $('#materialnote').materialnote({

@@ -142,7 +142,9 @@ public class FqboardDao {
 				int fqreport=rs.getInt("fqreport");
 				String id=rs.getString("id");
 				int recommend=rs.getInt("recommend");
-				FqboardVo vo=new FqboardVo(0, fqtype, fqtitle, fqcontent, null, fqhit, 0, fqreport, id, recommend);
+				System.out.println("DAOfqtype:"+rs.getInt("fqtype"));
+				System.out.println("DAOfqtitle:"+rs.getString("fqtitle"));
+				FqboardVo vo=new FqboardVo(fqno, fqtype, fqtitle, fqcontent, null, fqhit, 0, fqreport, id, recommend);
 				return vo;
 			}
 		return null;
@@ -158,16 +160,12 @@ public class FqboardDao {
 		PreparedStatement pstmt = null;
 		try {
 			con=DbcpBean.getConn();
-			String sql="update fqboard set fqtype=?,fqtitle=?,fqcontent=?,fqhit=?,fqreport=?,id=?,recommend=? where fqno=?";
+			String sql="update fqboard set fqtype=?,fqtitle=?,fqcontent=? where fqno=?";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, vo.getFqtype());
 			pstmt.setString(2, vo.getFqtitle());
 			pstmt.setString(3, vo.getFqcontent());
-			pstmt.setInt(4, vo.getFqhit());
-			pstmt.setInt(5, vo.getFqreport());
-			pstmt.setString(6, vo.getId());
-			pstmt.setInt(7, vo.getRecommend());
-			pstmt.setInt(8, vo.getFqno());
+			pstmt.setInt(4, vo.getFqno());
 			return pstmt.executeUpdate();
 			
 		}catch(SQLException se) {
@@ -442,7 +440,7 @@ public class FqboardDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		System.out.println("fqno:"+fqno+"id:"+id);
+		//System.out.println("fqno:"+fqno+"id:"+id);
 		try {
 			conn=DbcpBean.getConn();
 			String sql="select count(*) cnt from recommend where id=? and type='fq' and bonum=?";
