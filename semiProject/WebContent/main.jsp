@@ -16,10 +16,10 @@
 	#footer{width:100%; position: relative; float: left; margin-top: 20px;}
 </style>
 <script type="text/javascript">
-	function samsung(){
+	function imgsamsung(){
 	    location.href="http://www.samsung.com/sec/galaxys9/preorder/";
 	}
-	function lg(){
+	function imglg(){
 	    location.href="http://www.lge.co.kr/lgekor/product/mobile/smart-phone/productDetail.do?cateId=0210&prdId=EPRD.318023";
 	}
 </script>
@@ -29,8 +29,8 @@
 		<jsp:include page="/home/header.jsp"></jsp:include>
 	</div>
 	<table id="event" >
-		<tr><td><img id="samsung" alt="" src="image\samsung.jpg" style="width: 250px;" onclick="samsung()"></td></tr>
-		<tr><td><img id="lg" alt="" src="image\LG.jpg" style="width: 250px;" onclick="lg()"></td></tr>
+		<tr><td><img id="imgsamsung" alt="" src="image\samsung.jpg" style="width: 250px;" onclick="imgsamsung()"></td></tr>
+		<tr><td><img id="imglg" alt="" src="image\LG.jpg" style="width: 250px;" onclick="imglg()"></td></tr>
 	</table>
 	<div id="content" style="width: 1350px;">
 		<c:choose>

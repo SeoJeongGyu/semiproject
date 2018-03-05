@@ -333,7 +333,7 @@
 	<c:forEach var="i" begin="${startPage }" end="${endPage }">
 		<c:choose>
 			<c:when test="${pageNum==i }">
-				<li class="active"><a href="javascript:aa('${i}')" >${i}</a></li>
+				<li class="active"><a href="javascript:aa('${i}')" style="background-color:#993333;">${i}</a></li>
 			</c:when>
 			<c:otherwise>
 			<li class="waves-effect"><a href="javascript:aa('${i}')">${i}</a></li>

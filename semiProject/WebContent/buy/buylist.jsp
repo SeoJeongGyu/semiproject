@@ -50,7 +50,7 @@ function getDetail(bno){
 	<c:forEach var="i" begin="${startPage }" end="${endPage }">
 		<c:choose>
 			<c:when test="${pageNum==i }">
-				<li class="active"><a href="buy.do?cmd=buyList&pageNum=${i}" >${i}</a></li>
+				<li class="active"><a href="buy.do?cmd=buyList&pageNum=${i}" style="background-color:#993333;" >${i}</a></li>
 				
 			</c:when>
 			<c:otherwise>
@@ -82,6 +82,6 @@ function getDetail(bno){
         <div class="input-field col s3" >
           <input id="" name="text" type="text" class="validate" value="">
         </div>
-      <button class="btn waves-effect waves-light" type="submit" name="action" style="margin-top: 25px; background-color: #ee6e73;">검색</button>
+      <button class="btn waves-effect waves-light" type="submit" name="action" style="margin-top: 25px; background-color: #993333;">검색</button>
       </div>
     </form>
