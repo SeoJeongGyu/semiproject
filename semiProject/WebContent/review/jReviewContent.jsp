@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<style>
+#rcomment{
+     border-bottom: 1px solid #993333;
+     box-shadow: 0 1px 0 0 #993333;
+   }
+</style>
 <script>
 /* if('${param.result}'!=""){alert('${param.result}');}
 if('${result}' !=""){
@@ -32,6 +38,41 @@ if('${sessionScope.id}' != ""){
 	}else{
 		alert("추천기능은 로그인 된 상태에서만 가능합니다");
 	}
+}
+function btnblock(rcno){
+    var rcomment1 = document.getElementById(rcno);
+    var btn1 = document.getElementById("btn1"+rcno);
+    rcomment1.style.display="block";
+    btn1.style.display="block";
+    rcomment1.style.color="#993333";
+    rcomment1.style.borderBottom="1px solid #993333";
+    rcomment1.style.boxShadow="0 1px 0 0 #993333";
+    btn1.style.backgroundColor="#993333";
+    btn1.style.marginLeft="10px";
+    btn1.style.width="150px";
+}
+
+function rcomment(rcno,rcref,rclev,rcstep,rcreport){
+    if(rcno==null){
+        var rcno=0;
+        var rcref=0;
+        var rclev=0;
+        var rcstep=0;
+        var rcreport=0;
+    }
+    if('${sessionScope.id}'==null||'${sessionScope.id}'==""){
+        alert("로그인하세요.");
+        return;
+    }
+    console.log("id : "+'${sessionScope.id}');
+    var rcomment = document.getElementById("rcomment").value;
+    var rcomment1=null;
+    if(rcomment==""){
+        rcomment1 = document.getElementById(rcno).value;
+		location.href="review.do?cmd=rcomment&rcomment="+rcomment1+"&id=${sessionScope.id}&rno=${vo.rno}&rcno="+rcno+"&rcref="+rcref+"&rclev="+rclev+"&rcstep="+rcstep+"&rcreport="+rcreport;
+    }else{
+		location.href="review.do?cmd=rcomment&rcomment="+rcomment+"&id=${sessionScope.id}&rno=${vo.rno}&rcno="+rcno+"&rcref="+rcref+"&rclev="+rclev+"&rcstep="+rcstep+"&rcreport="+rcreport;
+    }
 }
 
 function police(){
@@ -98,10 +139,44 @@ function police(){
     </ul>
   </div>
 		<!-- 댓글기능  -->
-		<div id="bottom">
-		
-		</div>
 	
+		<div id="bottom"></div>
+	<input type="hidden" value="${vo.rtitle }" name="rtitle">
+	<input type="hidden" value="${vo.rcontent }" name="rcontent">
+	<br>
+	<br>
+	<br>
 
 	</form>
+	 <div class="divider"></div>
+	 <br>
+	<br>
+	<br>
+	<br>
+	<br>
+      <div class="row">
+        <div class="input-field col s6" >
+          <textarea id="rcomment" class="materialize-textarea" style="color: #993333;"></textarea>
+          <label for="rcomment" style="color: #993333;">댓글</label>
+        </div>
+          <a class="waves-effect waves-light btn" style="margin-top: 60px; background-color: #993333;" href="javascript:rcomment()">댓글등록</a>
+      </div>
+	      <ul class="collection with-header">
+      <c:forEach var="list" items="${requestScope.rclist }">
+      		<c:choose>
+      			<c:when test="${list.rclev==0}">
+	        <li class="collection-item"><div>작성자 : ${list.id} <br> 내용 : ${list.rccontent }<a href="javascript:btnblock(${list.rcno})" class="secondary-content"><i class="material-icons" style="color: #993333;"">send</i></a></div></li>
+	        	</c:when>
+	        	<c:otherwise>
+	        	<li class="collection-item" style="margin-left: 100px;"><div>작성자 : ${list.id} <br> 내용 : ${list.rccontent }</div></li>
+	        	</c:otherwise>
+      		</c:choose>
+      	<div class="row">
+        <div class="input-field col s6" >
+          <textarea id="${list.rcno}" class="materialize-textarea" style=" display: none;"></textarea>
+        </div>
+          <a id="btn1${list.rcno}" class="waves-effect waves-light btn" style="display:none;" href="javascript:rcomment(${list.rcno },${list.rcref },${list.rclev },${list.rcstep },${list.rcreport })">댓글등록</a>
+      </div>
+      </c:forEach>
+	      </ul>
 </div>

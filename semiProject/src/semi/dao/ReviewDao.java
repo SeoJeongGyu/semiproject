@@ -7,8 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import semi.vo.RcommentVo;
 import semi.vo.ReviewVo;
-import semi.vo.SellVo;
 import test.dbcp.DbcpBean;
 
 public class ReviewDao {
@@ -137,9 +137,123 @@ public class ReviewDao {
 			DbcpBean.closeConn(conn, pstmt, rs);
 		}
 	}
+	public int rcommentdetail(int rno){
+        Connection con=null;
+        PreparedStatement pstmt=null;
+        ResultSet rs=null;
+        String sqlplus="";
+        try {
+            con=DbcpBean.getConn();
+            //System.out.println("con:"+con);
+            String sql="select MAX(rcreport) mrcreport from rcomment where rno = ? ";
+            System.out.println(sql);
+            pstmt=con.prepareStatement(sql);
+            pstmt.setInt(1, rno);
+            rs=pstmt.executeQuery();
+            rs.next();
+            return rs.getInt("mrcreport");
+        }catch(SQLException se) {
+            System.out.println(se.getMessage());
+            return -1;
+        }finally {
+            DbcpBean.closeConn(con, pstmt, rs);
+        }
+    }
+	public ArrayList<RcommentVo> rcomment(int rno){
+        Connection con=null;
+        PreparedStatement pstmt=null;
+        ResultSet rs=null;
+        String sqlplus="";
+        try {
+            con=DbcpBean.getConn();
+            //System.out.println("con:"+con);
+            String sql="select * from rcomment where rno=? order by rcref asc,rcno asc, rclev asc, rcstep desc, rcreport asc ";
+            System.out.println(sql);
+            pstmt=con.prepareStatement(sql);
+            pstmt.setInt(1, rno);
+            rs=pstmt.executeQuery();
+            ArrayList<RcommentVo> list=new ArrayList<>();
+            while(rs.next()) {
+                RcommentVo vo=new RcommentVo(rs.getInt("rcno"),rs.getString("rccontent"),rs.getInt("rcref"),rs.getInt("rclev"),rs.getInt("rcstep"),rs.getInt("rcreport"),rs.getDate("rcdate"),rs.getString("id"),rs.getInt("rno"));
+                list.add(vo);
+            }
+            return list;
+        }catch(SQLException se) {
+            System.out.println(se.getMessage());
+            return null;
+        }finally {
+            DbcpBean.closeConn(con, pstmt, rs);
+        }
+    }
 	
-	
-	
+	public int rcommentInsert(String rcomment,String id,int rno,int rcno,int rcref,int rclev,int rcstep,int rcreport) {
+	    Connection con = null;
+        PreparedStatement pstmt = null;
+        PreparedStatement pstmt1 = null;
+        PreparedStatement pstmt2 = null;
+        int mrcreport = rcommentdetail(rno);
+        try {
+            con=DbcpBean.getConn();
+            System.out.println("rcomment:"+rcomment);
+            System.out.println("rclev:"+rclev);
+            System.out.println("rcstep:"+rcstep);
+            System.out.println("id:"+id);
+            System.out.println("rno:"+rno);
+            System.out.println("!!!!!rno:"+rcreport);
+            System.out.println("mrcreport:"+mrcreport);
+            if(rcno!=0) {
+                System.out.println("¿Ô´Ù");
+                String sql="update rcomment set rcstep=rcstep+1 where rcref=? and rcstep>?";
+                String sql2="update rcomment set rcreport=rcreport+1 where rno=? and rcreport>?";
+                pstmt1=con.prepareStatement(sql);
+                pstmt2=con.prepareStatement(sql2);
+                pstmt1.setInt(1, rcref);
+                pstmt1.setInt(2, rcstep);
+                pstmt2.setInt(1, rno);
+                pstmt2.setInt(2, rcreport);
+                pstmt1.executeUpdate();
+                pstmt2.executeUpdate();
+                rclev=rclev+1;
+                rcstep=rcstep+1;
+                rcreport=rcreport+1;
+                String sql1="insert into rcomment values(rcomment_seq.nextval,?,?,?,?,?,sysdate,?,?)";
+                pstmt=con.prepareStatement(sql1);
+                pstmt.setString(1, rcomment);
+                pstmt.setInt(2, rcref);
+                pstmt.setInt(3, rclev);
+                pstmt.setInt(4, rcstep);
+                pstmt.setInt(5, rcreport);
+                pstmt.setString(6, id);
+                pstmt.setInt(7, rno);
+            }else {
+                if(mrcreport==0) {
+                    String sql2="insert into rcomment values(rcomment_seq.nextval,?,rcomment_seq.currval,?,?,1,sysdate,?,?)";
+                    pstmt=con.prepareStatement(sql2);
+                    pstmt.setString(1, rcomment);
+                    pstmt.setInt(2, rclev);
+                    pstmt.setInt(3, rcstep);
+                    pstmt.setString(4, id);
+                    pstmt.setInt(5, rno);
+                }else {
+                    String sql2="insert into rcomment values(rcomment_seq.nextval,?,rcomment_seq.currval,?,?,?,sysdate,?,?)";
+                    pstmt=con.prepareStatement(sql2);
+                    pstmt.setString(1, rcomment);
+                    pstmt.setInt(2, rclev);
+                    pstmt.setInt(3, rcstep);
+                    pstmt.setInt(4, mrcreport+1);
+                    pstmt.setString(5, id);
+                    pstmt.setInt(6, rno);
+                }
+            }
+            return pstmt.executeUpdate();
+        }catch(SQLException se) {
+            System.out.println(se.getMessage());
+            return -1;
+        }finally {
+            DbcpBean.closeConn(null, pstmt1, null);
+            DbcpBean.closeConn(con, pstmt, null);
+        }
+	}
 	public int getCount() {
 		Connection conn = null;
 		PreparedStatement pstmt = null;

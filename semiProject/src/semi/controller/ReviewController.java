@@ -14,6 +14,7 @@ import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import semi.dao.ReviewDao;
+import semi.vo.RcommentVo;
 import semi.vo.ReviewVo;
 
 @WebServlet("/review.do")
@@ -44,12 +45,31 @@ public class ReviewController extends HttpServlet {
 			police(req,resp);
 		}else if(cmd.equals("updateOk")) {
 			updateOk(req,resp);
+		}else if(cmd.equals("rcomment")) {
+		    rcomment(req,resp);
 		}
 		
 	}
 
+	public void rcomment(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	    String rcomment = req.getParameter("rcomment");
+	    String id = req.getParameter("id");
+	    int rno = Integer.parseInt(req.getParameter("rno"));
+	    int rcno = Integer.parseInt(req.getParameter("rcno"));
+	    int rcref = Integer.parseInt(req.getParameter("rcref"));
+	    int rclev = Integer.parseInt(req.getParameter("rclev"));
+	    int rcstep = Integer.parseInt(req.getParameter("rcstep"));
+	    int rcreport = Integer.parseInt(req.getParameter("rcreport"));
+	    System.out.println("rcomment : "+rcomment);
+	    System.out.println("rcno : "+rcno);
+	    System.out.println("rcref : "+rcref);
+	    System.out.println("rclev : "+rclev);
+	    System.out.println("rcstep : "+rcstep);
+	    System.out.println("rcreport : "+rcreport);
+	    int n = ReviewDao.getInstance().rcommentInsert(rcomment, id, rno, rcno, rcref, rclev, rcstep,rcreport);
+	    content(req, resp);
+	}
 	public void list(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
 		String text = req.getParameter("text");
 		String spageNum = req.getParameter("pageNum");
 		System.out.println("spageNum:"+spageNum);
@@ -86,6 +106,7 @@ public class ReviewController extends HttpServlet {
 		if(pageCount<endPage) {
 			endPage=pageCount;
 		}
+		
 		req.setAttribute("rlist", rlist);
 		req.setAttribute("pageCount",pageCount);
 		req.setAttribute("startPage", startPage);
@@ -101,7 +122,11 @@ public class ReviewController extends HttpServlet {
 
 	public void writeOk(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+
 		String uploadPath = "D:\\Github\\semiproject\\semiProject\\WebContent\\image";
+
+		
+
 		MultipartRequest mr = new MultipartRequest(req, uploadPath, 1024 * 1024 * 5, "utf-8",
 				new DefaultFileRenamePolicy());
 
@@ -123,12 +148,13 @@ public class ReviewController extends HttpServlet {
 	}
 
 	public void content(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
 		int rno = Integer.parseInt(req.getParameter("rno"));
 		ReviewDao dao = ReviewDao.getInstance();
 		ReviewVo vo = dao.content(rno);
 		int recommend=dao.getRecommend(rno);
 		int police = dao.getPolice(rno);
+		ArrayList<RcommentVo>rclist = dao.getInstance().rcomment(rno);
+		req.setAttribute("rclist", rclist);
 		req.setAttribute("recommend", recommend);
 		req.setAttribute("police", police);
 		req.setAttribute("vo", vo);
