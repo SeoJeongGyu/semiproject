@@ -29,8 +29,10 @@
 		<jsp:include page="/home/header.jsp"></jsp:include>
 	</div>
 	<table id="event" >
+
 		<tr><td><img id="imgsamsung" alt="" src="image\samsung.jpg" style="width: 250px;" onclick="imgsamsung()"></td></tr>
 		<tr><td><img id="imglg" alt="" src="image\LG.jpg" style="width: 250px;" onclick="imglg()"></td></tr>
+
 	</table>
 	<div id="content" style="width: 1350px;">
 		<c:choose>
@@ -51,6 +53,7 @@
 						    <a href="http://localhost:8081/semiProject/fq.do?cmd=fqdetail&fqno=${fq.fqno}" style="color: #993333;" class="collection-item">${fq.fqtitle}</a>
 				        </c:forEach>  
 				</div>
+
 			</div>
 		<!-- 	<div id="review" style="margin-top: 30px; width: 1300px; height: 400px; background-color: gray;"></div>
 			<div id="fqboard" style="margin-top: 30px; margin-left : 40px;  width: 630px; height: 350px; background-color: yellow;"></div>
@@ -60,6 +63,9 @@
 			
 			
 			
+
+			</div>
+
 			<br>
 			
 			<div id="review" style="margin-top: 30px; width: 1300px; height: 500px; background-color: white;  overflow:hidden;text-overflow:ellipsis;">

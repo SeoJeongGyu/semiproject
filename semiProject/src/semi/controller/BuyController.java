@@ -56,9 +56,10 @@ public class BuyController extends HttpServlet {
 			int bno=Integer.parseInt(req.getParameter("bno"));
 			String btitle=req.getParameter("btitle");
 			String bcontent=req.getParameter("scontent");
+			int success=Integer.parseInt(req.getParameter("bsuccess"));
 			
 			BuyDao dao=BuyDao.getInstance();
-			BuyVo vo=new BuyVo(bno, btitle, bcontent, null, 0, 0, 0, 0, null);
+			BuyVo vo=new BuyVo(bno, btitle, bcontent, null, 0, 0, success, 0, null);
 			int n=dao.updateOk(vo);
 			
 			if(n>0) {
@@ -206,11 +207,12 @@ public class BuyController extends HttpServlet {
 	}
 	private void insertOk(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException{
+		int success=Integer.parseInt(req.getParameter("success"));
 		String btitle=req.getParameter("btitle");
 		String bcontent= req.getParameter("scontent");
 		String id=(String)req.getSession().getAttribute("id");
 		
-		BuyVo vo=new BuyVo(0, btitle, bcontent, null, 0, 0, 0, 0, id);
+		BuyVo vo=new BuyVo(0, btitle, bcontent, null, 0, 0, success, 0, id);
 		BuyDao dao=BuyDao.getInstance();
 		int n=dao.insert(vo);
 		if(n>0) {

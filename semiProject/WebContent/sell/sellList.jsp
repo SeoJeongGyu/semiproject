@@ -310,6 +310,9 @@
           <c:forEach var="sell" items="${requestScope.slist }">
 			<tr onclick="getDetail(${sell.sno })">
 			<c:choose>
+				<c:when test="${sell.sgrade==2 }">			
+					<td>공지글</td>
+				</c:when>
 				<c:when test="${sell.success==1 }">			
 					<td>판매중</td>
 				</c:when>

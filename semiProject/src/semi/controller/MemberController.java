@@ -59,8 +59,8 @@ public class MemberController  extends HttpServlet{
             }
         }else {
             req.setAttribute("page", "/member/login.jsp");
-            req.setAttribute("result", "로그인에 실패하였습니다.");
-            RequestDispatcher rd = req.getRequestDispatcher("start.jsp");
+            req.setAttribute("result", "fail");
+            RequestDispatcher rd = req.getRequestDispatcher("main.jsp");
             rd.forward(req, resp);
         }
     }
@@ -88,12 +88,12 @@ public class MemberController  extends HttpServlet{
         int n = MemberDao.getInstance().insert(vo);
         if(n>0) {
             req.setAttribute("page", "/member/login.jsp");
-            req.setAttribute("result", "회원가입에 성공하였습니다 로그인 하세요");
+            req.setAttribute("msg", "회원가입에 성공하였습니다 로그인 하세요");
             RequestDispatcher rd = req.getRequestDispatcher("main.jsp");
             rd.forward(req, resp);
         }else {
             req.setAttribute("page", "/member/join.jsp");
-            req.setAttribute("result", "가입할 수 없습니다.");
+            req.setAttribute("msg", "가입할 수 없습니다.");
             RequestDispatcher rd = req.getRequestDispatcher("main.jsp");
             rd.forward(req, resp);
         }

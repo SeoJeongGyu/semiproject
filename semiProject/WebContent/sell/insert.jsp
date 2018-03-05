@@ -42,8 +42,8 @@
 	    <select name="company" class="select">
 	      <option value="company" disabled selected>선택하세요</option>
 	      <option value="1">삼성</option>
-	      <option value="2">애플</option>
-	      <option value="3">LG</option>
+	      <option value="2">LG</option>
+	      <option value="3">애플</option>
 	      <option value="4">기타</option>
 	    </select>
 	    <label>제조사</label>

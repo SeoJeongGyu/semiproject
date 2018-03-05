@@ -38,6 +38,7 @@ public class BuyDao {
 				int bhit=rs.getInt("bhit");
 				int success=rs.getInt("success");
 				String id=rs.getString("id");
+				//System.out.println("success?????"+success);
 				BuyVo vo=new BuyVo(bno, btitle, bcontent, bdate, 0, bhit, success, 0, id);
 				return vo;
 			}
@@ -55,11 +56,13 @@ public class BuyDao {
 		PreparedStatement pstmt = null;
 		try {
 			con=DbcpBean.getConn();
-			String sql="update buy set btitle=?,bcontent=? where bno=?";
+			String sql="update buy set btitle=?,bcontent=?, success=? where bno=?";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setString(1, vo.getBtitle());
 			pstmt.setString(2, vo.getBcontent());
-			pstmt.setInt(3, vo.getBno());
+			pstmt.setInt(3, vo.getSuccess());
+			pstmt.setInt(4, vo.getBno());
+			//System.out.println("제목:"+ vo.getBtitle() + "거래상황:"+vo.getSuccess());
 			return pstmt.executeUpdate();
 			
 		}catch(SQLException se) {

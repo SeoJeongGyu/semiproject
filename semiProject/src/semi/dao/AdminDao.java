@@ -22,10 +22,9 @@ public class AdminDao {
                 if(table.equals("notices")) {
                     sql="insert into "+table+" values(notices_seq.nextval,?,?,0,sysdate)";
                 }else if(table.equals("buy")) {
-                    /*sql="insert into"+table+"values()";*/
-                    return 1;
+                	sql="insert into "+table+" values(buy_seq.nextval,?,?,sysdate,2,0,0,0,'admin')";
                 }else if(table.equals("fqboard")) {
-                    return 1;
+                	sql="insert into "+table+" values(fq_seq.nextval,0,?,?,sysdate,0,2,0,'admin',0)";
                 }else if(table.equals("sell")) {
                     sql="insert into "+table+" values(sell_seq.nextval,0,0,0,'°øÁö',0,?,?,sysdate,2,0,0,0,'admin')";
                 }

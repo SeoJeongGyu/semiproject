@@ -28,6 +28,15 @@
 <br>
 <div class="row">
    <form class="col s12" method="post" action="/semiProject/buy.do?cmd=insertOk">
+   	  <div class="input-field col s12">
+	    <select name="success" class="select">
+	      <option value="success" disabled selected>선택하세요</option>
+	      <option value="0">거래중</option>
+	      <option value="1">거래완료</option>
+	    </select>
+	    <label>type</label>
+	  </div>
+   
       <div class="row">
         <div class="input-field col s12">
           <input name="btitle" type="text" class="validate">

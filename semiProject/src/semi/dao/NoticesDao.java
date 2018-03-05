@@ -136,13 +136,15 @@ public class NoticesDao {
         PreparedStatement pstmt=null;
         ResultSet rs=null;
         String sql="";
+        String sqlplus="where title like '%"+text+"%'";
         try {
             con=DbcpBean.getConn();
             if(text==null||text=="") {
                 sql="select * from (select aa.*,rownum rnum from(select * from notices order by num desc)aa ) where rnum>=? and rnum<=?";
             }else {
-                sql="select * from (select aa.*,rownum rnum from(select * from notices "+text+" order by num desc)aa ) where rnum>=? and rnum<=?";
+                sql="select * from (select aa.*,rownum rnum from(select * from notices "+sqlplus+" order by num desc)aa ) where rnum>=? and rnum<=?";
             }
+            System.out.println("sql : "+sql);
             pstmt=con.prepareStatement(sql);
             pstmt.setInt(1, startRow);
             pstmt.setInt(2, endRow);

@@ -25,7 +25,10 @@ function getDetail(bno){
           <c:forEach var="buy" items="${requestScope.list }">
 			<tr onclick="getDetail(${buy.bno })">
 			<c:choose>
-				<c:when test="${buy.success==1 }">			
+				<c:when test="${buy.bgrade==2 }">			
+					<td>공지글</td>
+				</c:when>
+				<c:when test="${buy.success==0 }">			
 					<td>거래중</td>
 				</c:when>
 				<c:otherwise>
