@@ -1,4 +1,4 @@
-package semi.batch;
+/*package semi.batch;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -53,3 +53,4 @@ public class sellBatch {
 		timer.scheduleAtFixedRate(task, new Date(cal.getTimeInMillis()), 1000 * 60 * 60 * 24);
 	}
 }
+*/

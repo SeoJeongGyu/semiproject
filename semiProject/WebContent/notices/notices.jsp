@@ -70,12 +70,12 @@
 	    <!-- <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li> -->
   	</ul>
   	</div>
-    <form class="col s12" method="post" action="<%=request.getContextPath()%>/boardlist.do?cmd=notices">
+    <form class="col s12" method="post" action="<%=request.getContextPath()%>/notices.do?cmd=notices">
     <div class="row" style="margin-left: 400px;">
         <div class="input-field col s3" >
           <input id="" name="text" type="text" class="validate" value="${requestScope.text}">
-        </div>
-      <button class="btn waves-effect waves-light" type="submit" name="action" style="margin-top: 25px; background-color: #ee6e73;">검색</button>
+        </div>	
+      <button class="btn waves-effect waves-light" type="submit" name="action" style="margin-top: 25px; background-color: #993333;">검색</button>
       </div>
     </form>
   </div>
