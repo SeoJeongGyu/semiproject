@@ -72,7 +72,7 @@ public class BoardController extends HttpServlet{
         int n = AdminDao.getInstance().adminDelete(sql);
         System.out.println("n:"+n);
         if(n>0) {
-            req.setAttribute("del", "疙飞己傍");
+            req.setAttribute("del", "氇呺牴靹标车");
         }else {
             req.setAttribute("page", "/admin/board.jsp");
             req.setAttribute("page1", "/fqboard");
@@ -146,7 +146,7 @@ public class BoardController extends HttpServlet{
         int n = AdminDao.getInstance().adminDelete(sql);
         System.out.println("n:"+n);
         if(n>0) {
-            req.setAttribute("del", "疙飞己傍");
+            req.setAttribute("del", "氇呺牴靹标车");
         }else {
             req.setAttribute("page", "/admin/board.jsp");
             req.setAttribute("page1", "/review");
@@ -220,7 +220,7 @@ public class BoardController extends HttpServlet{
         int n = AdminDao.getInstance().adminDelete(sql);
         System.out.println("n:"+n);
         if(n>0) {
-            req.setAttribute("del", "疙飞己傍");
+            req.setAttribute("del", "氇呺牴靹标车");
         }else {
             req.setAttribute("page", "/admin/board.jsp");
             req.setAttribute("page1", "/buy");
@@ -253,7 +253,7 @@ public class BoardController extends HttpServlet{
         int n = AdminDao.getInstance().adminDelete(sql);
         System.out.println("n:"+n);
         if(n>0) {
-            req.setAttribute("del", "疙飞己傍");
+            req.setAttribute("del", "氇呺牴靹标车");
         }else {
             req.setAttribute("page", "/admin/board.jsp");
             req.setAttribute("page1", "sell");
@@ -333,7 +333,7 @@ public class BoardController extends HttpServlet{
            n+=AdminDao.getInstance().notices(chk[i], title, content);
            System.out.println("n:"+n);
        }
-        System.out.println("肯己n:"+n);
+        
         notices(req,resp);
     }
     public void buy(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

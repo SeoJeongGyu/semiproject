@@ -123,7 +123,7 @@ public class ReviewController extends HttpServlet {
 	public void writeOk(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 
-		String uploadPath = "D:\\Github\\semiproject\\semiProject\\WebContent\\image";
+		String uploadPath = "C:\\Users\\JHTA\\git\\semiproject\\semiProject\\WebContent\\image";
 
 		
 
@@ -240,7 +240,7 @@ public class ReviewController extends HttpServlet {
 	
 	public void updateOk(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	
-		String uploadPath = "D:\\Github\\semiproject\\semiProject\\WebContent\\image";
+		String uploadPath = "C:\\Users\\JHTA\\git\\semiproject\\semiProject\\WebContent\\image";
 		MultipartRequest mr = new MultipartRequest(req, uploadPath, 1024 * 1024 * 5, "utf-8",
 		new DefaultFileRenamePolicy());
 		int rno=Integer.parseInt(mr.getParameter("rno"));

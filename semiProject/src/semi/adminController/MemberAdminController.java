@@ -32,7 +32,7 @@ public class MemberAdminController extends HttpServlet{
             int n = MemberDao.getInstance().delete(sql);
             System.out.println("n:"+n);
             if(n>0) {
-                req.setAttribute("del", "昏力己傍");
+                req.setAttribute("del", "靷牅靹标车");
             }else {
                 req.setAttribute("page", "/admin/member.jsp");
             }

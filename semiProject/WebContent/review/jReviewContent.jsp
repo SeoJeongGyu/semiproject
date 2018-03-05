@@ -8,10 +8,10 @@
    }
 </style>
 <script>
-/* if('${param.result}'!=""){alert('${param.result}');}
+ if('${param.result}'!=""){alert('${param.result}');}
 if('${result}' !=""){
 	alert('${result}');
-} */
+} 
 
 function rupdate(){
 	if('${sessionScope.id}' == '${vo.id}'){
@@ -141,8 +141,8 @@ function police(){
 		<!-- 댓글기능  -->
 	
 		<div id="bottom"></div>
-	<input type="hidden" value="${vo.rtitle }" name="rtitle">
-	<input type="hidden" value="${vo.rcontent }" name="rcontent">
+	<%-- <input type="hidden" value="${vo.rtitle }" name="rtitle">
+	<input type="hidden" value="${vo.rcontent }" name="rcontent"> --%>
 	<br>
 	<br>
 	<br>
