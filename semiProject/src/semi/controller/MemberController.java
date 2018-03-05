@@ -2,6 +2,7 @@ package semi.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -37,10 +38,22 @@ public class MemberController  extends HttpServlet{
         }else if(cmd.equals("update")) {
         	update(req,resp);
         }else if(cmd.equals("mypage")) {
-        	req.setAttribute("page", "/mypage/myPageMain.jsp");
-            req.getRequestDispatcher("main.jsp").forward(req, resp);
+        	mypage(req,resp);
         }
     }
+    public void mypage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    	String id =(String)req.getSession().getAttribute("id");
+    	System.out.println("id:?"+id);
+    	ArrayList<MemberVo> list = null;
+    	list = MemberDao.getInstance().updateMember(id);
+    	req.setAttribute("list", list);
+     	req.setAttribute("page", "/mypage/myPageUpdate.jsp");
+        req.getRequestDispatcher("main.jsp").forward(req, resp);
+    }
+    
+    
+    
+    
     public void loginOk(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id=req.getParameter("id");
         String pwd=req.getParameter("pwd");
@@ -53,14 +66,14 @@ public class MemberController  extends HttpServlet{
                 System.out.println("여기옴");
                 resp.sendRedirect(req.getContextPath()+"/admin.jsp");
             }else if(addr.equals("")) {
-                resp.sendRedirect(req.getContextPath()+"/start.jsp");
+                resp.sendRedirect(req.getContextPath()+"/member/start.jsp");
             }else {
                 resp.sendRedirect(addr);
             }
         }else {
             req.setAttribute("page", "/member/login.jsp");
             req.setAttribute("result", "로그인에 실패하였습니다.");
-            RequestDispatcher rd = req.getRequestDispatcher("start.jsp");
+            RequestDispatcher rd = req.getRequestDispatcher("member/login.jsp");
             rd.forward(req, resp);
         }
     }

@@ -33,14 +33,14 @@ note.value='${vo.rcontent}';
 <center>
 
 <!-- 전체를 감싸는 div -->
-<div id="write" style="width: 1000px; height: 527px; margin-top: 100px;">
+<div id="write" style="width: 1000px; height: 1000px; margin-top: 100px;">
   <!-- 전체 form  -->
     <form class="cols12" action="<%=request.getContextPath() %>/review.do?cmd=updateOk&rno=${vo.rno}" method="post" enctype="multipart/form-data">
 <div class="row">
 <h5>대표사진변경</h5>
     <!-- 사진 등록 AJAX div  -->
 <div id="list" style="clear:both;float:left;margin-top:15px; overflow:hidden; width:210px;height:140px;text-align:center;">
-<img src="/semiProject/upload/${vo.savefilename}" style="width:210px; border:1px solid #F0F0F0" >
+<img src="image/${vo.savefilename}"style="width:210px; border:1px solid #F0F0F0" >
 </div>
 <br><br><br><br><br>
 <div id="file" >

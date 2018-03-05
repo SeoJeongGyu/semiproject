@@ -19,7 +19,8 @@ public class LoginFilter implements Filter{
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
             throws IOException, ServletException {
-        //���ǿ� id�� �ִ��� �˻� - ���ǿ� id�� ������ login true�� ����ǵ��� �ۼ��� ������.
+
+        req.setCharacterEncoding("utf-8");
         String cmd = req.getParameter("cmd");
         System.out.println("filter cmd:"+cmd);
         if(cmd.equals("insert")||cmd.equals("write")) {

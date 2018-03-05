@@ -74,7 +74,6 @@ public class FqcommentDao {
 				pstmt.setInt(5,vo.getFqno());
 				pstmt.setString(6, vo.getId());
 				pstmt.executeUpdate();
-				System.out.println("fccommentDao111111: "+ pstmt.executeUpdate());
 			}else {
 				String sql="insert into fqcomment values(fqcno_seq.nextval,?,fqcno_seq.currval,?,?,0,sysdate,?,?)";
 				pstmt=con.prepareStatement(sql);
@@ -84,15 +83,14 @@ public class FqcommentDao {
 				pstmt.setInt(4,vo.getFqno());
 				pstmt.setString(5, vo.getId());
 				pstmt.executeUpdate();
-				System.out.println("fccommentDao222222: "+ pstmt.executeUpdate());
 			}
-			
 			return 1;
 		}catch(SQLException se) {
 			System.out.println(se.getMessage());
 			return -1;
 		}finally {
 			DbcpBean.closeConn(con, pstmt, null);
+			DbcpBean.closeConn(null, pstmt1, null);
 		}
 	}
 }

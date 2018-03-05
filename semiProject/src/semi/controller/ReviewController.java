@@ -45,6 +45,7 @@ public class ReviewController extends HttpServlet {
 		}else if(cmd.equals("updateOk")) {
 			updateOk(req,resp);
 		}
+		
 	}
 
 	public void list(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -144,8 +145,7 @@ public class ReviewController extends HttpServlet {
 		int n = dao.delete(rno, id);
 		
 		if(n>0) {
-		req.setAttribute("page", "/review/jReviewList.jsp");
-		req.getRequestDispatcher("main.jsp").forward(req, resp);
+			resp.sendRedirect("/semiProject/review.do?cmd=list");
 		}else {
 			req.setAttribute("result", "cancel");
 			
@@ -214,7 +214,7 @@ public class ReviewController extends HttpServlet {
 	
 	public void updateOk(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	
-		String uploadPath = req.getServletContext().getRealPath("/upload");
+		String uploadPath = "D:\\Github\\semiproject\\semiProject\\WebContent\\image";
 		MultipartRequest mr = new MultipartRequest(req, uploadPath, 1024 * 1024 * 5, "utf-8",
 		new DefaultFileRenamePolicy());
 		int rno=Integer.parseInt(mr.getParameter("rno"));

@@ -44,7 +44,7 @@ $(".dropdown-button").dropdown();
 			<c:otherwise>
 				<li>${sessionScope.id}님</li>
 				<li><a href="<%=request.getContextPath()%>/member/logout.jsp">로그아웃</a></li>
-				<li><a href="<%=request.getContextPath()%>/member.do?cmd=mypage">마이페이지</a></li>
+				<li><a href="<%=request.getContextPath()%>/member.do?cmd=mypage&id=${sessionScope.id}">마이페이지</a></li>
 			</c:otherwise>
 		</c:choose>
       </ul>

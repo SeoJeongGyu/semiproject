@@ -49,6 +49,7 @@ public void scrap(HttpServletRequest req, HttpServletResponse resp) throws Servl
 	}
 public void list(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	String id=(String)req.getSession().getAttribute("id");
+	System.out.println(id);
 	String text = req.getParameter("text");
     String spageNum = req.getParameter("pageNum");
     System.out.println("spageNum:"+spageNum);

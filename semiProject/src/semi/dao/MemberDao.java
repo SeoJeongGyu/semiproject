@@ -72,6 +72,33 @@ public class MemberDao {
             DbcpBean.closeConn(con, pstmt, rs);
         }
     }
+    
+    public ArrayList<MemberVo>updateMember(String id){
+        Connection con=null;
+        PreparedStatement pstmt=null;
+        ResultSet rs=null;
+    
+        try {
+            con=DbcpBean.getConn();
+            String sql= "select * from member where id=?";
+            pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, id);
+            rs=pstmt.executeQuery();
+            ArrayList<MemberVo> list =new  ArrayList<MemberVo>();
+            while(rs.next()) {
+                list.add(new MemberVo(rs.getString("id"),rs.getString("pwd"),
+                        rs.getString("nickname"),rs.getString("name"),rs.getString("phone"),
+                        rs.getString("email"),rs.getDate("regdate")));
+            }
+            return list;
+        } catch (SQLException se) {
+            System.out.println(se.getMessage());
+            return null;
+        } finally {
+            DbcpBean.closeConn(con, pstmt, rs);
+        }
+    }
+    
     public int getMax(String select ,String text){
         Connection con=null;
         PreparedStatement pstmt=null;

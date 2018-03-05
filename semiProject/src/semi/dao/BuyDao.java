@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import semi.vo.BuyVo;
+import semi.vo.FqboardVo;
 import semi.vo.MemberVo;
 import semi.vo.SellVo;
 import test.dbcp.DbcpBean;
@@ -46,6 +47,26 @@ public class BuyDao {
 			return null;
 		}finally {
 			DbcpBean.closeConn(con, pstmt, rs);
+		}
+	}
+	
+	public int updateOk(BuyVo vo) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con=DbcpBean.getConn();
+			String sql="update buy set btitle=?,bcontent=? where bno=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, vo.getBtitle());
+			pstmt.setString(2, vo.getBcontent());
+			pstmt.setInt(3, vo.getBno());
+			return pstmt.executeUpdate();
+			
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return -1;
+		}finally {
+			DbcpBean.closeConn(con, pstmt, null);
 		}
 	}
 	

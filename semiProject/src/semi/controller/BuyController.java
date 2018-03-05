@@ -11,10 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import semi.dao.BuyDao;
+import semi.dao.FqboardDao;
 import semi.dao.MemberDao;
 import semi.dao.ReviewDao;
 import semi.dao.SellDao;
 import semi.vo.BuyVo;
+import semi.vo.FqboardVo;
 import semi.vo.MemberVo;
 import semi.vo.SellVo;
 
@@ -44,10 +46,30 @@ public class BuyController extends HttpServlet {
 			update(req,resp);
 		}else if(cmd.equals("police")) {
 			police(req,resp);
+		}else if(cmd.equals("updateOk")) {
+			updateOk(req,resp);
 		}
 	}
 	
-	
+		private void updateOk(HttpServletRequest req, HttpServletResponse resp) 
+				throws ServletException, IOException{
+			int bno=Integer.parseInt(req.getParameter("bno"));
+			String btitle=req.getParameter("btitle");
+			String bcontent=req.getParameter("scontent");
+			
+			BuyDao dao=BuyDao.getInstance();
+			BuyVo vo=new BuyVo(bno, btitle, bcontent, null, 0, 0, 0, 0, null);
+			int n=dao.updateOk(vo);
+			
+			if(n>0) {
+				resp.sendRedirect(req.getContextPath()+"/buy.do?cmd=buyList");
+			}else {
+				req.setAttribute("result", "fail");
+				resp.sendRedirect(req.getContextPath()+"/buy.do?cmd=buyList");
+			}
+			
+		}
+		
 	private void police(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException{
 		int bno = Integer.parseInt(req.getParameter("bno"));
