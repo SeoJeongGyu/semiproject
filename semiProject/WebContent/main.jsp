@@ -52,7 +52,7 @@
 			
 			<br>
 			
-			<div id="review" style="margin-top: 30px; width: 1300px; height: 500px; background-color: white;  text-overflow:ellipsis;">
+			<div id="review" style="margin-top: 30px; width: 1300px; height: 500px; background-color: white;  overflow:hidden;text-overflow:ellipsis;">
 				<c:forEach var="review" items="${requestScope.reviewMain }">
 				<div style="margin-left:10px; margin-top:30px; float:left; ">
 				<div style="clear:both;overflow:hidden;">				<div style="float:left;width:390px;overflow:hidden;text-align:center; margin-right:30px; text-overflow:ellipsis;">
@@ -60,10 +60,10 @@
 								<a href="/semiProject/review.do?cmd=content&rno=${review.rno}"><!--  --><img src="/semiProject/upload/${review.savefilename}" style="border:1px solid #F0F0F0; width:310px;height:220px;" ></a>
 							</div>
 										
-					<div style="clear:both;overflow:hidden;text-align:left;margin-top:20px;" onclick="location.href='/semiProject/review.do?cmd=content&rno=${review.rno}'" class="pointer">		
+					<div style="clear:both;overflow:hidden;text-align:left;margin-top:20px;" onclick="location.href='/semiProject/review.do?cmd=content&rno=${review.rno}'">		
 						<div style="margin-left:100px;width:100%;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;padding-bottom:2px;"><h5>${review.rtitle }</h5></div>
 
-						<div style="margin-top:10px; white-space:nowrap; text-overflow:ellipsis;">
+						<div style="margin-top:10px; white-space:nowrap; text-overflow:ellipsis;width:300px;">
 							<span>${review.rcontent }</span>
 						</div>
 					</div>
