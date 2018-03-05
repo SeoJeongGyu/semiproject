@@ -29,8 +29,8 @@
 		<jsp:include page="/home/header.jsp"></jsp:include>
 	</div>
 	<table id="event" >
-		<tr><td><img id="imgsamsung" alt="" src="image\samsung.jpg" style="width: 250px;" onclick="samsung()"></td></tr>
-		<tr><td><img id="imglg" alt="" src="image\LG.jpg" style="width: 250px;" onclick="lg()"></td></tr>
+		<tr><td><img id="imgsamsung" alt="" src="image\samsung.jpg" style="width: 250px;" onclick="imgsamsung()"></td></tr>
+		<tr><td><img id="imglg" alt="" src="image\LG.jpg" style="width: 250px;" onclick="imglg()"></td></tr>
 	</table>
 	<div id="content" style="width: 1350px;">
 		<c:choose>
