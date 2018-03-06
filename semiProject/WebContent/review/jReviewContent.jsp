@@ -8,10 +8,10 @@
    }
 </style>
 <script>
-/* if('${param.result}'!=""){alert('${param.result}');}
+if('${param.result}'!=""){alert('${param.result}');}
 if('${result}' !=""){
 	alert('${result}');
-} */
+}
 
 function rupdate(){
 	if('${sessionScope.id}' == '${vo.id}'){
