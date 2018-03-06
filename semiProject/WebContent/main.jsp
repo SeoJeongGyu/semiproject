@@ -73,7 +73,7 @@
 				<div style="margin-left:10px; margin-top:30px; float:left; ">
 				<div style="clear:both;overflow:hidden;">				<div style="float:left;width:390px;overflow:hidden;text-align:center; margin-right:30px; text-overflow:ellipsis;">
 												<div style="width:310px;height:220px;text-align:center;overflow:hidden;">
-								<a href="/semiProject/review.do?cmd=content&rno=${review.rno}"><!--  --><img src="/semiProject/image/${review.savefilename}" style="border:1px solid #F0F0F0; width:310px;height:220px;" ></a>
+								<a href="/semiProject/review.do?cmd=content&rno=${review.rno}"><!--  --><img src="image/${review.savefilename}" style="border:1px solid #F0F0F0; width:310px;height:220px;" ></a>
 							</div>
 										
 					<div style="clear:both;overflow:hidden;text-align:left;margin-top:20px;" onclick="location.href='/semiProject/review.do?cmd=content&rno=${review.rno}'">		
