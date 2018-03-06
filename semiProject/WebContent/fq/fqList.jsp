@@ -28,6 +28,9 @@ function getDetail(fqno){
 				<c:when test="${fq.fqgrade==1 }">
 					<td>인기글</td>
 				</c:when>
+				<c:when test="${fq.fqgrade==2 }">
+					<td>공지글</td>
+				</c:when>
 				<c:when test="${fq.fqtype==1 }">			
 					<td>일반</td>
 				</c:when>

@@ -41,7 +41,6 @@ public void scrap(HttpServletRequest req, HttpServletResponse resp) throws Servl
 	MyPageVo vo = new MyPageVo(0, title, id, url, null,rno);
 	int n=MyPageDao.getInstance().scrapAdd(vo);
 	if(n>0) {
-		url = url+"&result=ScrapSuccess";
 		resp.sendRedirect(url);
 	}
 	
