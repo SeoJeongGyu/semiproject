@@ -90,6 +90,12 @@ function getDetail(fqno){
 			    </td>
 			    <td onclick="getDetail(${vo.fqno })">${vo.fqno }</td>
 			    <c:choose>
+				<c:when test="${vo.fqgrade==1 }">	
+				<td onclick="getDetail(${vo.fqno })">인기글</td>
+				</c:when>
+				<c:when test="${vo.fqgrade==2 }">	
+				<td onclick="getDetail(${vo.fqno })">공지글</td>
+				</c:when>
 				<c:when test="${vo.fqtype==1 }">
 				<td onclick="getDetail(${vo.fqno })">일반</td>			
 				</c:when>
@@ -99,9 +105,6 @@ function getDetail(fqno){
 				<c:when test="${vo.fqtype==3 }">	
 				<td onclick="getDetail(${vo.fqno })">질문</td>
 				</c:when>
-				<c:otherwise>
-				<td onclick="getDetail(${vo.fqno })">버그글</td>
-				</c:otherwise>
 			</c:choose>
               <td onclick="getDetail(${vo.fqno })">${vo.fqtitle }</td>
               <td onclick="getDetail(${vo.fqno })">${vo.id }</td>

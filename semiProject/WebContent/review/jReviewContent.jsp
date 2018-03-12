@@ -8,10 +8,18 @@
    }
 </style>
 <script>
+<<<<<<< HEAD
  if('${param.result}'!=""){alert('${param.result}');}
+=======
+if('${param.result}'!=""){alert('${param.result}');}
+>>>>>>> branch 'jg1' of https://github.com/SeoJeongGyu/semiproject.git
 if('${result}' !=""){
 	alert('${result}');
+<<<<<<< HEAD
 } 
+=======
+}
+>>>>>>> branch 'jg1' of https://github.com/SeoJeongGyu/semiproject.git
 
 function rupdate(){
 	if('${sessionScope.id}' == '${vo.id}'){

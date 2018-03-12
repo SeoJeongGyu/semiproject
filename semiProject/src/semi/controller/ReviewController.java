@@ -127,6 +127,9 @@ public class ReviewController extends HttpServlet {
 
 		
 
+
+		
+
 		MultipartRequest mr = new MultipartRequest(req, uploadPath, 1024 * 1024 * 5, "utf-8",
 				new DefaultFileRenamePolicy());
 
@@ -192,14 +195,9 @@ public class ReviewController extends HttpServlet {
 		String id = req.getParameter("id");
 		ReviewDao dao=ReviewDao.getInstance();
 		int n=dao.oxrecommend(rno, id);
-		
 		if(n>0) {
-		
-
 			req.setAttribute("result", "동일게시물에는추천할수없습니다");
-
 			req.setAttribute("result", "동일 게시물에는 추천할 수 없습니다.");
-
 			content(req, resp);
 		}else {
 		int recommend = dao.recommend(rno, id);
@@ -240,7 +238,10 @@ public class ReviewController extends HttpServlet {
 	
 	public void updateOk(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	
+
 		String uploadPath = "C:\\Users\\JHTA\\git\\semiproject\\semiProject\\WebContent\\image";
+
+
 		MultipartRequest mr = new MultipartRequest(req, uploadPath, 1024 * 1024 * 5, "utf-8",
 		new DefaultFileRenamePolicy());
 		int rno=Integer.parseInt(mr.getParameter("rno"));
